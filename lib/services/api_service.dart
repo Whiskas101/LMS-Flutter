@@ -14,12 +14,12 @@ class ApiService{
   static late String moodleCookie;
 
   //Variables for handling the automatic login
-  static late DateTime lastLoginAttempt;
+  static late DateTime? lastLoginAttempt;
 
   //Im assuming the actual official session limit is longer but eh.
   static const Duration _sessionLength = Duration(minutes: 30);
 
-  //  !!!Subject to change or move out of this Class entirely.!!!
+  //  !!!Subject to change or move out of this Class entirely!!!
   static String host = "10.0.2.2:5000";
 
   // Secure storage to store and access the username and password for future automated login
@@ -47,7 +47,9 @@ class ApiService{
   /// Returns a true if it does need re-auth, false if it doesn't.
   static bool needsReAuthentication(){
     //Time elapsed since the last successful login
-    Duration timeElapsed = DateTime.now().difference(lastLoginAttempt);
+
+
+    Duration timeElapsed = DateTime.now().difference(lastLoginAttempt!);
     if( timeElapsed > _sessionLength){
       return true;
     }
@@ -193,7 +195,8 @@ class ApiService{
     );
 
     if(response.statusCode == 200){
-      //Need to work on this section
+      //Need to work on this section, it makes two request and saving logic must
+      // be separate from this api service.
     }
 
 
