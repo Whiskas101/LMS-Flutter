@@ -21,7 +21,22 @@ class _PlaygroundState extends State<Playground> {
   void doGetSubject(){
     ApiService.getSubjectData();
   }
+  
+  void doMaterialStuff(){
+    // https://mydy.dypatil.edu/rait/course/view.php?id=5923
+    // https://mydy.dypatil.edu/rait/course/view.php?id=5921
+    // https://mydy.dypatil.edu/rait/course/view.php?id=5922,
+    ApiService.getSubjectMaterial("https://mydy.dypatil.edu/rait/course/view.php?id=5921");
+  }
+  
+  void doDownloadStuff(){
+    // https://mydy.dypatil.edu/rait/mod/presentation/view.php?id=611990
+    // https://mydy.dypatil.edu/rait/mod/presentation/view.php?id=612128
+    // https://mydy.dypatil.edu/rait/mod/flexpaper/view.php?id=613117
+    // https://mydy.dypatil.edu/rait/mod/presentation/view.php?id=614269
 
+    ApiService.downloadResource("https://mydy.dypatil.edu/rait/mod/presentation/view.php?id=611990");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +54,14 @@ class _PlaygroundState extends State<Playground> {
               ElevatedButton(
                 onPressed: doGetSubject,
                 child: Text("do subject stuff"),
+              ),
+              ElevatedButton(
+                onPressed: doMaterialStuff,
+                child: Text("do material stuff"),
+              ),
+              ElevatedButton(
+                onPressed: doDownloadStuff,
+                child: Text("do download stuff"),
               ),
 
             ],

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:dy_integrated_5/utils/customHttp.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // import 'package:http/http.dart' as http;
 
@@ -22,7 +23,7 @@ class ApiService{
   //  !!!Subject to change or move out of this Class entirely!!!
   static String host = "10.0.2.2:5000";
 
-  // Secure storage to store and access the username and password for future automated login
+  // Secure storage to store and access the username and password for future automated login.
   static const FlutterSecureStorage _storage = FlutterSecureStorage();
 
 
@@ -47,9 +48,8 @@ class ApiService{
   /// Returns a true if it does need re-auth, false if it doesn't.
   static bool needsReAuthentication(){
     //Time elapsed since the last successful login
-
-
     Duration timeElapsed = DateTime.now().difference(lastLoginAttempt!);
+
     if( timeElapsed > _sessionLength){
       return true;
     }
@@ -79,7 +79,6 @@ class ApiService{
 
   /// Returns a boolean based on whether the login was successful or not.
   static Future<bool> attemptLogin(String username, String password, {bool storePassword = true}) async {
-    //this is meant to the doc
     Uri baseUri = Uri.http(host, '/login');
     print(baseUri);
     var response = await CustomHttp.post(
@@ -94,7 +93,7 @@ class ApiService{
       // For a valid login, parse the cookies, and store them for future data requests
       Map<String, dynamic> responseBody = jsonDecode(response.body);
       sessionCookie = response.headers['set-cookie']!;
-      moodleCookie = "MoodleSession=$responseBody['MoodleSession']";
+      moodleCookie = "MoodleSession=${responseBody['MoodleSession']}";
 
       //Update the last successful login time
       lastLoginAttempt = DateTime.now();
@@ -118,12 +117,25 @@ class ApiService{
   }
 
 
-  /// Get Subjects data as a list of objects
+  /// Get Subjects as a list of objects
   /// return format is a JSON Object like
   /// { name, instructor, course_code, link, attendance }
-  static Future<List<Map<String,dynamic>>> getSubjectData() async {
-    await ensureSessionValidity();
+  static Future<List<Map<String,dynamic>>> getSubjectData({bool forceReFetch = false}) async {
 
+    //See if we already have a cached version of the Subject Information.
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? jsonString = prefs.getString('Subjects');
+
+    if ((jsonString != null) && (forceReFetch == false)) {
+      print("Subject Cache hit!");
+      List<Map<String, dynamic>> jsonData = jsonDecode(jsonString).cast<Map<String, dynamic>>();
+      print(jsonData);
+      return jsonData;
+    }
+
+
+    // If data wasn't in shared preferences, we just get the data by calling the API
+    await ensureSessionValidity();
 
     Uri uri = Uri.http(host, '/subjects');
 
@@ -138,6 +150,8 @@ class ApiService{
     //Successful request
     if(response.statusCode == 200){
       List<Map<String, dynamic>> jsonData = jsonDecode(response.body).cast<Map<String,dynamic>>();
+      prefs.setString('Subjects', jsonEncode(jsonData));
+
       return jsonData;
     }
 
@@ -148,8 +162,18 @@ class ApiService{
 
 
   /// Fetches Materials for a given subject, returns a List of JSON Objects
-  /// Each JSON is like: { name, link, type }
-  static Future<List<Map<String, dynamic>>> getSubjectMaterial(String link) async {
+  /// Each JSON Object within the list is of the form: { name, link, type }
+  static Future<List<Map<String, dynamic>>> getSubjectMaterial(String link, {bool forceReFetch = false}) async {
+    //Check if there's a cached version
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? jsonString = prefs.getString(link);
+    if(jsonString != null && forceReFetch == false){
+      List<Map<String, dynamic>> jsonData = jsonDecode(jsonString).cast<Map<String, dynamic>>();
+      print("cache hit for material with $link");
+      print(jsonData);
+      return jsonData;
+    }
+
     await ensureSessionValidity();
 
     Uri uri = Uri.http(host, '/materials');
@@ -167,6 +191,9 @@ class ApiService{
 
     if (response.statusCode == 200){
       List<Map<String, dynamic>> jsonData = jsonDecode(response.body).cast<Map<String,dynamic>>();
+
+      prefs.setString(link, jsonEncode(jsonData));
+      print(jsonData);
       return jsonData;
     }
 
@@ -179,15 +206,18 @@ class ApiService{
 
   /// Downloads a pdf based on the link returned by the external api call
   /// and stores it to a path
-  static void downloadResource(String subject, String link) async {
+  static void downloadResource(String link) async {
+
     await ensureSessionValidity();
 
     Uri uri = Uri.http(host, '/download');
+    String type = link.split("/")[5];
 
     var response = await CustomHttp.post(
       uri,
       body: {
         'link':link,
+        'type':type
       },
       headers: {
         'Cookie':sessionCookie
@@ -195,11 +225,25 @@ class ApiService{
     );
 
     if(response.statusCode == 200){
-      //Need to work on this section, it makes two request and saving logic must
-      // be separate from this api service.
+
+      Map<String, dynamic> resourceData = jsonDecode(response.body);
+      String link = resourceData['link'];
+      String name = resourceData['name'];
+
+      Uri uri = Uri.parse(link);
+      print(link);
+      //Once we have the resource link, we can initiate a download
+      response = await CustomHttp.get(
+        uri,
+        headers: {
+          'Cookie':moodleCookie,
+        }
+      );
+      print(moodleCookie);
+      print(response.headers);
+
+      ///To-do: Implement the saving and path caching logic to open the pdf
     }
-
-
 
   }
 
