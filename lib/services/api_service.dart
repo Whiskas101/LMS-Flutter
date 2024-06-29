@@ -1,9 +1,19 @@
+// for handling json strings
 import 'dart:convert';
+
+// for loading data into their appropriate data models
+import 'package:dy_integrated_5/models/CourseMaterial.dart';
+import 'package:dy_integrated_5/models/Semester.dart';
+import 'package:dy_integrated_5/services/file_handler.dart';
+
+
+// Custom Http for separating the exception handling logic
 import 'package:dy_integrated_5/utils/customHttp.dart';
+
+//for caching data
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// import 'package:http/http.dart' as http;
 
 /// Simple Static Class for handling data returned from the backend API.
 class ApiService{
@@ -13,12 +23,12 @@ class ApiService{
   // The API deals with the rest.
   static late String sessionCookie;
   static late String moodleCookie;
-
-  //Variables for handling the automatic login
-  static late DateTime? lastLoginAttempt;
-
+  
   //Im assuming the actual official session limit is longer but eh.
   static const Duration _sessionLength = Duration(minutes: 30);
+
+  //Variables for handling the automatic login
+  static DateTime lastLoginAttempt = DateTime.now().subtract(_sessionLength);
 
   //  !!!Subject to change or move out of this Class entirely!!!
   static String host = "10.0.2.2:5000";
@@ -117,20 +127,22 @@ class ApiService{
   }
 
 
-  /// Get Subjects as a list of objects
+  /// Get Subjects as a list of objects (called a semester)
   /// return format is a JSON Object like
   /// { name, instructor, course_code, link, attendance }
-  static Future<List<Map<String,dynamic>>> getSubjectData({bool forceReFetch = false}) async {
+  static Future<Semester> getSemesterData({bool forceReFetch = false}) async {
 
     //See if we already have a cached version of the Subject Information.
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? jsonString = prefs.getString('Subjects');
 
+    // if user didn't explicitly specify a re-fetch AND we have a valid cache, no request is made.
     if ((jsonString != null) && (forceReFetch == false)) {
       print("Subject Cache hit!");
       List<Map<String, dynamic>> jsonData = jsonDecode(jsonString).cast<Map<String, dynamic>>();
+      Semester semester = Semester.fromJSON(jsonData);
       print(jsonData);
-      return jsonData;
+      return semester;
     }
 
 
@@ -151,27 +163,29 @@ class ApiService{
     if(response.statusCode == 200){
       List<Map<String, dynamic>> jsonData = jsonDecode(response.body).cast<Map<String,dynamic>>();
       prefs.setString('Subjects', jsonEncode(jsonData));
+      Semester semester = Semester.fromJSON(jsonData);
 
-      return jsonData;
+      return semester;
     }
 
-    //If the request fails, return empty
-    return [];
+    //If the request fails, return empty semester
+    return Semester();
 
   }
 
 
   /// Fetches Materials for a given subject, returns a List of JSON Objects
   /// Each JSON Object within the list is of the form: { name, link, type }
-  static Future<List<Map<String, dynamic>>> getSubjectMaterial(String link, {bool forceReFetch = false}) async {
+  static Future<List<CourseMaterial>> getSubjectMaterial(String link, {bool forceReFetch = false}) async {
     //Check if there's a cached version
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? jsonString = prefs.getString(link);
     if(jsonString != null && forceReFetch == false){
       List<Map<String, dynamic>> jsonData = jsonDecode(jsonString).cast<Map<String, dynamic>>();
+      List<CourseMaterial> materials = jsonData.map((jsonObject)=>CourseMaterial.fromJSON(jsonObject)).toList();
       print("cache hit for material with $link");
-      print(jsonData);
-      return jsonData;
+      print(materials);
+      return materials;
     }
 
     await ensureSessionValidity();
@@ -191,10 +205,10 @@ class ApiService{
 
     if (response.statusCode == 200){
       List<Map<String, dynamic>> jsonData = jsonDecode(response.body).cast<Map<String,dynamic>>();
-
+      List<CourseMaterial> materials = jsonData.map((jsonObject)=>CourseMaterial.fromJSON(jsonObject)).toList(); // Putting data into Course Material class
       prefs.setString(link, jsonEncode(jsonData));
-      print(jsonData);
-      return jsonData;
+      print(materials);
+      return materials;
     }
 
     //Failed request
@@ -206,13 +220,21 @@ class ApiService{
 
   /// Downloads a pdf based on the link returned by the external api call
   /// and stores it to a path
-  static void downloadResource(String link) async {
+  static void downloadResource(String subject, String name, String link, {bool forceReFetch = false}) async {
 
-    await ensureSessionValidity();
+    //Try opening the file, if it exists, it will be opened, otherwise, we make a fetch
+    if(forceReFetch == false){
+      if(await FileHandler.readFile(subject, name)){
+        //successful read, no need to proceed further and download again
+        return;
+      }
+    }
+
+    await ensureSessionValidity(); // Make sure we are logged in before sending the download request.
 
     Uri uri = Uri.http(host, '/download');
-    String type = link.split("/")[5];
-
+    String type = link.split("/")[5]; // Extracting the type of the resource
+    print("downloading");
     var response = await CustomHttp.post(
       uri,
       body: {
@@ -229,10 +251,12 @@ class ApiService{
       Map<String, dynamic> resourceData = jsonDecode(response.body);
       String link = resourceData['link'];
       String name = resourceData['name'];
+      name = Uri.decodeComponent(name); // Convert to a normal string [Eg. week%201%20ppython_uw.pdf ===> week 1 ppython_uw.pdf ]
 
       Uri uri = Uri.parse(link);
       print(link);
-      //Once we have the resource link, we can initiate a download
+
+      //Once the resource link is received, we can initiate a download
       response = await CustomHttp.get(
         uri,
         headers: {
@@ -242,7 +266,8 @@ class ApiService{
       print(moodleCookie);
       print(response.headers);
 
-      ///To-do: Implement the saving and path caching logic to open the pdf
+      FileHandler.writeThenReadFile(subject, name, response.bodyBytes);
+
     }
 
   }

@@ -7,7 +7,11 @@ class Semester{
   /// this only exists so I have a neat way of persisting data across multiple launches,
   /// without having to call the API again and again, it's a very slow process sometimes.
 
-  late List<Subject> subjects = [];
+  List<Subject> subjects = [];
+
+  Semester(){
+    subjects = [];
+  }
 
 
   Semester.fromJSON(List<Map<String,dynamic>> jsonData){

@@ -1,15 +1,27 @@
 
 
 import 'package:dy_integrated_5/models/Semester.dart';
-import 'package:flutter/foundation.dart';
+import 'package:dy_integrated_5/services/api_service.dart';
+
+// for State management
+import 'package:riverpod/riverpod.dart';
 
 
 
-class SemesterProvider extends ChangeNotifier{
-  late Semester _semester;
+class SemesterNotifier extends Notifier<Semester>{
 
-  Semester get semester => _semester;
+  @override
+  Semester build() {
+    return Semester();
+  }
 
-
+  void getSemesterData({bool forceReFetch = false})async {
+    Semester sem = await ApiService.getSemesterData(forceReFetch: forceReFetch);
+    state = sem;
+  }
 
 }
+
+final semesterNotifierProvider = NotifierProvider<SemesterNotifier, Semester>((){
+  return SemesterNotifier();
+});

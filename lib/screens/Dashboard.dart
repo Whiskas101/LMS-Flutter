@@ -18,13 +18,13 @@ class _DashboardState extends State<Dashboard> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-             SizedBox(height: 24,),
+             const SizedBox(height: 24,),
               
               //Upper most layer, with the two buttons, maybe add a search bar here?
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
@@ -45,7 +45,7 @@ class _DashboardState extends State<Dashboard> {
                 ],
               ),
 
-              SizedBox(height: 24,),
+              const SizedBox(height: 24,),
 
               // Weird ahh message that makes no sense but autistic aesthetic
               Row(
@@ -57,7 +57,7 @@ class _DashboardState extends State<Dashboard> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                             "DYF",
                             style: TextStyle(
                               fontSize: 24,
@@ -80,12 +80,12 @@ class _DashboardState extends State<Dashboard> {
                 ],
               ),
 
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
 
               //Search bar
               Container(
                 height: 55,
-                margin: EdgeInsets.symmetric(horizontal: 8.0),
+                margin: const EdgeInsets.symmetric(horizontal: 8.0),
 
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -105,12 +105,12 @@ class _DashboardState extends State<Dashboard> {
 
                 ),
                 
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
 
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      padding: EdgeInsets.symmetric(horizontal: 12.0),
                       child: Icon(
                         Icons.search
                       ),
@@ -124,7 +124,7 @@ class _DashboardState extends State<Dashboard> {
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      padding: EdgeInsets.symmetric(horizontal: 12.0),
                       child: Icon(
                           Icons.keyboard_option_key
                       ),
@@ -133,14 +133,14 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ),
 
-              SizedBox(height: 28,),
+              const SizedBox(height: 28,),
 
               // QuickJump
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    padding: EdgeInsets.symmetric(horizontal: 12.0),
                     child: Text(
                         "Quick Jump",
                       style: TextStyle(
@@ -151,7 +151,7 @@ class _DashboardState extends State<Dashboard> {
                 ],
               ),
 
-              SizedBox(height: 14,),
+              const SizedBox(height: 14,),
 
               //Quick Jump Items
               Padding(
@@ -160,23 +160,23 @@ class _DashboardState extends State<Dashboard> {
 
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
 
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.fromBorderSide(BorderSide(width: 1)),
+                        border: const Border.fromBorderSide(BorderSide(width: 1)),
 
 
 
-                        boxShadow: [BoxShadow(
+                        boxShadow: const [BoxShadow(
                           color: Colors.grey,
                           blurRadius: 2
                         )]
                       ),
 
-                      child: Row(
+                      child: const Row(
                         children: [
                           Icon(
                               Icons.receipt_long_outlined,
@@ -188,23 +188,23 @@ class _DashboardState extends State<Dashboard> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
 
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.fromBorderSide(BorderSide(width: 1)),
+                          border: const Border.fromBorderSide(BorderSide(width: 1)),
 
 
 
-                          boxShadow: [BoxShadow(
+                          boxShadow: const [BoxShadow(
                               color: Colors.grey,
                               blurRadius: 2
                           )]
                       ),
 
-                      child: Row(
+                      child: const Row(
                         children: [
                           Icon(
                             Icons.timelapse_rounded,
@@ -220,14 +220,14 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ),
 
-              SizedBox(height: 32,),
+              const SizedBox(height: 32,),
 
               //Subjects
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    padding: EdgeInsets.symmetric(horizontal: 12.0),
                     child: Text(
                       "Your Courses",
                       style: TextStyle(
@@ -237,35 +237,35 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ],
               ),
-              SizedBox(height: 14,),
+              const SizedBox(height: 14,),
 
               //Subject Grid
-              Container(
+              SizedBox(
                 height: 350,
 
                 child: GridView(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                       childAspectRatio: 1.7/1
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
 
 
                     children: [
                       Container(
-                        padding: EdgeInsets.all(8),
-                        margin: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
+                        margin: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.white, 
-                          border: Border.fromBorderSide(BorderSide(width: 1)),
+                          border: const Border.fromBorderSide(BorderSide(width: 1)),
                           boxShadow: [BoxShadow(
                             color: CustomColors.customGray,
                             blurRadius: 2
                           )]
                         ),
                         
-                        child: Column(
+                        child: const Column(
                           children: [
                             Row(
                               
@@ -300,19 +300,19 @@ class _DashboardState extends State<Dashboard> {
                         
                       ),
                       Container(
-                        padding: EdgeInsets.all(8),
-                        margin: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
+                        margin: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white,
-                            border: Border.fromBorderSide(BorderSide(width: 1)),
+                            border: const Border.fromBorderSide(BorderSide(width: 1)),
                             boxShadow: [BoxShadow(
                                 color: CustomColors.customGray,
                                 blurRadius: 2
                             )]
                         ),
 
-                        child: Column(
+                        child: const Column(
                           children: [
                             Row(
 
@@ -347,19 +347,19 @@ class _DashboardState extends State<Dashboard> {
 
                       ),
                       Container(
-                        padding: EdgeInsets.all(8),
-                        margin: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
+                        margin: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white,
-                            border: Border.fromBorderSide(BorderSide(width: 1)),
+                            border: const Border.fromBorderSide(BorderSide(width: 1)),
                             boxShadow: [BoxShadow(
                                 color: CustomColors.customGray,
                                 blurRadius: 2
                             )]
                         ),
 
-                        child: Column(
+                        child: const Column(
                           children: [
                             Row(
 
@@ -394,19 +394,19 @@ class _DashboardState extends State<Dashboard> {
 
                       ),
                       Container(
-                        padding: EdgeInsets.all(8),
-                        margin: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
+                        margin: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white,
-                            border: Border.fromBorderSide(BorderSide(width: 1)),
+                            border: const Border.fromBorderSide(BorderSide(width: 1)),
                             boxShadow: [BoxShadow(
                                 color: CustomColors.customGray,
                                 blurRadius: 2
                             )]
                         ),
 
-                        child: Column(
+                        child: const Column(
                           children: [
                             Row(
 
@@ -441,19 +441,19 @@ class _DashboardState extends State<Dashboard> {
 
                       ),
                       Container(
-                        padding: EdgeInsets.all(8),
-                        margin: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
+                        margin: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white,
-                            border: Border.fromBorderSide(BorderSide(width: 1)),
+                            border: const Border.fromBorderSide(BorderSide(width: 1)),
                             boxShadow: [BoxShadow(
                                 color: CustomColors.customGray,
                                 blurRadius: 2
                             )]
                         ),
 
-                        child: Column(
+                        child: const Column(
                           children: [
                             Row(
 
