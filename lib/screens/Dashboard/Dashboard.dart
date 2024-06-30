@@ -16,6 +16,9 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,26 +26,26 @@ class _DashboardState extends State<Dashboard> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-             SizedBox(height: 24,),
+             const SizedBox(height: 24,),
               
               //Upper most layer, with the two buttons [ no functionality (YET) ]
               TopBar(),
 
-              SizedBox(height: 24,),
+              const SizedBox(height: 24,),
 
               // Weird ahh message that makes no sense but autistic aesthetic
               HeadSection(),
 
-              SizedBox(height: 28,),
+              const SizedBox(height: 28,),
 
               // QuickJump
-              QuickJump(),
+              const QuickJump(),
 
 
-              SizedBox(height: 32,),
+              const SizedBox(height: 32,),
 
               //Subjects
               SubjectGridSection()

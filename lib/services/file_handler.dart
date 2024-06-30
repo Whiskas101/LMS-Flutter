@@ -32,15 +32,14 @@ class FileHandler{
     }
 
     static Future<bool> readFile(String dirname, String fileName) async {
-
+      print("Reading $fileName");
       Directory appDir = await _getAppDir();
-      print("Attempting a read");
-      print("${appDir.path}/$dirname/$fileName");
+      // print("${appDir.path}/$dirname/$fileName");
       File file = File("${appDir.path}/$dirname/$fileName");
-      print(file);
+      // print(file);
       // if file doesn't already exist, return false for failure to read
-      if(!await file.exists()){
-        print("File doesnt exist bro");
+      if(await file.exists() == false){
+        // print(file.existsSync());
         return false;
       }
 

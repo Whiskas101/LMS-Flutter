@@ -6,18 +6,25 @@ import 'package:dy_integrated_5/screens/SubjectScreen/SearchBar.dart';
 
 import 'package:flutter/material.dart';
 
+import '../../models/Subject.dart';
+
 
 
 
 
 class SubjectScreen extends StatefulWidget {
-  const SubjectScreen({super.key});
+  late Subject subject;
+
+  SubjectScreen({super.key, required this.subject});
 
   @override
   State<SubjectScreen> createState() => _SubjectScreenState();
 }
 
 class _SubjectScreenState extends State<SubjectScreen> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,15 +37,15 @@ class _SubjectScreenState extends State<SubjectScreen> {
             child: Column(
 
               children: [
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
 
                 // Screen Name + Refresh Button
-                ScreenTitle(),
+                ScreenTitle(subject: widget.subject),
 
 
 
                 // Top Most Card with the [Subject details]
-                BigSubjectCard(),
+                BigSubjectCard(subject: widget.subject,),
 
 
 
@@ -49,7 +56,7 @@ class _SubjectScreenState extends State<SubjectScreen> {
 
 
                 //Actual resources
-                MaterialLists()
+                MaterialLists(subject: widget.subject)
 
 
 

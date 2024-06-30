@@ -11,13 +11,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class SemesterNotifier extends AsyncNotifier<Semester>{
 
   @override
-  Semester build() {
-    return Semester();
+  Future<Semester> build() async {
+    return await ApiService.getSemesterData();
   }
 
   void getSemesterData({bool forceReFetch = false})async {
     state = const AsyncLoading<Semester>();
     Semester sem = await ApiService.getSemesterData(forceReFetch: forceReFetch);
+    print(sem);
     state = AsyncData(sem);
   }
 

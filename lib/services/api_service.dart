@@ -28,10 +28,11 @@ class ApiService{
   static const Duration _sessionLength = Duration(minutes: 30);
 
   //Variables for handling the automatic login
-  static DateTime lastLoginAttempt = DateTime.now().subtract(_sessionLength);
+  static DateTime lastLoginAttempt = DateTime.now().subtract(_sessionLength*2); // Just to be safe.
 
   //  !!!Subject to change or move out of this Class entirely!!!
-  static String host = "10.0.2.2:5000";
+  static String host = "192.168.29.137:5000";
+  // REMEMBER TO CHANGE THIS WHEN TESTING ON EMULATOR VS WHEN ON USB DEBUGGING !!!
 
   // Secure storage to store and access the username and password for future automated login.
   static const FlutterSecureStorage _storage = FlutterSecureStorage();
@@ -48,7 +49,7 @@ class ApiService{
   static Future<Map<String, String?>> getCredentials() async {
     String? username = await _storage.read(key: 'username');
     String? password = await _storage.read(key: 'password');
-    print(username);
+    print("Stored username: $username");
     print(password);
     return {'username': username, 'password': password};
   }
@@ -58,7 +59,7 @@ class ApiService{
   /// Returns a true if it does need re-auth, false if it doesn't.
   static bool needsReAuthentication(){
     //Time elapsed since the last successful login
-    Duration timeElapsed = DateTime.now().difference(lastLoginAttempt!);
+    Duration timeElapsed = DateTime.now().difference(lastLoginAttempt);
 
     if( timeElapsed > _sessionLength){
       return true;
@@ -76,6 +77,7 @@ class ApiService{
       Map<String, String?> credentials = await getCredentials();
       String? username = credentials['username'];
       String? password = credentials['password'];
+      print("Relogging !!!!");
       await attemptLogin(
           username!,
           password!,
@@ -131,7 +133,7 @@ class ApiService{
   /// return format is a JSON Object like
   /// { name, instructor, course_code, link, attendance }
   static Future<Semester> getSemesterData({bool forceReFetch = false}) async {
-
+    print("Fetching sem data");
     //See if we already have a cached version of the Subject Information.
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? jsonString = prefs.getString('Subjects');
@@ -177,6 +179,7 @@ class ApiService{
   /// Fetches Materials for a given subject, returns a List of JSON Objects
   /// Each JSON Object within the list is of the form: { name, link, type }
   static Future<List<CourseMaterial>> getSubjectMaterial(String link, {bool forceReFetch = false}) async {
+    print("Attempting material fetch for $link");
     //Check if there's a cached version
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? jsonString = prefs.getString(link);
@@ -184,7 +187,7 @@ class ApiService{
       List<Map<String, dynamic>> jsonData = jsonDecode(jsonString).cast<Map<String, dynamic>>();
       List<CourseMaterial> materials = jsonData.map((jsonObject)=>CourseMaterial.fromJSON(jsonObject)).toList();
       print("cache hit for material with $link");
-      print(materials);
+      print(jsonData);
       return materials;
     }
 
@@ -226,17 +229,17 @@ class ApiService{
     if(forceReFetch == false){
       print("attempting - Reading $subject, $name ");
       if(await FileHandler.readFile(subject, name)){
-
+        print("Cache hit");
         //successful read, no need to proceed further and download again
         return;
       }
     }
-
+    print("Cache miss");
     await ensureSessionValidity(); // Make sure we are logged in before sending the download request.
 
     Uri uri = Uri.http(host, '/download');
     String type = link.split("/")[5]; // Extracting the type of the resource
-    print("downloading");
+
     var response = await CustomHttp.post(
       uri,
       body: {
@@ -256,17 +259,14 @@ class ApiService{
       name = Uri.decodeComponent(name); // Convert to a normal string [Eg. week%201%20ppython_uw.pdf ===> week 1 ppython_uw.pdf ]
 
       Uri uri = Uri.parse(link);
-      print(link);
 
-      //Once the resource link is received, we can initiate a download
+      // Once the resource link is received, we can initiate a download
       response = await CustomHttp.get(
         uri,
         headers: {
           'Cookie':moodleCookie,
         }
       );
-      print(moodleCookie);
-      print(response.headers);
       print('$subject, $name!!!!!!!!!!!!!!!!!!!');
       FileHandler.writeThenReadFile(subject, name, response.bodyBytes);
 

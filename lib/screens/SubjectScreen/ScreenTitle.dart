@@ -1,16 +1,17 @@
+import 'package:dy_integrated_5/models/Subject.dart';
+import 'package:dy_integrated_5/providers/CourseMaterialProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:dy_integrated_5/utils/constants.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ScreenTitle extends StatefulWidget {
-  const ScreenTitle({super.key});
+class ScreenTitle extends ConsumerWidget {
+  final Subject subject;
+  const ScreenTitle({super.key, required this.subject});
 
   @override
-  State<ScreenTitle> createState() => _ScreenTitleState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
 
-class _ScreenTitleState extends State<ScreenTitle> {
-  @override
-  Widget build(BuildContext context) {
+
     return Row(
 
       children: [
@@ -40,7 +41,10 @@ class _ScreenTitleState extends State<ScreenTitle> {
               Icons.refresh_sharp,
               size: 32,
             ),
-            onPressed: (){},
+            onPressed: (){
+              print("${subject.link} fetch");
+              ref.read(courseMaterialProvider.notifier).getCourseMaterials(subject.link);
+            },
 
           ),
         ),

@@ -2,14 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:dy_integrated_5/utils/constants.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
+import '../../models/Subject.dart';
+
 class BigSubjectCard extends StatefulWidget {
-  const BigSubjectCard({super.key});
+  final Subject subject;
+  const BigSubjectCard({super.key, required this.subject});
 
   @override
   State<BigSubjectCard> createState() => _BigSubjectCardState();
 }
 
 class _BigSubjectCardState extends State<BigSubjectCard> {
+  
+  double toValidDouble(String text){
+    return double.parse(text.substring(0, text.length - 1))/100;
+  }
+  
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,8 +57,9 @@ class _BigSubjectCardState extends State<BigSubjectCard> {
                   child: Row(
                     children: [
                       Expanded(
+                        //Subject name
                         child: Text(
-                          "Principles of Communications Engineering",
+                          widget.subject.name,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 3,
                           softWrap: true,
@@ -72,8 +82,10 @@ class _BigSubjectCardState extends State<BigSubjectCard> {
                         // color: Colors.pink
                       ),
 
+
+                      // Faculty/Instructor name
                       child: Text(
-                        "Some Weird Faculty name",
+                        widget.subject.instructor,
                         overflow: TextOverflow.fade,
                         style: TextStyle(
                             color: Colors.black87,
@@ -104,7 +116,7 @@ class _BigSubjectCardState extends State<BigSubjectCard> {
                 radius: 55,
                 lineWidth: 12,
                 animationDuration: 3000,
-                percent: 0.9,
+                percent: toValidDouble(widget.subject.attendance),
                 animation: true,
                 // animateFromLastPercent: true,
 
