@@ -1,20 +1,17 @@
 import 'package:dy_integrated_5/providers/CourseMaterialProvider.dart';
 import 'package:dy_integrated_5/providers/SemesterProvider.dart';
 import 'package:dy_integrated_5/services/api_service.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/Semester.dart';
 
 
 
 
 class Playground extends ConsumerWidget {
   const Playground({super.key});
-
-
-
 
   void doStuff(){
     ApiService.attemptLogin(
@@ -43,6 +40,8 @@ class Playground extends ConsumerWidget {
     print("Wow downloading shit");
     ApiService.downloadResource("TestingDownload","week 1 ppython_uw.pdf","https://mydy.dypatil.edu/rait/mod/presentation/view.php?id=611990");
   }
+
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref ) {
@@ -83,13 +82,30 @@ class Playground extends ConsumerWidget {
               ),
 
               Container(
-                height: 400,
+                height: 300,
                 child: SingleChildScrollView(
                   child: Column(
-                    children: materials.map((material){return Text(material.name);}).toList(),
+                    children: materials.when(
+                        data: (data)=>data.map((material){return Text(material.name);}).toList(),
+                        error: (error, stackTrace)=>[Text("$error")],
+                        loading: ()=>[CircularProgressIndicator()]
+                    ),
                   ),
                 ),
-              )
+              ),
+              SizedBox(height: 20,),
+              Container(
+                height: 300,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: semester.when(
+                        data: (data)=>data.subjects.map((subject)=>Text(subject.name)).toList(),
+                        error: (error, stackTrace)=>[Text("$error")],
+                        loading: ()=>[CircularProgressIndicator()]
+                    ),
+                  ),
+                ),
+              ),
 
             ],
           ),

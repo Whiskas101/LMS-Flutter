@@ -37,9 +37,9 @@ class FileHandler{
       print("Attempting a read");
       print("${appDir.path}/$dirname/$fileName");
       File file = File("${appDir.path}/$dirname/$fileName");
-
+      print(file);
       // if file doesn't already exist, return false for failure to read
-      if(await file.exists()){
+      if(!await file.exists()){
         print("File doesnt exist bro");
         return false;
       }

@@ -6,20 +6,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../services/api_service.dart';
 
-class CourseMaterialNotifier extends Notifier<List<CourseMaterial>>{
+class CourseMaterialNotifier extends AsyncNotifier<List<CourseMaterial>>{
   @override
-  List<CourseMaterial> build() {
+  List<CourseMaterial> build()  {
     return []; //default is an empty list
   }
 
-  void getCourseMaterials(String link, {bool forceReFetch = false})async {
-    List<CourseMaterial> materials = await ApiService.getSubjectMaterial(link, forceReFetch: forceReFetch);
-    state = materials;
-  }
 
+  void getCourseMaterials(String link, {bool forceReFetch = false}) async {
+    state = const AsyncLoading<List<CourseMaterial>>();
+    List<CourseMaterial> materials = await ApiService.getSubjectMaterial(link, forceReFetch: forceReFetch);
+    print("Found materials");
+    state = AsyncData(materials);
+  }
 
 }
 
-final courseMaterialProvider = NotifierProvider<CourseMaterialNotifier, List<CourseMaterial>>(
+final courseMaterialProvider = AsyncNotifierProvider<CourseMaterialNotifier, List<CourseMaterial>>(
       () => CourseMaterialNotifier(),
 );

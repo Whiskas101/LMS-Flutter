@@ -224,7 +224,9 @@ class ApiService{
 
     //Try opening the file, if it exists, it will be opened, otherwise, we make a fetch
     if(forceReFetch == false){
+      print("attempting - Reading $subject, $name ");
       if(await FileHandler.readFile(subject, name)){
+
         //successful read, no need to proceed further and download again
         return;
       }
@@ -265,7 +267,7 @@ class ApiService{
       );
       print(moodleCookie);
       print(response.headers);
-
+      print('$subject, $name!!!!!!!!!!!!!!!!!!!');
       FileHandler.writeThenReadFile(subject, name, response.bodyBytes);
 
     }

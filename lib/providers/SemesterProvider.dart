@@ -4,11 +4,11 @@ import 'package:dy_integrated_5/models/Semester.dart';
 import 'package:dy_integrated_5/services/api_service.dart';
 
 // for State management
-import 'package:riverpod/riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 
-class SemesterNotifier extends Notifier<Semester>{
+class SemesterNotifier extends AsyncNotifier<Semester>{
 
   @override
   Semester build() {
@@ -16,12 +16,13 @@ class SemesterNotifier extends Notifier<Semester>{
   }
 
   void getSemesterData({bool forceReFetch = false})async {
+    state = const AsyncLoading<Semester>();
     Semester sem = await ApiService.getSemesterData(forceReFetch: forceReFetch);
-    state = sem;
+    state = AsyncData(sem);
   }
 
 }
 
-final semesterNotifierProvider = NotifierProvider<SemesterNotifier, Semester>((){
+final semesterNotifierProvider = AsyncNotifierProvider<SemesterNotifier, Semester>((){
   return SemesterNotifier();
 });
