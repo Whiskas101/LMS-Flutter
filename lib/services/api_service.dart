@@ -31,9 +31,10 @@ class ApiService{
   static DateTime lastLoginAttempt = DateTime.now().subtract(_sessionLength*2); // Just to be safe.
 
   //  !!!Subject to change or move out of this Class entirely!!!
+  // REMEMBER TO CHANGE THIS WHEN TESTING ON EMULATOR VS WHEN ON USB DEBUGGING !!!
   // static String host = "192.168.29.137:5000"; //for external device
   static String host = "10.0.2.2:5000";     // for emulator
-  // REMEMBER TO CHANGE THIS WHEN TESTING ON EMULATOR VS WHEN ON USB DEBUGGING !!!
+
 
   // Secure storage to store and access the username and password for future automated login.
   static const FlutterSecureStorage _storage = FlutterSecureStorage();
@@ -229,10 +230,19 @@ class ApiService{
     //Try opening the file, if it exists, it will be opened, otherwise, we make a fetch
     if(forceReFetch == false){
       print("attempting - Reading $subject, $name ");
-      if(await FileHandler.readFile(subject, name)){
-        print("Cache hit");
-        //successful read, no need to proceed further and download again
-        return;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      print(name);
+      String key = "$subject@$name";
+      String? nameWithExtension = prefs.getString(key);
+
+      print(key);
+
+      if (nameWithExtension != null){
+        if(await FileHandler.readFile(subject, nameWithExtension!)){
+          print("Cache hit");
+          //successful read, no need to proceed further and download again
+          return;
+        }
       }
     }
     print("Cache miss");

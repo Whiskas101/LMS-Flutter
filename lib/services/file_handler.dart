@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:open_filex/open_filex.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Static Class for handling writing and reading file
 ///  ONLY FOR THE APPLICATION DIRECTORY.
@@ -23,9 +24,29 @@ class FileHandler{
         );
         await file.writeAsBytes(data);
         print("Created a file ${dirname}/$fileName");
+
+        // Creating a key value pair, 
+        // dirname IS the subject name
+        // removing the extension from the filename
+        String removeFileExtension(String fileName) {
+          final indexOfDot = fileName.lastIndexOf('.');
+          if (indexOfDot == -1) {
+            return fileName; // No extension found, return the original name
+          }
+          return fileName.substring(0, indexOfDot);
+        }
+        String rawFileName = removeFileExtension(fileName);
+        String key = "$dirname@$rawFileName";
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        prefs.setString(key, fileName);
+        print("wrote into prefs => {$key : $fileName}");
+
+        
         readFile(dirname, fileName); // Read after downloading duh
 
       }catch(e){
+        
         rethrow; //rethrowing rn cause developing
       }
 
