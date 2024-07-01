@@ -1,7 +1,7 @@
 import 'package:dy_integrated_5/models/Subject.dart';
 import 'package:dy_integrated_5/providers/CourseMaterialProvider.dart';
 import 'package:flutter/material.dart';
-import 'package:dy_integrated_5/utils/constants.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ScreenTitle extends ConsumerWidget {

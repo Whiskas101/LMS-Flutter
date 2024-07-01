@@ -31,7 +31,8 @@ class ApiService{
   static DateTime lastLoginAttempt = DateTime.now().subtract(_sessionLength*2); // Just to be safe.
 
   //  !!!Subject to change or move out of this Class entirely!!!
-  static String host = "192.168.29.137:5000";
+  // static String host = "192.168.29.137:5000"; //for external device
+  static String host = "10.0.2.2:5000";     // for emulator
   // REMEMBER TO CHANGE THIS WHEN TESTING ON EMULATOR VS WHEN ON USB DEBUGGING !!!
 
   // Secure storage to store and access the username and password for future automated login.

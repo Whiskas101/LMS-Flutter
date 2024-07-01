@@ -12,18 +12,10 @@ import '../../models/Subject.dart';
 
 
 
-class SubjectScreen extends StatefulWidget {
-  late Subject subject;
+class SubjectScreen extends StatelessWidget {
+  final Subject subject;
 
-  SubjectScreen({super.key, required this.subject});
-
-  @override
-  State<SubjectScreen> createState() => _SubjectScreenState();
-}
-
-class _SubjectScreenState extends State<SubjectScreen> {
-
-
+  const SubjectScreen({super.key, required this.subject});
 
   @override
   Widget build(BuildContext context) {
@@ -40,23 +32,23 @@ class _SubjectScreenState extends State<SubjectScreen> {
                 const SizedBox(height: 20,),
 
                 // Screen Name + Refresh Button
-                ScreenTitle(subject: widget.subject),
+                ScreenTitle(subject: subject),
 
 
 
                 // Top Most Card with the [Subject details]
-                BigSubjectCard(subject: widget.subject,),
+                BigSubjectCard(subject: subject,),
 
 
 
 
                 //Search Function
-                CustomSearchBar(),
+                const CustomSearchBar(),
 
 
 
                 //Actual resources
-                MaterialLists(subject: widget.subject)
+                MaterialLists(subject: subject)
 
 
 

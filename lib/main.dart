@@ -16,9 +16,9 @@ void main() async {
 
   Map<String, String?> user = await ApiService.getCredentials();
   if((user['username'] != null && user['password'] != null)){
-    runApp(MyApp(home:Dashboard()));
+    runApp(const MyApp(home:Dashboard()));
   }else{
-    runApp(MyApp(home: LoginScreen()));
+    runApp(const MyApp(home: LoginScreen()));
   }
 
 
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           textTheme: GoogleFonts.aBeeZeeTextTheme()
         ),
-        home: Dashboard(),
+        home: home,
       ),
     );
   }
