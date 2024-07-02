@@ -5,6 +5,8 @@ class CourseMaterial{
   late String name;
   late String type;
 
+
+
   CourseMaterial.fromJSON(Map<String, dynamic> jsonData){
     link = jsonData['link'];
     name = jsonData['name'];

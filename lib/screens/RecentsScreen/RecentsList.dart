@@ -1,43 +1,41 @@
-
-import 'package:dy_integrated_5/models/CourseMaterial.dart';
-import 'package:dy_integrated_5/models/Subject.dart';
-import 'package:dy_integrated_5/providers/CourseMaterialProvider.dart';
 import 'package:dy_integrated_5/providers/DatabaseProvider.dart';
 import 'package:dy_integrated_5/providers/SearchProvider.dart';
-
-import 'package:dy_integrated_5/services/api_service.dart';
-
-import 'package:flutter/material.dart';
-import 'package:dy_integrated_5/utils/constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MaterialLists extends ConsumerWidget {
-  final Subject subject;
-  const MaterialLists({super.key, required this.subject});
+import 'package:flutter/material.dart';
+
+import '../../models/CourseMaterial.dart';
+import '../../models/Recents.dart';
+import '../../services/api_service.dart';
+import '../../utils/constants.dart';
+
+
+class RecentsList extends ConsumerWidget {
+  const RecentsList({super.key});
+
+
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-
-
-    final materials = ref.watch(courseMaterialProvider);
+    final recentMaterials = ref.watch(databaseNotifierProvider);
+    print("Got this: $recentMaterials");
     final searchTerm = ref.watch(searchProvider);
-    print(searchTerm);
-
-
 
 
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 20),
-      height: 450,
+      height: 570,
 
-      child: materials.when(
+      child: recentMaterials.when(
           data: (data){
 
+            print('$data is used here');
 
-            List<CourseMaterial> filteredMaterials = data.where(
-                    (material)=>material.name.toLowerCase().contains(searchTerm.toLowerCase())
+            List<Recent> filteredMaterials = data.where(
+                    (recentObj)=>recentObj.material.name.toLowerCase().contains(searchTerm.toLowerCase())
             ).toList();
             print(filteredMaterials);
 
@@ -67,8 +65,8 @@ class MaterialLists extends ConsumerWidget {
                   ),
                   child: ListTile(
                     onTap: (){
-                      ref.read(databaseNotifierProvider.notifier).insert(filteredMaterials[index], subject.name);
-                      ApiService.downloadResource(subject.name, filteredMaterials[index].name, filteredMaterials[index].link);
+                      ref.read(databaseNotifierProvider.notifier).insert(filteredMaterials[index].material, filteredMaterials[index].subject);
+                      ApiService.downloadResource(filteredMaterials[index].subject, filteredMaterials[index].material.name, filteredMaterials[index].material.link);
                     },
 
 
@@ -81,25 +79,25 @@ class MaterialLists extends ConsumerWidget {
                         Expanded(
                           // File name
                           child: Text(
-                            filteredMaterials[index].name,
+                            filteredMaterials[index].material.name,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],
                     ),//File Type
-                    subtitle: Text(filteredMaterials[index].type),
+                    subtitle: Text(filteredMaterials[index].material.type),
                     trailing: IconButton(
                       iconSize: 32,
                       onPressed: ()=>{
 
-                        ApiService.downloadResource(subject.name, filteredMaterials[index].name, filteredMaterials[index].link, forceReFetch: true)
+                        ApiService.downloadResource(filteredMaterials[index].subject, filteredMaterials[index].material.name, filteredMaterials[index].material.link, forceReFetch: true)
                       },
                       style: IconButton.styleFrom(
-                        side: BorderSide(
-                          color: CustomColors.customGray,
+                          side: BorderSide(
+                            color: CustomColors.customGray,
 
-                        )
+                          )
                       ),
                       icon: const Icon(
                           Icons.refresh_sharp
@@ -114,12 +112,9 @@ class MaterialLists extends ConsumerWidget {
             );
           },
           error: (error, stackTrace)=>const Text("You've done it again."),
-          loading: ()=>const CircularProgressIndicator()
+          loading: ()=>Text("Loading")
       ),
 
     );
   }
 }
-
-
-

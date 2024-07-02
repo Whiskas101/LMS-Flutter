@@ -8,6 +8,7 @@ class Subject{
   late String courseId;
   late String link;
 
+
   Subject.fromJSON(Map<String, dynamic> jsonData){
     name = jsonData['name'];
     instructor = jsonData['instructor'];

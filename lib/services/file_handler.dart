@@ -4,6 +4,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../utils/helpers.dart';
+
 /// Static Class for handling writing and reading file
 ///  ONLY FOR THE APPLICATION DIRECTORY.
 class FileHandler{
@@ -13,7 +15,7 @@ class FileHandler{
       return await getApplicationDocumentsDirectory();
     }
 
-    static Future<void> writeThenReadFile(String dirname, String fileName, List<int> data, {bool rewrite = false}) async {
+    static Future<void> writeThenReadFile(String dirname, String fileName, String link, List<int> data, {bool rewrite = false}) async {
 
       Directory appDir = await _getAppDir();
       File file = File("${appDir.path}/$dirname/$fileName");
@@ -28,19 +30,12 @@ class FileHandler{
         // Creating a key value pair, 
         // dirname IS the subject name
         // removing the extension from the filename
-        String removeFileExtension(String fileName) {
-          final indexOfDot = fileName.lastIndexOf('.');
-          if (indexOfDot == -1) {
-            return fileName; // No extension found, return the original name
-          }
-          return fileName.substring(0, indexOfDot);
-        }
-        String rawFileName = removeFileExtension(fileName);
-        String key = "$dirname@$rawFileName";
+
+
         SharedPreferences prefs = await SharedPreferences.getInstance();
 
-        prefs.setString(key, fileName);
-        print("wrote into prefs => {$key : $fileName}");
+        prefs.setString(link, fileName);
+        print("wrote into prefs => {$link : $fileName}");
 
         
         readFile(dirname, fileName); // Read after downloading duh

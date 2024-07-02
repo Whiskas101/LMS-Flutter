@@ -43,7 +43,7 @@ class ScreenTitle extends ConsumerWidget {
             ),
             onPressed: (){
               print("${subject.link} fetch");
-              ref.read(courseMaterialProvider.notifier).getCourseMaterials(subject.link);
+              ref.read(courseMaterialProvider.notifier).getCourseMaterials(subject.link, forceReFetch: true);
             },
 
           ),

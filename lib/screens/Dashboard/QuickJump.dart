@@ -1,4 +1,8 @@
+import 'package:dy_integrated_5/providers/DatabaseProvider.dart';
+import 'package:dy_integrated_5/providers/SearchProvider.dart';
+import 'package:dy_integrated_5/screens/RecentsScreen/RecentsScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 class QuickJump extends StatelessWidget {
@@ -81,15 +85,31 @@ class QuickJump extends StatelessWidget {
                     )]
                 ),
 
-                child: const Row(
-                  children: [
-                    Icon(
-                      Icons.timelapse_rounded,
-                      size: 28,
-                    ),
+                child: Consumer(
+                  builder: (context, ref, child) {
+                    return GestureDetector(
+                      onTap: (){
+                        ref.read(searchProvider.notifier).updateSearchTerm("");
+                        ref.read(databaseNotifierProvider.notifier).getRecent();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context)=> RecentsScreen())
+                        );
 
-                    Text("Recent")
-                  ],
+                      },
+                      child: const Row(
+                        children: [
+                          Icon(
+                            Icons.timelapse_rounded,
+                            size: 28,
+                          ),
+
+                          Text("Recent")
+                        ],
+                      ),
+                    );
+                  },
+
                 ),
               ),
 

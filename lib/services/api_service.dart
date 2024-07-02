@@ -9,15 +9,17 @@ import 'package:dy_integrated_5/services/file_handler.dart';
 
 // Custom Http for separating the exception handling logic
 import 'package:dy_integrated_5/utils/customHttp.dart';
+import 'package:dy_integrated_5/utils/helpers.dart';
 
 //for caching data
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 
 /// Simple Static Class for handling data returned from the backend API.
 class ApiService{
-
   //Variables for cookie persistence across subsequent requests.
   // Chose to avoid the overhead of a library, since there will only ever be these two cookies needed
   // The API deals with the rest.
@@ -32,8 +34,8 @@ class ApiService{
 
   //  !!!Subject to change or move out of this Class entirely!!!
   // REMEMBER TO CHANGE THIS WHEN TESTING ON EMULATOR VS WHEN ON USB DEBUGGING !!!
-  // static String host = "192.168.29.137:5000"; //for external device
-  static String host = "10.0.2.2:5000";     // for emulator
+  static String host = "192.168.29.137:5000"; //for external device
+  // static String host = "10.0.2.2:5000";     // for emulator
 
 
   // Secure storage to store and access the username and password for future automated login.
@@ -229,13 +231,15 @@ class ApiService{
 
     //Try opening the file, if it exists, it will be opened, otherwise, we make a fetch
     if(forceReFetch == false){
-      print("attempting - Reading $subject, $name ");
+      // name = removeFileExtension(name);
+      // print("attempting - Reading $subject, $name ");
+
       SharedPreferences prefs = await SharedPreferences.getInstance();
       print(name);
-      String key = "$subject@$name";
-      String? nameWithExtension = prefs.getString(key);
 
-      print(key);
+      String? nameWithExtension = prefs.getString(link);
+
+      print('Trying out Key: $link');
 
       if (nameWithExtension != null){
         if(await FileHandler.readFile(subject, nameWithExtension!)){
@@ -254,8 +258,8 @@ class ApiService{
     var response = await CustomHttp.post(
       uri,
       body: {
-        'link':link,
-        'type':type
+        'link': link,
+        'type': type
       },
       headers: {
         'Cookie':sessionCookie
@@ -265,11 +269,11 @@ class ApiService{
     if(response.statusCode == 200){
 
       Map<String, dynamic> resourceData = jsonDecode(response.body);
-      String link = resourceData['link'];
+      String resourceLink = resourceData['link'];
       String name = resourceData['name'];
       name = Uri.decodeComponent(name); // Convert to a normal string [Eg. week%201%20ppython_uw.pdf ===> week 1 ppython_uw.pdf ]
 
-      Uri uri = Uri.parse(link);
+      Uri uri = Uri.parse(resourceLink);
 
       // Once the resource link is received, we can initiate a download
       response = await CustomHttp.get(
@@ -279,7 +283,25 @@ class ApiService{
         }
       );
       print('$subject, $name!!!!!!!!!!!!!!!!!!!');
-      FileHandler.writeThenReadFile(subject, name, response.bodyBytes);
+
+      FileHandler.writeThenReadFile(subject, name, link, response.bodyBytes);
+
+    }else{
+
+      //The case where the link is not actually a downloadable resource
+      print("Not making a download request, IMPLEMENT LAUNCHER");
+      print(link);
+      Uri targetUri = Uri.parse(
+        link // The link to the actual non downloadable resource, like a video embedded on the official site
+      );
+
+      if(await canLaunchUrl(targetUri)){
+        await launchUrl(targetUri);
+      }else{
+        print("Couldn't launch");
+      }
+
+
 
     }
 

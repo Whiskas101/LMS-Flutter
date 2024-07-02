@@ -1,6 +1,13 @@
+
+
+import 'dart:convert';
+
+import 'package:dy_integrated_5/models/CourseMaterial.dart';
 import 'package:dy_integrated_5/providers/CourseMaterialProvider.dart';
 import 'package:dy_integrated_5/providers/SemesterProvider.dart';
+
 import 'package:dy_integrated_5/services/api_service.dart';
+import 'package:dy_integrated_5/services/db_service.dart';
 
 import 'package:flutter/material.dart';
 
@@ -42,6 +49,36 @@ class Playground extends ConsumerWidget {
   }
 
 
+  void pushToDB() async {
+    Map<String, dynamic> data = {
+      'link':'https://mydy.dypatil.edu/rait/mod/resource/view.php?id=609024',
+      'name':'notasubject',
+      'type':'notminelmao'
+    };
+    
+    CourseMaterial course = CourseMaterial.fromJSON(data);
+
+    String link = "https://mydy.dypatil.edu/rait/mod/resource/view.php?id=609024";
+
+
+
+    // DatabaseService.instance.delete();
+    print("fone");
+    // List<CourseMaterial> stuff = fetchedData.map(
+    //     (row){
+    //       final raw = row['material'] as String;
+    //
+    //
+    //       Map<String, dynamic> jsonData = jsonDecode(raw);
+    //       return CourseMaterial.fromJSON(jsonData);
+    //
+    //
+    //     }
+    // ).toList();
+
+    // print(stuff);
+  }
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref ) {
@@ -81,31 +118,11 @@ class Playground extends ConsumerWidget {
                 child: const Text("do download stuff"),
               ),
 
-              Container(
-                height: 300,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: materials.when(
-                        data: (data)=>data.map((material){return Text(material.name);}).toList(),
-                        error: (error, stackTrace)=>[Text("$error")],
-                        loading: ()=>[CircularProgressIndicator()]
-                    ),
-                  ),
-                ),
-              ),
+
               SizedBox(height: 20,),
-              Container(
-                height: 300,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: semester.when(
-                        data: (data)=>data.subjects.map((subject)=>Text(subject.name)).toList(),
-                        error: (error, stackTrace)=>[Text("$error")],
-                        loading: ()=>[CircularProgressIndicator()]
-                    ),
-                  ),
-                ),
-              ),
+              ElevatedButton(onPressed: pushToDB, child: Text("Datapush"))
+
+
 
             ],
           ),

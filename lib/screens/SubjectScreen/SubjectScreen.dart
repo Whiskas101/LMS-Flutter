@@ -17,9 +17,13 @@ class SubjectScreen extends StatelessWidget {
 
   const SubjectScreen({super.key, required this.subject});
 
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
 
@@ -43,7 +47,7 @@ class SubjectScreen extends StatelessWidget {
 
 
                 //Search Function
-                const CustomSearchBar(),
+                CustomSearchBar(),
 
 
 

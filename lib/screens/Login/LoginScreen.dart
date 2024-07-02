@@ -17,10 +17,8 @@ class LoginScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-
-    // Things to work on!
-    // Login screen
-    // Find a way to fix the cant re read downloaded file issue for course materials
+    // This is a waste of resources, no need to initialise entire controllers
+    // TODO: Switch to a simple [Provider<String>], instead of a heavy [Provider<TextEditingController>] 
 
     final usernameController = ref.watch(usernameControllerProvider);
     final passwordController = ref.watch(passwordControllerProvider);
@@ -57,27 +55,50 @@ class LoginScreen extends ConsumerWidget {
 
 
               children: [
-                //Login Box
-                Container(
-                  // color: Colors.red,
+                //Login form Box
+                Column(
+                  children: [
+                    // Username field
+                    TextField(
+                      controller: usernameController,
+                      cursorColor: Colors.blue,
 
-                  child: Column(
-                    children: [
-                      // Username field
-                      TextField(
-                        controller: usernameController,
-                        cursorColor: Colors.blue,
+                      decoration: const InputDecoration(
 
-                        decoration: InputDecoration(
+                        labelText: "Username",
+                        labelStyle: TextStyle(
+                          color: Colors.blueGrey
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.blueAccent
+                          )
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.black87
+                            )
+                        )
 
-                          labelText: "Username",
+                      ),
+                    ),
+
+                    const SizedBox(height: 24,),
+
+                    //Password field
+                    TextField(
+                      obscureText: true,
+                      controller: passwordController,
+                      cursorColor: Colors.blue,
+                      decoration: const InputDecoration(
+                          labelText: "Password",
                           labelStyle: TextStyle(
-                            color: Colors.blueGrey
+                              color: Colors.blueGrey
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.blueAccent
-                            )
+                              borderSide: BorderSide(
+                                  color: Colors.blueAccent
+                              )
                           ),
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -85,57 +106,30 @@ class LoginScreen extends ConsumerWidget {
                               )
                           )
 
-                        ),
                       ),
-
-                      SizedBox(height: 24,),
-
-                      //Password field
-                      TextField(
-                        obscureText: true,
-                        controller: passwordController,
-                        cursorColor: Colors.blue,
-                        decoration: InputDecoration(
-                            labelText: "Password",
-                            labelStyle: TextStyle(
-                                color: Colors.blueGrey
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.blueAccent
-                                )
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.black87
-                                )
-                            )
-
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
 
-                SizedBox(height: 24,),
+                const SizedBox(height: 24,),
 
                 //Login button
                 ElevatedButton(
                     onPressed: tryLogin,
-                    child: Text(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      side: const BorderSide(
+                        color: Colors.black87
+                      )
+                    )
+                  ),
+                    child: const Text(
                         "login",
                       style: TextStyle(
                         color: Colors.black87
                       ),
-                    ),
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      side: BorderSide(
-                        color: Colors.black87
-                      )
                     )
-                  )
                 )
 
               ],

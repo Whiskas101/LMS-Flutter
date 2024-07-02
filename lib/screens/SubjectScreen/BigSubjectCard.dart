@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dy_integrated_5/utils/constants.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:dy_integrated_5/utils/helpers.dart';
 
 import '../../models/Subject.dart';
 
@@ -8,14 +9,12 @@ class BigSubjectCard extends StatelessWidget {
   final Subject subject;
   const BigSubjectCard({super.key, required this.subject});
 
-  double toValidDouble(String text){
-    return double.parse(text.substring(0, text.length - 1))/100;
-  }
+
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
       decoration: BoxDecoration(
           color: Colors.white,
 
@@ -109,11 +108,18 @@ class BigSubjectCard extends StatelessWidget {
                 radius: 55,
                 lineWidth: 12,
                 animationDuration: 3000,
-                percent: toValidDouble(subject.attendance),
+                percent: handlePercentage(subject.attendance),
                 animation: true,
                 // animateFromLastPercent: true,
+                center: Text(
+                  "${(handlePercentage(subject.attendance, floor: true)*100).toInt()}%",
+                  style: const TextStyle(
+                    fontSize: 18,
+                    color: Colors.white
+                  ),
+                ),
 
-                progressColor: Colors.blueAccent,
+                progressColor: handlePercentage(subject.attendance) > 0.75 ? Colors.blueAccent : Colors.redAccent,
                 curve: Curves.easeInOutCubicEmphasized,
 
 
