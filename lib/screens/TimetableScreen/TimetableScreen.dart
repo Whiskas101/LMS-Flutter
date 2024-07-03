@@ -4,6 +4,7 @@ import 'package:dy_integrated_5/screens/TimetableScreen/GridObject.dart';
 import 'package:flutter/material.dart';
 
 
+
 import '../../models/TimeTable.dart';
 
 
@@ -15,9 +16,17 @@ class AcceptState{
 }
 
 
-class TimetableScreen extends StatelessWidget{
+class TimetableScreen extends StatefulWidget{
+
+
+
   const TimetableScreen({super.key});
 
+  @override
+  State<TimetableScreen> createState() => _TimetableScreenState();
+}
+
+class _TimetableScreenState extends State<TimetableScreen> {
   @override
   Widget build(BuildContext context) {
 
@@ -83,6 +92,10 @@ class TimetableScreen extends StatelessWidget{
       "EN"
     ];
 
+    void setData(String newData, int row, int col){
+      data.timetable[row][col] = newData;
+    }
+
 
     final generatedSubjects = ["Break", "MP"];
     for (int i = 0; i < subjects_temp.length; i++ ){
@@ -95,27 +108,25 @@ class TimetableScreen extends StatelessWidget{
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 25),
           child: Column(
+
             children: [
               // Title name
-              Row(
+              const Row(
                 children: [
-                  Container(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                      child: Text(
-                        "Your Timetable",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 28
-                        ),
-
-
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 6.0),
+                    child: Text(
+                      "Your Timetable",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 28
                       ),
+
+
                     ),
                   ),
                 ],
               ),
-
 
               //Days of the week (working)
               Container(
@@ -155,14 +166,15 @@ class TimetableScreen extends StatelessWidget{
                 ),
               ),
 
-              //Time Table set
+              //Time Table Matrix
               Container(
                 height: 425,
                 padding: const EdgeInsets.all(8),
 
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: Colors.black12
+                  color: Colors.black12,
+                  
                 ),
 
                 child: ClipRRect(
@@ -184,19 +196,26 @@ class TimetableScreen extends StatelessWidget{
                       final row = (index ~/5) % 5;
                       final col = index % 5;
 
-                      return DragTarget<AcceptState>(
+                      return GestureDetector(
+                        onTap: ()=>{print("I was tapped too")},
+                        child: DragTarget<AcceptState>(
 
-                        onAcceptWithDetails: (details){
-                          data.timetable[(index/5).floor()%5][index % 5] = details.data.text;
-                        },
-                        builder: (BuildContext context, List<Object?> candidateData, List<dynamic> rejectedData) {
+                          onAcceptWithDetails: (details){
+                            data.timetable[(index/5).floor()%5][index % 5] = details.data.text;
+                            print(data.timetable);
+                          },
+                          builder: (BuildContext context, List<Object?> candidateData, List<dynamic> rejectedData) {
+                            print(data.timetable);
+                            // NEED TO TEST WHETHER THE REBUILD IS MUTATING THE STATE OF THE TIMETABLE OR NOT!!!!!
+                            return GridObject(
+                                alterFunc: setData,
+                                index:index,
+                                data: data.timetable[row][col],
+                                text: valueAtIndex(index), row: row, col: col,
+                            );
+                          },
 
-                          return GridObject(
-                              data: data.timetable[row][col],
-                              text: valueAtIndex(index)
-                          );
-                        },
-
+                        ),
                       );
                     },
 
@@ -204,8 +223,11 @@ class TimetableScreen extends StatelessWidget{
                 ),
               ),
 
+
               SizedBox(height: 15,),
 
+
+              //Subjects to be dragged into timetable
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 height: 125,
@@ -271,8 +293,8 @@ class TimetableScreen extends StatelessWidget{
 
                         child: Container(
 
-                          margin: EdgeInsets.all(2),
-                          padding: EdgeInsets.all(2),
+                          margin: const EdgeInsets.all(2),
+                          padding: const EdgeInsets.all(2),
                           decoration: BoxDecoration(
                               color: Colors.black12,
                               borderRadius: BorderRadius.circular(10)
@@ -281,7 +303,7 @@ class TimetableScreen extends StatelessWidget{
                           child: Center(
                             child: Text(
                               generatedSubjects[index],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 12,
                                   color: Colors.black26
                               ),
