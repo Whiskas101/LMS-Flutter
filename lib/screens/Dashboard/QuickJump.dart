@@ -1,6 +1,7 @@
 import 'package:dy_integrated_5/providers/DatabaseProvider.dart';
 import 'package:dy_integrated_5/providers/SearchProvider.dart';
 import 'package:dy_integrated_5/screens/RecentsScreen/RecentsScreen.dart';
+import 'package:dy_integrated_5/screens/TimetableScreen/TimetableScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -57,15 +58,20 @@ class QuickJump extends StatelessWidget {
                     )]
                 ),
 
-                child: const Row(
-                  children: [
-                    Icon(
-                      Icons.receipt_long_outlined,
-                      size: 28,
-                    ),
-
-                    Text("Timetable")
-                  ],
+                child: GestureDetector(
+                  onTap: ()=>{
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>TimetableScreen()))
+                  },
+                  child: const Row(
+                    children: [
+                      Icon(
+                        Icons.receipt_long_outlined,
+                        size: 28,
+                      ),
+                  
+                      Text("Timetable")
+                    ],
+                  ),
                 ),
               ),
               Container(

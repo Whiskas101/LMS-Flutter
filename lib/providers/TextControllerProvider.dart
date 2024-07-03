@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 
 
 
+/// THESE ARE A BAD BAD IDEA.
+/// NEED TO REPLACE THEM WITH SIMPLER EQUIVALENTS, OR USE [StatefulConsumerWidgets]
+
 
 final usernameControllerProvider = Provider<TextEditingController>((ref){
   final controller = TextEditingController();
