@@ -6,33 +6,20 @@ import 'package:dy_integrated_5/widgets/SubjectWidget.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:dy_integrated_5/utils/constants.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import '../../models/Subject.dart';
 
 
-class SubjectGridSection extends HookConsumerWidget {
+
+class SubjectGridSection extends ConsumerWidget {
   const SubjectGridSection({super.key});
-
-
-
-
-
-
 
 
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-
     final semester = ref.watch(semesterNotifierProvider);
-
-
-
 
 
     return Column(
@@ -64,7 +51,7 @@ class SubjectGridSection extends HookConsumerWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    childAspectRatio: 1.7/1,
+                    childAspectRatio: 1.7/1, // Width : Height ratio
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 0),
 
@@ -93,13 +80,11 @@ class SubjectGridSection extends HookConsumerWidget {
               loading: (){
 
 
-                return Column(
+                return const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      child: CircularProgressIndicator(
-                        color: Colors.blueAccent,
-                      ),
+                    CircularProgressIndicator(
+                      color: Colors.blueAccent,
                     )
                   ],
                 );

@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../models/CourseMaterial.dart';
 import '../../models/Recents.dart';
 import '../../services/api_service.dart';
 import '../../utils/constants.dart';

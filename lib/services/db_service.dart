@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:dy_integrated_5/models/CourseMaterial.dart';
-import 'package:dy_integrated_5/models/Subject.dart';
+
 import 'package:dy_integrated_5/utils/helpers.dart';
 
 import 'package:sqflite/sqflite.dart';
@@ -39,7 +39,6 @@ class DatabaseService{
     final dbPath = await getDatabasesPath();
     final databasePath = join(dbPath, "main1_db.db");
 
-    print("Opening db");
     final database = await openDatabase(
         databasePath,
       onCreate: (db, version){
@@ -86,19 +85,15 @@ class DatabaseService{
       limit: num
     );
 
-    print("raw fetched data $data");
-
     final value =  data.map(
         (row){
+          // Creating a Recent object.
           final raw = row['material'] as String;
           final subject = row['subject'] as String;
-          print(subject);
-          print(raw);
           return Recent(CourseMaterial.fromJSON(jsonDecode(raw)), subject);
         }
     ).toList();
 
-    print("Recent Encoded: $value");
     return value;
 
   }

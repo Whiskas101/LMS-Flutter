@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:dy_integrated_5/models/CourseMaterial.dart';
 import 'package:dy_integrated_5/providers/CourseMaterialProvider.dart';
 import 'package:dy_integrated_5/providers/SemesterProvider.dart';
+import 'package:dy_integrated_5/providers/TimetableProvider.dart';
 
 import 'package:dy_integrated_5/services/api_service.dart';
 import 'package:dy_integrated_5/services/db_service.dart';
@@ -80,12 +81,14 @@ class Playground extends ConsumerWidget {
   }
 
 
+
   @override
   Widget build(BuildContext context, WidgetRef ref ) {
 
     final semester = ref.watch(semesterNotifierProvider);
     final materials = ref.watch(courseMaterialProvider);
 
+    final timetable = ref.read(timetableNotifierProvider);
 
 
     return Scaffold(
@@ -120,7 +123,11 @@ class Playground extends ConsumerWidget {
 
 
               SizedBox(height: 20,),
-              ElevatedButton(onPressed: pushToDB, child: Text("Datapush"))
+              ElevatedButton(onPressed: pushToDB, child: Text("Datapush")),
+
+              ElevatedButton(onPressed: (){
+                ref.read(timetableNotifierProvider.notifier).getTimeTable();
+              }, child: Text("Get timetable"))
 
 
 

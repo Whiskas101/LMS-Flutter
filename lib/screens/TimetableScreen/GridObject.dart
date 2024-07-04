@@ -1,23 +1,31 @@
+import 'package:dy_integrated_5/providers/TimetableProvider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../models/TimeTable.dart';
 
 
-class GridObject extends StatefulWidget {
-  String data;
-  late String text;
+class GridObject extends ConsumerStatefulWidget {
+  final String data;
+  final String text;
 
   final int index;
 
-  late int row;
-  late int col;
-  late void Function(String newData, int row, int col) alterFunc;
+  final int row;
+  final int col;
 
-  GridObject({super.key, required this.data, required this.text, required this.index, required this.alterFunc, required this.row, required this.col});
+
+  const GridObject({super.key, required this.data, required this.text, required this.index, required this.row, required this.col});
 
   @override
-  State<GridObject> createState() => _GridObjectState();
+  ConsumerState<GridObject> createState() => _GridObjectState();
 }
 
-class _GridObjectState extends State<GridObject> {
+class _GridObjectState extends ConsumerState<GridObject> {
+
+
 
   String timeAtIndex(int index){
     int rowIndex = (index/5).floor();
@@ -37,31 +45,35 @@ class _GridObjectState extends State<GridObject> {
     return map[rowIndex]!;
   }
 
+
   @override
   Widget build(BuildContext context) {
-    print("Widget rebuilt with data: ${widget.data}, ${widget.text}");
+
+    TimeTable data = ref.read(timetableNotifierProvider).value ?? TimeTable();
+
+    bool hasSubjectData = data.timetable[widget.row][widget.col] != "";
+
+
     return GestureDetector(
 
       onTap: (){
-        setState(() {
-          widget.data = "";
-          widget.alterFunc("", widget.row, widget.col);
-          widget.text = timeAtIndex(widget.index);
-        });
+         setState(() {
+           ref.read(timetableNotifierProvider.notifier).setValue("", widget.row, widget.col);
+         });
       },
 
       child: AnimatedScale(
         duration: const Duration(milliseconds: 600),
         curve: Curves.easeInOutCubicEmphasized,
-        scale: widget.data.isNotEmpty ? 1.00 : 0.88,
+        scale: hasSubjectData ? 1.00 : 0.88,
         child: Container(
           margin: const EdgeInsets.all(2),
           padding: const EdgeInsets.all(2),
           decoration: BoxDecoration(
-              color: widget.data.isNotEmpty ? Colors.lightBlueAccent : Colors.grey,
+              color: hasSubjectData ? Colors.lightBlueAccent : Colors.grey[50],
               border: Border.fromBorderSide(BorderSide(
-                width: widget.data.isNotEmpty ? 1 : 0,
-                color: widget.data.isNotEmpty ? Colors.grey : Colors.black26
+                width: hasSubjectData ? 1 : 0,
+                color: hasSubjectData ? Colors.grey : Colors.black26
               )),
               borderRadius: BorderRadius.circular(10)
           ),
@@ -70,20 +82,26 @@ class _GridObjectState extends State<GridObject> {
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              
               children: [
-                Text(
-                  widget.text,
-                  style: TextStyle(
-                      color: widget.data.isNotEmpty ? Colors.blueGrey : Colors.black26
+                Flexible(
+                  flex:2,
+                  child: Text(
+                    hasSubjectData ? widget.text : timeAtIndex(widget.index),
+                    style: TextStyle(color: hasSubjectData ? Colors.black87 : Colors.black26,
+                      fontSize: hasSubjectData ? 10 : 9,
+                      overflow: TextOverflow.clip
+                    ),
                   ),
-
-
                 ),
+                hasSubjectData ? Flexible(
+                  flex: 1,
+                  child: Text(
+                      timeAtIndex(widget.index),
+                    style: const TextStyle(
+                      fontSize: 8,
 
-                widget.data.isNotEmpty ? Text(
-                    timeAtIndex(widget.index),
-                  style: TextStyle(
-                    fontSize: 8
+                    ),
                   ),
                 ) : Container(),
 

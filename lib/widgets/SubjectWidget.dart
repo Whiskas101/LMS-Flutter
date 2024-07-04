@@ -34,6 +34,8 @@ class SubjectWidget extends StatelessWidget {
         children: [
           Expanded(
             child: Column(
+
+
               children: [
                 Expanded(
                   child: Row(
