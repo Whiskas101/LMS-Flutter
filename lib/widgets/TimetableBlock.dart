@@ -69,7 +69,7 @@ class TimetableBlock extends StatelessWidget {
           ),
         ) : Container();
       }),
-        SizedBox(width: 50,)
+        const SizedBox(width: 50,)
 
 
       ],

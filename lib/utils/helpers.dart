@@ -1,5 +1,7 @@
 
 
+import 'package:flutter/material.dart';
+
 String removeFileExtension(String fileName) {
   final indexOfDot = fileName.lastIndexOf('.');
   if (indexOfDot == -1) {
@@ -92,4 +94,21 @@ String timeAtIndexLinear(int rowIndex){
   print(map[rowIndex]);
   return map[rowIndex]!;
 }
+
+Color getSubjectColor(String subject){
+
+  if(subject.toLowerCase().contains("lab")){
+    return Colors.yellowAccent;
+  }
+  if(subject.toLowerCase() == "break"){
+    return Colors.greenAccent;
+  }
+
+  if(subject.toLowerCase() == "mp"){
+    return Colors.lightGreenAccent;
+  }
+
+  return Colors.lightBlueAccent;
+}
+
 

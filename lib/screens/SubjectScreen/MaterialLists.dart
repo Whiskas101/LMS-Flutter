@@ -2,14 +2,13 @@
 import 'package:dy_integrated_5/models/CourseMaterial.dart';
 import 'package:dy_integrated_5/models/Subject.dart';
 import 'package:dy_integrated_5/providers/CourseMaterialProvider.dart';
-import 'package:dy_integrated_5/providers/DatabaseProvider.dart';
+
 import 'package:dy_integrated_5/providers/SearchProvider.dart';
 
-import 'package:dy_integrated_5/services/api_service.dart';
 import 'package:dy_integrated_5/widgets/CustomListTile.dart';
 
 import 'package:flutter/material.dart';
-import 'package:dy_integrated_5/utils/constants.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MaterialLists extends ConsumerWidget {
@@ -19,14 +18,8 @@ class MaterialLists extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-
-
     final materials = ref.watch(courseMaterialProvider);
     final searchTerm = ref.watch(searchProvider);
-    print(searchTerm);
-
-
-
 
 
     return SizedBox(
@@ -79,7 +72,10 @@ class MaterialLists extends ConsumerWidget {
           },
 
           error: (error, stackTrace)=>const Text("You've done it again."),
-          loading: ()=>const CircularProgressIndicator()
+
+          loading: ()=>const  Center(
+              child: CircularProgressIndicator()
+          )
       ),
 
     );

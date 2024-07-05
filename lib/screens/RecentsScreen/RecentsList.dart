@@ -23,12 +23,13 @@ class RecentsList extends ConsumerWidget {
 
 
 
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 20),
+    return SizedBox(
+      // margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
       height: 570,
 
       child: recentMaterials.when(
           data: (data){
+            if (data.isEmpty) return const Center(child: Text("No Recently Opened Files"));
 
             print('$data is used here');
 
@@ -49,6 +50,7 @@ class RecentsList extends ConsumerWidget {
                ).createShader(bounds);
               },
               child: ListView.builder(
+                padding: EdgeInsets.zero,
                 physics: const BouncingScrollPhysics(),
                 itemCount: filteredMaterials.length,
               

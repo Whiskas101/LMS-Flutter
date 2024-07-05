@@ -4,10 +4,8 @@ import 'package:dy_integrated_5/providers/SemesterProvider.dart';
 import 'package:dy_integrated_5/screens/SubjectScreen/SubjectScreen.dart';
 import 'package:dy_integrated_5/utils/constants.dart';
 import 'package:dy_integrated_5/widgets/SubjectWidget.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
-
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -42,7 +40,7 @@ class SubjectGridSection extends ConsumerWidget {
           //top left shadow
           BoxShadow(
               color: Colors.grey.shade50,
-              offset: Offset(-10, -10),
+              offset: const Offset(-10, -10),
               blurRadius: 15,
               spreadRadius: 1
 
@@ -51,7 +49,7 @@ class SubjectGridSection extends ConsumerWidget {
           //Bottom right shadow
           BoxShadow(
               color: Colors.grey.shade300,
-              offset: Offset(15,15),
+              offset: const Offset(15,15),
               blurRadius: 15,
               spreadRadius: 14
           )
@@ -88,7 +86,7 @@ class SubjectGridSection extends ConsumerWidget {
                     ),
                   ),
                 ),
-                Icon(
+                const Icon(
                     Icons.menu_book,
                   color: Colors.greenAccent,
                 )
@@ -99,17 +97,14 @@ class SubjectGridSection extends ConsumerWidget {
           const SizedBox(height: 14,),
 
           //Subject Grid
-          SizedBox(
-            height: 300,
-
-
+          Expanded(
             child: semester.when(
                 data: (semester){
                   return GridView.builder(
 
 
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount:(MediaQuery.sizeOf(context).longestSide ~/ 300).floor(),
                       childAspectRatio: 1.8/1, // Width : Height ratio
                       // mainAxisSpacing: 20,
                       crossAxisSpacing: 10
@@ -131,13 +126,9 @@ class SubjectGridSection extends ConsumerWidget {
                         child: SubjectWidget(subject: semester.subjects[index])
                       );
                     },
-
-
-
-
                   );
                 },
-                error: (error, stackTrace)=>Text("You fucked up."),
+                error: (error, stackTrace)=>const Text("You fucked up."),
                 loading: (){
 
 

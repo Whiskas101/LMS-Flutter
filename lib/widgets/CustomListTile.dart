@@ -22,9 +22,10 @@ class CustomListTile extends ConsumerWidget {
       },
 
 
-      leading: const Icon(
-        Icons.document_scanner,
+      leading: Icon(
+        Icons.dashboard,
         size: 32,
+        color: Colors.lightBlueAccent[200],
       ),
       title: Row(
         children: [
@@ -34,11 +35,19 @@ class CustomListTile extends ConsumerWidget {
               filteredMaterials[index].name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontSize: 14,
+              ),
             ),
           ),
         ],
       ),//File Type
-      subtitle: Text(filteredMaterials[index].type),
+      subtitle: Text(
+          filteredMaterials[index].type,
+        style: const TextStyle(
+            fontSize: 10,
+        ),
+      ),
       trailing: IconButton(
         iconSize: 32,
         onPressed: ()=>{

@@ -5,27 +5,29 @@ import 'package:flutter/material.dart';
 import 'package:dy_integrated_5/utils/constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../models/TimeTable.dart';
+
 class HeadSection extends ConsumerWidget {
   const HeadSection({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final TimeTable = ref.watch(timetableNotifierProvider);
+    final timeTable = ref.watch(timetableNotifierProvider);
 
 
     return Column(
       children: [
         // FDY
         // APP NAME widget, with bottom text
-        Row(
+        const Row(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     "FDY",
                     style: TextStyle(
                       fontSize: 24,
@@ -105,8 +107,9 @@ class HeadSection extends ConsumerWidget {
         //   ),
         // ),
 
-        TimeTable.when(
+        timeTable.when(
             data: (data){
+
               //Gets the day of the week as an int [1-7]
               int day = DateTime.now().weekday - 1;
               List<String> subjects = [];

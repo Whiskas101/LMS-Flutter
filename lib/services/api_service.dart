@@ -9,7 +9,6 @@ import 'package:dy_integrated_5/services/file_handler.dart';
 
 // Custom Http for separating the exception handling logic
 import 'package:dy_integrated_5/utils/customHttp.dart';
-import 'package:dy_integrated_5/utils/helpers.dart';
 
 //for caching data
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -34,9 +33,9 @@ class ApiService{
 
   //  !!!Subject to change or move out of this Class entirely!!!
   // REMEMBER TO CHANGE THIS WHEN TESTING ON EMULATOR VS WHEN ON USB DEBUGGING !!!
-  // static String host = "192.168.29.137:5000"; //for external device
+  static String host = "192.168.29.137:5000"; //for external device
   // static String host = "10.0.2.2:5000";     // for emulator
-  static String host = "127.0.0.1:5000";
+  // static String host = "127.0.0.1:5000"; // for windows executable testing
 
   // Secure storage to store and access the username and password for future automated login.
   static const FlutterSecureStorage _storage = FlutterSecureStorage();
@@ -242,7 +241,7 @@ class ApiService{
       print('Trying out Key: $link');
 
       if (nameWithExtension != null){
-        if(await FileHandler.readFile(subject, nameWithExtension!)){
+        if(await FileHandler.readFile(subject, nameWithExtension)){
           print("Cache hit");
           //successful read, no need to proceed further and download again
           return;

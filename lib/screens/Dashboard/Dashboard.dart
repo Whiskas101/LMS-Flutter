@@ -55,7 +55,7 @@ class Dashboard extends StatelessWidget {
             const SizedBox(
               height: 28,
             ),
-            Expanded(
+            const Expanded(
               child: Column(
                 children: [
                   // QuickJump
@@ -66,10 +66,14 @@ class Dashboard extends StatelessWidget {
                   ),
 
                   //Subjects
-                  SubjectGridSection()
+                  Expanded(child: SubjectGridSection()),
+
                 ],
               ),
-            )
+            ),
+            const SizedBox(
+              height: 28,
+            ),
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 
+import 'package:dy_integrated_5/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:dy_integrated_5/utils/helpers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,11 +14,14 @@ class DaysHeader extends ConsumerWidget {
 
 
           return Container(
-            padding: const EdgeInsets.all(8),
+
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
             height: 100,
             child: GridView.builder(
-
+              padding: EdgeInsets.zero,
+              physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+
                   crossAxisCount: 5,
                   crossAxisSpacing: 4,
                   mainAxisSpacing: 2
@@ -31,15 +35,15 @@ class DaysHeader extends ConsumerWidget {
                   margin: const EdgeInsets.all(2),
                   padding: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
-                      color: Colors.blueAccent,
+                      color: Colors.grey.shade50,
                       borderRadius: BorderRadius.circular(10)
                   ),
 
                   child: Center(
                     child: Text(
                       dayAtIndex(index),
-                      style: const TextStyle(
-                          color: Colors.white
+                      style: TextStyle(
+                          color: CustomColors.customDarkGrey3
                       ),
                     ),
                   ),

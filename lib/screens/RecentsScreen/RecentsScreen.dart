@@ -1,11 +1,11 @@
-import 'package:dy_integrated_5/providers/SearchProvider.dart';
+
 import 'package:dy_integrated_5/screens/RecentsScreen/RecentsList.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:dy_integrated_5/screens/RecentsScreen/RecentsSearchBar.dart';
+import 'package:dy_integrated_5/screens/RecentsScreen/ScreenTitle.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../utils/constants.dart';
 
 class RecentsScreen extends ConsumerWidget {
   const RecentsScreen({super.key});
@@ -13,92 +13,63 @@ class RecentsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade200,
       resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Column(
-            children: [
-              Column(
-                children: [
-                  const SizedBox(
-                    height: 24,
-                  ),
+      body: Column(
 
-                  //Screen Name
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Text(
-                          "Recently Opened",
-                          style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 26,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
-                  ),
+        children: [
+          Container(
 
-                  //SearchBar
-                  Container(
-                    height: 55,
-                    margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.fromBorderSide(
-                          BorderSide(width: 1, color: CustomColors.customGray),
-                        ),
-                        boxShadow: [
-                          BoxShadow(color: CustomColors.customGray, blurRadius: 1)
-                        ]),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        //Search Icon
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12.0),
-                          child: Icon(Icons.search),
-                        ),
+            padding: const EdgeInsets.fromLTRB(8,  40, 8, 40),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
+              color: Colors.lightBlue,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black87,
+                  spreadRadius: -10,
+                  blurRadius: 25
+                )
+              ]
+            ),
 
-                        //Search field
-                        Flexible(
-                          child: TextField(
-                            onChanged: (value) => ref
-                                .watch(searchProvider.notifier)
-                                .updateSearchTerm(value),
-                            decoration: null,
-                          ),
-                        ),
+            child: const Column(
+              children: [
+                SizedBox(
+                  height: 24,
+                ),
 
-                        //Weird end logo
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                          child: IconButton(
-                              onPressed: () {
-                                ref
-                                    .read(searchProvider.notifier)
-                                    .updateSearchTerm("");
-                              },
-                              icon: const Icon(Icons.remove_circle)),
-                        ),
-                      ],
+                //Screen Name
+                ScreenTitle(),
+
+                //SearchBar
+                RecentsSearchBar()
+
+              ],
+            ),
+          ),
+
+
+
+          //Recent Material display
+          Expanded(
+              child: Container(
+                  decoration: BoxDecoration(
+
+                    gradient: LinearGradient(
+                        colors: [
+                          Colors.grey.shade100,
+                          Colors.grey.shade50,
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight
                     ),
                   ),
-                ],
-              ),
 
-              const SizedBox(height: 32,),
-
-              //Recent Material display
-              Expanded(
                   child: const RecentsList()
               )
-            ],
-          ),
-        ),
+          )
+        ],
       ),
     );
   }

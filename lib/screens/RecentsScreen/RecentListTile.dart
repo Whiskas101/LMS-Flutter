@@ -16,20 +16,26 @@ class RecentListTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
 
-      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
+      // margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-          border: Border.all(
-            color: Colors.black87,
-            width: 1,
+          // borderRadius: BorderRadius.vertical(
+          //   bottom: Radius.circular(15)
+          // ),
 
 
+          border: Border.symmetric(
+            horizontal: BorderSide(
+              width: 2,
+              color: Colors.grey.shade300
+            )
           ),
-          boxShadow: [BoxShadow(
-            color: CustomColors.customGray,
-            blurRadius: 5,
-          )]
+
+
+
+          // boxShadow: [BoxShadow(
+          //   color: CustomColors.customGray,
+          //   blurRadius: 5,
+          // )]
       ),
       child: ListTile(
         onTap: () async {
@@ -38,9 +44,10 @@ class RecentListTile extends ConsumerWidget {
         },
 
 
-        leading: const Icon(
-          Icons.document_scanner,
+        leading: Icon(
+          Icons.dashboard,
           size: 32,
+          color: Colors.lightBlue.shade300,
         ),
         title: Row(
           children: [
@@ -50,10 +57,12 @@ class RecentListTile extends ConsumerWidget {
                 filteredMaterials[index].material.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
+
               ),
             ),
           ],
         ),//File Type
+
         subtitle: Text(filteredMaterials[index].material.type),
         trailing: IconButton(
           iconSize: 32,

@@ -1,21 +1,17 @@
 import 'package:dy_integrated_5/providers/TimetableProvider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../models/TimeTable.dart';
+import '../../utils/helpers.dart';
 
 
 class GridObject extends ConsumerStatefulWidget {
   final String data;
   final String text;
-
   final int index;
-
   final int row;
   final int col;
-
 
   const GridObject({super.key, required this.data, required this.text, required this.index, required this.row, required this.col});
 
@@ -24,8 +20,6 @@ class GridObject extends ConsumerStatefulWidget {
 }
 
 class _GridObjectState extends ConsumerState<GridObject> {
-
-
 
   String timeAtIndex(int index){
     int rowIndex = (index/5).floor();
@@ -50,7 +44,7 @@ class _GridObjectState extends ConsumerState<GridObject> {
   Widget build(BuildContext context) {
 
     TimeTable data = ref.read(timetableNotifierProvider).value ?? TimeTable();
-
+    String subjectName = data.timetable[widget.row][widget.col];
     bool hasSubjectData = data.timetable[widget.row][widget.col] != "";
 
 
@@ -70,7 +64,7 @@ class _GridObjectState extends ConsumerState<GridObject> {
           margin: const EdgeInsets.all(2),
           padding: const EdgeInsets.all(2),
           decoration: BoxDecoration(
-              color: hasSubjectData ? Colors.lightBlueAccent : Colors.grey[50],
+              color: hasSubjectData ? getSubjectColor(subjectName) : Colors.grey[50],
               border: Border.fromBorderSide(BorderSide(
                 width: hasSubjectData ? 1 : 0,
                 color: hasSubjectData ? Colors.grey : Colors.black26
