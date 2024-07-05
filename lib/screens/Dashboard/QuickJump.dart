@@ -35,7 +35,7 @@ class QuickJump extends StatelessWidget {
           //top left shadow
           BoxShadow(
             color: Colors.grey.shade50,
-            offset: Offset(-15, -15),
+            offset: const Offset(-15, -15),
             blurRadius: 15,
             spreadRadius: 1
 
@@ -44,7 +44,7 @@ class QuickJump extends StatelessWidget {
           //Bottom right shadow
           BoxShadow(
             color: Colors.grey.shade300,
-            offset: Offset(15,15),
+            offset: const Offset(15,15),
               blurRadius: 15,
             spreadRadius: 1
           )
@@ -92,6 +92,7 @@ class QuickJump extends StatelessWidget {
                   child: Icon(
                       Icons.electric_bolt_sharp,
                     color: Colors.yellow,
+
                   ),
                 )
 
@@ -135,9 +136,9 @@ class QuickJump extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.receipt_long_outlined,
-                          color: CustomColors.customBlue,
+                          color: Colors.lightBlue,
                           size: 28,
                         ),
                         const SizedBox(width: 5,),
@@ -183,10 +184,10 @@ class QuickJump extends StatelessWidget {
                         },
                         child: Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.timelapse_rounded,
                               size: 28,
-                              color: CustomColors.customBlue,
+                              color: Colors.lightBlue,
                             ),
                             const SizedBox(width: 4,),
 

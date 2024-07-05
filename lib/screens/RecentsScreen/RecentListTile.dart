@@ -57,13 +57,22 @@ class RecentListTile extends ConsumerWidget {
                 filteredMaterials[index].material.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 14
+                ),
 
               ),
             ),
           ],
         ),//File Type
 
-        subtitle: Text(filteredMaterials[index].material.type),
+        subtitle: Text(
+            filteredMaterials[index].material.type,
+          style: TextStyle(
+            fontSize: 12
+          ),
+
+        ),
         trailing: IconButton(
           iconSize: 32,
           onPressed: ()=>{
