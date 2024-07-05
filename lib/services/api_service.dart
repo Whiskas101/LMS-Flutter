@@ -34,9 +34,9 @@ class ApiService{
 
   //  !!!Subject to change or move out of this Class entirely!!!
   // REMEMBER TO CHANGE THIS WHEN TESTING ON EMULATOR VS WHEN ON USB DEBUGGING !!!
-  static String host = "192.168.29.137:5000"; //for external device
+  // static String host = "192.168.29.137:5000"; //for external device
   // static String host = "10.0.2.2:5000";     // for emulator
-
+  static String host = "127.0.0.1:5000";
 
   // Secure storage to store and access the username and password for future automated login.
   static const FlutterSecureStorage _storage = FlutterSecureStorage();

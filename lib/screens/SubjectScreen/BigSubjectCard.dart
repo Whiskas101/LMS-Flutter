@@ -14,20 +14,21 @@ class BigSubjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-      decoration: BoxDecoration(
-          color: Colors.white,
+      margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
 
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-              width: 1,
-              color: Colors.black54
-          ),
-          boxShadow: [BoxShadow(
-              color: CustomColors.customGray,
-              blurRadius: 5
-          )]
-      ),
+      //   decoration: BoxDecoration(
+      //
+      //     // borderRadius: BorderRadius.circular(20),
+      //     // border: Border.all(
+      //     //     width: 1,
+      //     //     color: Colors.black54
+      //     // ),
+      //     // boxShadow: [BoxShadow(
+      //     //     color: CustomColors.customGray,
+      //     //     blurRadius: 5
+      //     // )]
+      // ),
+
       height: 175,
 
 
@@ -41,10 +42,8 @@ class BigSubjectCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(
-                    // color: Colors.red
-                  ),
+                  margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+
 
                   child: Row(
                     children: [
@@ -56,8 +55,9 @@ class BigSubjectCard extends StatelessWidget {
                           maxLines: 3,
                           softWrap: true,
                           style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 18
+                              color: CustomColors.customDarkGrey3,
+                              fontSize: 18,
+                            letterSpacing: -0.5
                           ),
                         ),
                       ),
@@ -80,7 +80,7 @@ class BigSubjectCard extends StatelessWidget {
                         subject.instructor,
                         overflow: TextOverflow.fade,
                         style: TextStyle(
-                            color: Colors.black87,
+                            color: CustomColors.customDarkGrey3,
                             fontSize: 10
                         ),
                       ),
@@ -96,10 +96,21 @@ class BigSubjectCard extends StatelessWidget {
 
           // Percentage Visualisation section
           Container(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+
               decoration: BoxDecoration(
-                  color:Colors.black87,
-                  borderRadius: BorderRadius.horizontal(right: Radius.circular(19))
+                // color: Colors.grey.shade100,
+                  borderRadius: const BorderRadius.only(
+                    bottomRight: Radius.circular(15)
+                  ),
+
+                border: Border(
+                    left: BorderSide(width: 5,
+                    color: Colors.grey.shade300)
+                )
+
+
+
               ),
 
 
@@ -113,13 +124,14 @@ class BigSubjectCard extends StatelessWidget {
                 // animateFromLastPercent: true,
                 center: Text(
                   "${(handlePercentage(subject.attendance, floor: true)*100).toInt()}%",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
-                    color: Colors.white
+                    color: handlePercentage(subject.attendance) > 0.75 ? Colors.lightBlueAccent : Colors.redAccent,
+
                   ),
                 ),
 
-                progressColor: handlePercentage(subject.attendance) > 0.75 ? Colors.blueAccent : Colors.redAccent,
+                progressColor: handlePercentage(subject.attendance) > 0.75 ? Colors.lightBlueAccent : Colors.redAccent,
                 curve: Curves.easeInOutCubicEmphasized,
 
 

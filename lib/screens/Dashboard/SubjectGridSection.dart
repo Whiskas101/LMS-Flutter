@@ -2,7 +2,9 @@ import 'package:dy_integrated_5/providers/CourseMaterialProvider.dart';
 import 'package:dy_integrated_5/providers/SearchProvider.dart';
 import 'package:dy_integrated_5/providers/SemesterProvider.dart';
 import 'package:dy_integrated_5/screens/SubjectScreen/SubjectScreen.dart';
+import 'package:dy_integrated_5/utils/constants.dart';
 import 'package:dy_integrated_5/widgets/SubjectWidget.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 
@@ -22,81 +24,141 @@ class SubjectGridSection extends ConsumerWidget {
     final semester = ref.watch(semesterNotifierProvider);
 
 
-    return Column(
-      children: [
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.0),
-              child: Text(
-                "Your Courses",
-                style: TextStyle(
-                    fontSize: 18
-                ),
-              ),
-            ),
-          ],
+    return Container(
+      margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
+      decoration: BoxDecoration(
+        // color: Colors.red,
+        borderRadius: BorderRadius.circular(15),
+        gradient: LinearGradient(
+            colors: [
+              Colors.grey.shade100,
+              Colors.grey.shade50,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight
         ),
-        const SizedBox(height: 14,),
+        boxShadow: [
+          //top left shadow
+          BoxShadow(
+              color: Colors.grey.shade50,
+              offset: Offset(-10, -10),
+              blurRadius: 15,
+              spreadRadius: 1
 
-        //Subject Grid
-        SizedBox(
-          height: 350,
+          ),
 
-
-          child: semester.when(
-              data: (semester){
-                return GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1.7/1, // Width : Height ratio
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 0),
-
-
-                  itemCount: semester.subjects.length,
-                  itemBuilder: (context, index){
-                    return GestureDetector(
-                      onTap: () async {
-                        ref.read(courseMaterialProvider.notifier).getCourseMaterials(semester.subjects[index].link);
-                        ref.read(searchProvider.notifier).updateSearchTerm("");// setting the data for the materials
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context)=>SubjectScreen(subject: semester.subjects[index]))
-                        );
-                      },
-                      child: SubjectWidget(subject: semester.subjects[index])
-                    );
-                  },
-
-
-
-
-                );
-              },
-              error: (error, stackTrace)=>Text("You fucked up."),
-              loading: (){
-
-
-                return const Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(
-                      color: Colors.blueAccent,
-                    )
-                  ],
-                );
-
-
-
-              }
+          //Bottom right shadow
+          BoxShadow(
+              color: Colors.grey.shade300,
+              offset: Offset(15,15),
+              blurRadius: 15,
+              spreadRadius: 14
           )
 
+        ],
 
-        ),
-      ],
+      ),
+      child: Column(
+        children: [
+           Container(
+             padding: const EdgeInsets.symmetric(horizontal: 12.0),
+             decoration: BoxDecoration(
+                 border: Border(
+                     bottom: BorderSide(
+                         width: 3,
+                         color: Colors.grey.shade300
+                     )
+                 )
+             ),
+             child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 0),
+                    child: Text(
+                      "Your Courses",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                        color: CustomColors.customDarkGrey3
+                      ),
+                    ),
+                  ),
+                ),
+                Icon(
+                    Icons.menu_book,
+                  color: Colors.greenAccent,
+                )
+
+              ],
+                       ),
+           ),
+          const SizedBox(height: 14,),
+
+          //Subject Grid
+          SizedBox(
+            height: 300,
+
+
+            child: semester.when(
+                data: (semester){
+                  return GridView.builder(
+
+
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 1.8/1, // Width : Height ratio
+                      // mainAxisSpacing: 20,
+                      crossAxisSpacing: 10
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+
+
+                    itemCount: semester.subjects.length,
+                    itemBuilder: (context, index){
+                      return GestureDetector(
+                        onTap: () async {
+                          ref.read(courseMaterialProvider.notifier).getCourseMaterials(semester.subjects[index].link);
+                          ref.read(searchProvider.notifier).updateSearchTerm("");// setting the data for the materials
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context)=>SubjectScreen(subject: semester.subjects[index]))
+                          );
+                        },
+                        child: SubjectWidget(subject: semester.subjects[index])
+                      );
+                    },
+
+
+
+
+                  );
+                },
+                error: (error, stackTrace)=>Text("You fucked up."),
+                loading: (){
+
+
+                  return const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(
+                        color: Colors.blueAccent,
+                      )
+                    ],
+                  );
+
+
+
+                }
+            )
+
+
+          ),
+        ],
+      ),
     );
   }
 }

@@ -16,19 +16,25 @@ class ScreenTitle extends ConsumerWidget {
 
       children: [
         //Leading Icon
-        Icon(
-          Icons.book,
-          size: 32,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+          child: Icon(
+            Icons.book,
+            size: 32,
+            color: Colors.grey.shade50
 
+          ),
         ),
 
         // Screen Name [course material]
-        Expanded(
+         Expanded(
           child: Text(
-            "Course Material",
+            "Course",
             style: TextStyle(
                 fontSize: 24,
-                fontWeight: FontWeight.bold
+                fontWeight: FontWeight.bold,
+              color: Colors.grey.shade50,
+              letterSpacing: 1.3
             ),
           ),
         ),
@@ -37,7 +43,7 @@ class ScreenTitle extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(0,0,8,0),
           child: IconButton(
-            icon:Icon(
+            icon:const Icon(
               Icons.refresh_sharp,
               size: 32,
             ),

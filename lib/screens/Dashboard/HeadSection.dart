@@ -30,6 +30,7 @@ class HeadSection extends ConsumerWidget {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
+                      color: Colors.white
                     ),
                   ),
                   Text(
@@ -37,7 +38,7 @@ class HeadSection extends ConsumerWidget {
                     style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w100,
-                        color: CustomColors.customGray
+                        color: Colors.white60
                     ),
                   ),
                 ],
@@ -109,7 +110,7 @@ class HeadSection extends ConsumerWidget {
               //Gets the day of the week as an int [1-7]
               int day = DateTime.now().weekday - 1;
               List<String> subjects = [];
-              if(day < 4){
+              if(day < 5){
                 int i;
                 for (i = 0; i < data.timetable.length; i++){
 
@@ -118,13 +119,13 @@ class HeadSection extends ConsumerWidget {
                 }
                 print(subjects.length);
               }
-              if (day < 4) {
+              if (day < 5) {
                 return SizedBox(
                 height: 70,
                   child: ShaderMask(
                     blendMode: BlendMode.dstOut,
                     shaderCallback: (Rect bounds) {
-                      return LinearGradient(
+                      return const LinearGradient(
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
                         colors: [Colors.purple, Colors.transparent, Colors.transparent, Colors.purple],
@@ -138,9 +139,7 @@ class HeadSection extends ConsumerWidget {
                   )
               );
               } else {
-                return Container(
-                child: Text("No lectures for today"),
-              );
+                return Text("No lectures for today");
               }
 
             },

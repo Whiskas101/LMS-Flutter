@@ -13,7 +13,8 @@ class TimetableBlock extends StatelessWidget {
   Widget build(BuildContext context) {
 
 
-
+    print(subjects);
+    print('got these');
 
     return Row(
       children: [
@@ -50,8 +51,8 @@ class TimetableBlock extends StatelessWidget {
             children: [
               Text(
                   subject.value,
-                style: const TextStyle(
-                  color: Colors.black54,
+                style:  TextStyle(
+                  color: CustomColors.customDarkGrey3,
                   fontSize: 12,
                   fontWeight: FontWeight.w600
                 ),
@@ -60,7 +61,7 @@ class TimetableBlock extends StatelessWidget {
                   timeAtIndexLinear(subject.key),
                 style: TextStyle(
                   fontSize: 10,
-                  color: CustomColors.customGray,
+                  color: CustomColors.customDarkGrey,
                 ),
               ),
               // Text("${subject.key}")
