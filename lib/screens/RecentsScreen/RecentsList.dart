@@ -65,7 +65,7 @@ class RecentsList extends ConsumerWidget {
             );
           },
           error: (error, stackTrace)=>const Text("You've done it again."),
-          loading: ()=>Text("Loading")
+          loading: ()=>const Center(child: Text("Loading"))
       ),
 
     );
