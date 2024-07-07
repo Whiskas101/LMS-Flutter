@@ -26,7 +26,7 @@ class TimetableScreen extends ConsumerWidget{
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    print("rebuilt");
+
     final data = ref.watch(timetableNotifierProvider);
     final semester = ref.watch(semesterNotifierProvider);
 
@@ -42,7 +42,7 @@ class TimetableScreen extends ConsumerWidget{
           Flexible(
             flex: 2,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 25),
+              padding: const EdgeInsets.fromLTRB(12.0, 20, 12, 0),
             
               decoration: const BoxDecoration(
                 color: Colors.lightBlue,

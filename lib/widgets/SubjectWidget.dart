@@ -2,7 +2,7 @@ import 'package:dy_integrated_5/models/Subject.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:percent_indicator/circular_percent_indicator.dart';
+// import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import '../utils/constants.dart';
 import '../utils/helpers.dart';

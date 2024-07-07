@@ -15,7 +15,7 @@ class DaysHeader extends ConsumerWidget {
 
           return Container(
 
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
             height: 100,
             child: GridView.builder(
               padding: EdgeInsets.zero,

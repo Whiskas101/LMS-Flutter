@@ -15,10 +15,10 @@ String removeFileExtension(String fileName) {
 String shortFormOf(String title){
   String result = "";
 
-  List<String> Words = title.split(" ");
+  List<String> words = title.split(" ");
   int i;
-  for (i = 0; i < Words.length; i++){
-    String word = Words[i];
+  for (i = 0; i < words.length; i++){
+    String word = words[i];
 
     // Checking if the first letter of the word is upper case. if so, add it to the result;
     if(word[0] == word[0].toUpperCase()){
@@ -91,14 +91,14 @@ String timeAtIndexLinear(int rowIndex){
     6:"3:00",
     7:"4:00",
   };
-  print(map[rowIndex]);
+  // print(map[rowIndex]);
   return map[rowIndex]!;
 }
 
 Color getSubjectColor(String subject){
 
   if(subject.toLowerCase().contains("lab")){
-    return Colors.yellowAccent;
+    return Colors.lightBlue;
   }
   if(subject.toLowerCase() == "break"){
     return Colors.greenAccent;

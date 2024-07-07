@@ -1,3 +1,5 @@
+import 'package:dy_integrated_5/utils/debouncer.dart';
+import 'package:dy_integrated_5/utils/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,12 +15,22 @@ class CustomListTile extends ConsumerWidget {
   final Subject subject;
   const CustomListTile({super.key, required this.index, required this.filteredMaterials, required this.subject});
 
+
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    Throttler _throttler = Throttler();
+
     return ListTile(
       onTap: (){
+
         ref.read(databaseNotifierProvider.notifier).insert(filteredMaterials[index], subject.name);
-        ApiService.downloadResource(subject.name, filteredMaterials[index].name, filteredMaterials[index].link);
+        _throttler.run((){
+          ApiService.downloadResource(subject.name, filteredMaterials[index].name, filteredMaterials[index].link);
+        });
+        // ApiService.downloadResource(subject.name, filteredMaterials[index].name, filteredMaterials[index].link);
+
       },
 
 

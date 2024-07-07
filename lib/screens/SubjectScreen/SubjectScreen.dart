@@ -51,7 +51,7 @@ class SubjectScreen extends StatelessWidget {
                     //top left shadow
                     BoxShadow(
                         color: Colors.grey.shade50,
-                        offset: Offset(-10, -10),
+                        offset: const Offset(-10, -10),
                         blurRadius: 15,
                         spreadRadius: 1
 
@@ -60,7 +60,7 @@ class SubjectScreen extends StatelessWidget {
                     //Bottom right shadow
                     BoxShadow(
                         color: Colors.grey.shade300,
-                        offset: Offset(15,15),
+                        offset: const Offset(15,15),
                         blurRadius: 15,
                         spreadRadius: 14
                     )
@@ -71,11 +71,11 @@ class SubjectScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
 
                         decoration: BoxDecoration(
                           color: Colors.lightBlue,
-                        borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+                        borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
                         border: Border(
                           bottom: BorderSide(
                             width: 5,

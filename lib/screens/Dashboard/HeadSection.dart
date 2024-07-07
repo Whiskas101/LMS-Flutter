@@ -1,11 +1,8 @@
 import 'package:dy_integrated_5/providers/TimetableProvider.dart';
-import 'package:dy_integrated_5/screens/TimetableScreen/GridObject.dart';
 import 'package:dy_integrated_5/widgets/TimetableBlock.dart';
 import 'package:flutter/material.dart';
-import 'package:dy_integrated_5/utils/constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../models/TimeTable.dart';
 
 class HeadSection extends ConsumerWidget {
   const HeadSection({super.key});

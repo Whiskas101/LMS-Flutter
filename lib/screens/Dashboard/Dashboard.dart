@@ -1,10 +1,8 @@
 import 'package:dy_integrated_5/screens/Dashboard/QuickJump.dart';
 import 'package:dy_integrated_5/screens/Dashboard/SubjectGridSection.dart';
 import 'package:dy_integrated_5/utils/constants.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'HeadSection.dart';
 import 'TopBar.dart';
@@ -34,34 +32,34 @@ class Dashboard extends StatelessWidget {
                   blurRadius: 3
                 )]
               ),
-              child: const Column(
+              child:  Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
 
                   //Upper most layer, with the two buttons [ no functionality (YET) ]
-                  TopBar(),
+                   TopBar(),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 18,
                   ),
 
                   // Weird ahh message that makes no sense but autistic aesthetic
-                  HeadSection(),
+                  const HeadSection(),
                 ],
               ),
             ),
             const SizedBox(
               height: 28,
             ),
-            const Expanded(
+             Expanded(
               child: Column(
                 children: [
                   // QuickJump
-                  QuickJump(),
+                  const QuickJump(),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
 

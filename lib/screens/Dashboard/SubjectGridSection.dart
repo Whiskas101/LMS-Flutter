@@ -3,6 +3,7 @@ import 'package:dy_integrated_5/providers/SearchProvider.dart';
 import 'package:dy_integrated_5/providers/SemesterProvider.dart';
 import 'package:dy_integrated_5/screens/SubjectScreen/SubjectScreen.dart';
 import 'package:dy_integrated_5/utils/constants.dart';
+import 'package:dy_integrated_5/utils/debouncer.dart';
 import 'package:dy_integrated_5/widgets/SubjectWidget.dart';
 
 import 'package:flutter/material.dart';
@@ -12,9 +13,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 class SubjectGridSection extends ConsumerWidget {
-  const SubjectGridSection({super.key});
+  SubjectGridSection({super.key});
 
-
+  final Throttler refreshThrottler = Throttler();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -116,7 +117,9 @@ class SubjectGridSection extends ConsumerWidget {
                     itemBuilder: (context, index){
                       return GestureDetector(
                         onTap: () async {
-                          ref.read(courseMaterialProvider.notifier).getCourseMaterials(semester.subjects[index].link);
+                          refreshThrottler.run((){
+                            ref.read(courseMaterialProvider.notifier).getCourseMaterials(semester.subjects[index].link);
+                          });
                           ref.read(searchProvider.notifier).updateSearchTerm("");// setting the data for the materials
                           Navigator.push(
                             context,

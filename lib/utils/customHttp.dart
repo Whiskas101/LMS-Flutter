@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:dy_integrated_5/utils/snackbar.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -22,24 +23,31 @@ class CustomHttp{
         headers: headers,
       );
     }on SocketException catch(error){
+      showSnackBar("Socket Exception", 2000);
       print("Socket Exception: $error");
-      rethrow;
+
+
     }on TimeoutException catch(error){
       print("Timed Out: $error");
-      rethrow;
+      showSnackBar("Connection Timed out", 2000);
+
     } on http.ClientException catch(error){
+      showSnackBar("Client Error", 2000);
       print("Client Exception: $error");
-      rethrow;
+
     } on FormatException catch(error){
-      print("Format Exception: $error");
-      rethrow;
+      showSnackBar("Format Exception Occurred", 2000);
+
     } on HttpException catch(error){
       print("Http Exception: $error");
-      rethrow;
+      showSnackBar("Http Exception Occurred", 2000);
+
     } catch(error){
       print("Unexpected Exception Idk how: $error");
-      rethrow;
+      showSnackBar("Something went wrong", 2000);
+
     }
+    return http.Response("Failed", 500);
   }
 
   static Future<http.Response> post(
@@ -52,28 +60,36 @@ class CustomHttp{
 
     try{
       return http.post(
+
         uri,
         body: body,
         headers: headers,
       );
     }on SocketException catch(error){
+      showSnackBar("Socket Exception", 2000);
       print("Socket Exception: $error");
-      rethrow;
+
+
     }on TimeoutException catch(error){
       print("Timed Out: $error");
-      rethrow;
+      showSnackBar("Connection Timed out", 2000);
+
     } on http.ClientException catch(error){
+      showSnackBar("Client Error", 2000);
       print("Client Exception: $error");
-      rethrow;
+
     } on FormatException catch(error){
-      print("Format Exception: $error");
-      rethrow;
+      showSnackBar("Format Exception Occurred", 2000);
+
     } on HttpException catch(error){
       print("Http Exception: $error");
-      rethrow;
+      showSnackBar("Http Exception Occurred", 2000);
+
     } catch(error){
       print("Unexpected Exception Idk how: $error");
-      rethrow;
+      showSnackBar("Something went wrong", 2000);
+
     }
+    return http.Response("Failed", 500);
   }
 }

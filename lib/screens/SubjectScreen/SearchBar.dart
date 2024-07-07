@@ -2,7 +2,6 @@
 
 import 'package:dy_integrated_5/providers/SearchProvider.dart';
 import 'package:flutter/material.dart';
-import 'package:dy_integrated_5/utils/constants.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -57,15 +56,15 @@ class CustomSearchBar extends ConsumerWidget {
           ),
 
           //Weird end logo
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: IconButton(
-                onPressed: (){
-                  ref.read(searchProvider.notifier).updateSearchTerm("");
-                },
-                icon:  const Icon(Icons.remove_circle)
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          //   child: IconButton(
+          //       onPressed: (){
+          //         ref.read(searchProvider.notifier).updateSearchTerm("");
+          //       },
+          //       icon:  const Icon(Icons.remove_circle)
+          //   ),
+          // ),
         ],
       ),
     );

@@ -6,15 +6,18 @@ import 'package:dy_integrated_5/models/CourseMaterial.dart';
 import 'package:dy_integrated_5/models/Semester.dart';
 import 'package:dy_integrated_5/services/file_handler.dart';
 
+// For stuff not meant to be on github
+import 'package:dy_integrated_5/secrets/secrets.dart';
 
 // Custom Http for separating the exception handling logic
 import 'package:dy_integrated_5/utils/customHttp.dart';
+import 'package:dy_integrated_5/utils/snackbar.dart';
+import 'package:flutter/material.dart';
 
 //for caching data
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 
 
 /// Simple Static Class for handling data returned from the backend API.
@@ -33,9 +36,11 @@ class ApiService{
 
   //  !!!Subject to change or move out of this Class entirely!!!
   // REMEMBER TO CHANGE THIS WHEN TESTING ON EMULATOR VS WHEN ON USB DEBUGGING !!!
-  static String host = "192.168.29.137:5000"; //for external device
-  // static String host = "10.0.2.2:5000";     // for emulator
-  // static String host = "127.0.0.1:5000"; // for windows executable testing
+  // static String host = "192.168.29.137:5000";             //for external device
+  // static String host = "10.0.2.2:5000";                      // for emulator
+  // static String host = "127.0.0.1:5000";                  // for windows executable testing
+  // static String host = "dfe4-49-36-98-69.ngrok-free.app"; //ngrok for temp
+  static String host = HOST;
 
   // Secure storage to store and access the username and password for future automated login.
   static const FlutterSecureStorage _storage = FlutterSecureStorage();
@@ -97,12 +102,14 @@ class ApiService{
     Uri baseUri = Uri.http(host, '/login');
     print(baseUri);
     var response = await CustomHttp.post(
+
       baseUri,
       body: {
         'username':username,
         'password':password
-      }
+      },
     );
+
 
     if( response.statusCode == 200) {
       // For a valid login, parse the cookies, and store them for future data requests
@@ -119,7 +126,6 @@ class ApiService{
         await saveCredentials(username, password);
       }
 
-
       print("Login success");
       return true;
 
@@ -127,8 +133,6 @@ class ApiService{
       print("Login failed");
       return false;
     }
-
-
   }
 
 
@@ -150,10 +154,8 @@ class ApiService{
       return semester;
     }
 
-
     // If data wasn't in shared preferences, we just get the data by calling the API
     await ensureSessionValidity();
-
     Uri uri = Uri.http(host, '/subjects');
 
     var response = await CustomHttp.get(
@@ -169,13 +171,11 @@ class ApiService{
       List<Map<String, dynamic>> jsonData = jsonDecode(response.body).cast<Map<String,dynamic>>();
       prefs.setString('Subjects', jsonEncode(jsonData));
       Semester semester = Semester.fromJSON(jsonData);
-
       return semester;
     }
 
     //If the request fails, return empty semester
     return Semester();
-
   }
 
 
@@ -194,6 +194,8 @@ class ApiService{
       return materials;
     }
 
+    print("cache fail for materials $link");
+
     await ensureSessionValidity();
 
     Uri uri = Uri.http(host, '/materials');
@@ -210,10 +212,13 @@ class ApiService{
     );
 
     if (response.statusCode == 200){
+      print("nice reponse");
       List<Map<String, dynamic>> jsonData = jsonDecode(response.body).cast<Map<String,dynamic>>();
+      // print("raw data: $jsonData");
       List<CourseMaterial> materials = jsonData.map((jsonObject)=>CourseMaterial.fromJSON(jsonObject)).toList(); // Putting data into Course Material class
+      print("setting string, $link, ${jsonData}");
       prefs.setString(link, jsonEncode(jsonData));
-      print(materials);
+      // print(materials);
       return materials;
     }
 
@@ -249,6 +254,8 @@ class ApiService{
       }
     }
     print("Cache miss");
+    //If cache miss, notify the user and mention download
+    showSnackBar("Downloading $name}", 5000);
     await ensureSessionValidity(); // Make sure we are logged in before sending the download request.
 
     Uri uri = Uri.http(host, '/download');
@@ -287,6 +294,7 @@ class ApiService{
 
     }else{
 
+      showSnackBar("Redirecting to Official Site", 500);
       //The case where the link is not actually a downloadable resource
       print("Not making a download request, IMPLEMENT LAUNCHER");
       print(link);

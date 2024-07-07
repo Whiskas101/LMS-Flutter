@@ -1,3 +1,4 @@
+import 'package:dy_integrated_5/utils/debouncer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,9 @@ import '../../utils/constants.dart';
 class RecentListTile extends ConsumerWidget {
   final int index;
   final List<Recent> filteredMaterials;
-  const RecentListTile({super.key, required this.index, required this.filteredMaterials});
+  RecentListTile({super.key, required this.index, required this.filteredMaterials});
+
+  final Throttler refreshThrottler =  Throttler();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,8 +42,10 @@ class RecentListTile extends ConsumerWidget {
       ),
       child: ListTile(
         onTap: () async {
-          ref.read(databaseNotifierProvider.notifier).insert(filteredMaterials[index].material, filteredMaterials[index].subject);
-          ApiService.downloadResource(filteredMaterials[index].subject, filteredMaterials[index].material.name, filteredMaterials[index].material.link);
+          refreshThrottler.run((){
+            ref.read(databaseNotifierProvider.notifier).insert(filteredMaterials[index].material, filteredMaterials[index].subject);
+            ApiService.downloadResource(filteredMaterials[index].subject, filteredMaterials[index].material.name, filteredMaterials[index].material.link);
+          });
         },
 
 
@@ -57,7 +62,7 @@ class RecentListTile extends ConsumerWidget {
                 filteredMaterials[index].material.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14
                 ),
 
@@ -68,27 +73,26 @@ class RecentListTile extends ConsumerWidget {
 
         subtitle: Text(
             filteredMaterials[index].material.type,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 12
           ),
 
         ),
-        trailing: IconButton(
-          iconSize: 32,
-          onPressed: ()=>{
-
-            ApiService.downloadResource(filteredMaterials[index].subject, filteredMaterials[index].material.name, filteredMaterials[index].material.link, forceReFetch: true)
-          },
-          style: IconButton.styleFrom(
-              side: BorderSide(
-                color: CustomColors.customGray,
-
-              )
-          ),
-          icon: const Icon(
-              Icons.refresh_sharp
-          ),
-        ),
+        // trailing: IconButton(
+        //   iconSize: 32,
+        //   onPressed: ()=>refreshThrottler.run((){
+        //     ApiService.downloadResource(filteredMaterials[index].subject, filteredMaterials[index].material.name, filteredMaterials[index].material.link, forceReFetch: true);
+        //   }),
+        //   style: IconButton.styleFrom(
+        //       side: BorderSide(
+        //         color: CustomColors.customGray,
+        //
+        //       )
+        //   ),
+        //   icon: const Icon(
+        //       Icons.refresh_sharp
+        //   ),
+        // ),
 
 
 

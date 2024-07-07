@@ -1,13 +1,14 @@
 import 'package:dy_integrated_5/models/Subject.dart';
 import 'package:dy_integrated_5/providers/CourseMaterialProvider.dart';
+import 'package:dy_integrated_5/utils/debouncer.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ScreenTitle extends ConsumerWidget {
   final Subject subject;
-  const ScreenTitle({super.key, required this.subject});
-
+  ScreenTitle({super.key, required this.subject});
+  final Throttler refreshThrottler = Throttler();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
@@ -47,10 +48,10 @@ class ScreenTitle extends ConsumerWidget {
               Icons.refresh_sharp,
               size: 32,
             ),
-            onPressed: (){
-              print("${subject.link} fetch");
+            onPressed: ()=>refreshThrottler.run((){
+              // print("${subject.link} fetch");
               ref.read(courseMaterialProvider.notifier).getCourseMaterials(subject.link, forceReFetch: true);
-            },
+            }),
 
           ),
         ),

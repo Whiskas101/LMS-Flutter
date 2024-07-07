@@ -74,7 +74,9 @@ class MaterialLists extends ConsumerWidget {
           error: (error, stackTrace)=>const Text("You've done it again."),
 
           loading: ()=>const  Center(
-              child: CircularProgressIndicator()
+              child: CircularProgressIndicator(
+                color: Colors.lightBlue,
+              )
           )
       ),
 

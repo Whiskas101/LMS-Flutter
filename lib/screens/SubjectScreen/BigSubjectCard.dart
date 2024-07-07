@@ -68,12 +68,7 @@ class BigSubjectCard extends StatelessWidget {
                   children: [
                     Container(
 
-                      margin: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                      decoration: BoxDecoration(
-
-                        // color: Colors.pink
-                      ),
-
+                      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
 
                       // Faculty/Instructor name
                       child: Text(

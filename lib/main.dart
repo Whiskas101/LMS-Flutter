@@ -3,6 +3,7 @@
 import 'package:dy_integrated_5/screens/Dashboard/Dashboard.dart';
 import 'package:dy_integrated_5/screens/Login/LoginScreen.dart';
 import 'package:dy_integrated_5/screens/playground.dart';
+import 'package:dy_integrated_5/utils/globals.dart';
 
 import 'package:dy_integrated_5/services/api_service.dart';
 
@@ -20,7 +21,7 @@ void main() async {
   if((user['username'] != null && user['password'] != null)){
     runApp(const MyApp(home:Dashboard()));
   }else{
-    runApp(const MyApp(home: LoginScreen()));
+    runApp(MyApp(home: LoginScreen()));
   }
   // runApp(MyApp(home: Playground()));
 
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
     return ProviderScope(
       child: MaterialApp(
         title: 'FDY',
-
+        scaffoldMessengerKey: snackbarKey,
         theme: ThemeData(
           // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,

@@ -41,16 +41,16 @@ class RecentsSearchBar extends ConsumerWidget {
           ),
 
           //Weird end logo
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: IconButton(
-                onPressed: () {
-                  ref
-                      .read(searchProvider.notifier)
-                      .updateSearchTerm("");
-                },
-                icon: const Icon(Icons.remove_circle)),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          //   child: IconButton(
+          //       onPressed: () {
+          //         ref
+          //             .read(searchProvider.notifier)
+          //             .updateSearchTerm("");
+          //       },
+          //       icon: const Icon(Icons.remove_circle)),
+          // ),
         ],
       ),
     );

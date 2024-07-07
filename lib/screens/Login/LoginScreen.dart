@@ -2,6 +2,7 @@
 import 'package:dy_integrated_5/providers/TextControllerProvider.dart';
 import 'package:dy_integrated_5/screens/Dashboard/Dashboard.dart';
 import 'package:dy_integrated_5/services/api_service.dart';
+import 'package:dy_integrated_5/utils/debouncer.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -10,8 +11,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 
 class LoginScreen extends ConsumerWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
 
+  final refreshThrottler = Throttler();
 
 
   @override
@@ -48,7 +50,7 @@ class LoginScreen extends ConsumerWidget {
 
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.all(25),
+          padding: const EdgeInsets.all(25),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -115,7 +117,9 @@ class LoginScreen extends ConsumerWidget {
 
                 //Login button
                 ElevatedButton(
-                    onPressed: tryLogin,
+                    onPressed: ()=>refreshThrottler.run((){
+                      tryLogin();
+                    }),
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
