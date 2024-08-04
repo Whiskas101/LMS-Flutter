@@ -5,10 +5,22 @@ class ScreenTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(12.0),
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: const Padding(
+            padding: EdgeInsets.all(8),
+            child: Icon(
+              Icons.exit_to_app,
+              size: 32,
+            ),
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.all(12.0),
           child: Text(
             "Recently Opened",
             style: TextStyle(

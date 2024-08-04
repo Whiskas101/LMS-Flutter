@@ -1,6 +1,7 @@
 import 'package:dy_integrated_5/screens/Dashboard/QuickJump.dart';
 import 'package:dy_integrated_5/screens/Dashboard/SubjectGridSection.dart';
 import 'package:dy_integrated_5/utils/constants.dart';
+import 'package:dy_integrated_5/widgets/LimitWidth.dart';
 
 import 'package:flutter/material.dart';
 
@@ -13,11 +14,10 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade200,
       resizeToAvoidBottomInset: false,
       body: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey.shade200
-        ),
+        decoration: BoxDecoration(color: Colors.grey.shade200),
         child: Column(
           children: [
             Container(
@@ -26,26 +26,24 @@ class Dashboard extends StatelessWidget {
                   color: Colors.lightBlue,
                   borderRadius:
                       const BorderRadius.vertical(bottom: Radius.circular(16)),
-
-                boxShadow: [BoxShadow(
-                  color: CustomColors.customDarkGrey3,
-                  blurRadius: 3
-                )]
-              ),
-              child:  Column(
+                  boxShadow: [
+                    BoxShadow(
+                        color: CustomColors.customDarkGrey3, blurRadius: 3)
+                  ]),
+              child: Column(
                 children: [
                   const SizedBox(
                     height: 16,
                   ),
 
-                  //Upper most layer, with the two buttons [ no functionality (YET) ]
-                   TopBar(),
+                  //Upper most layer, with the two buttons
+                  TopBar(),
 
                   const SizedBox(
                     height: 18,
                   ),
 
-                  // Weird ahh message that makes no sense but autistic aesthetic
+                  // Weird ahh message that makes no sense but yes
                   const HeadSection(),
                 ],
               ),
@@ -53,7 +51,7 @@ class Dashboard extends StatelessWidget {
             const SizedBox(
               height: 28,
             ),
-             Expanded(
+            Expanded(
               child: Column(
                 children: [
                   // QuickJump
@@ -65,7 +63,6 @@ class Dashboard extends StatelessWidget {
 
                   //Subjects
                   Expanded(child: SubjectGridSection()),
-
                 ],
               ),
             ),
