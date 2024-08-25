@@ -293,6 +293,11 @@ class ApiService{
       FileHandler.writeThenReadFile(subject, name, link, response.bodyBytes);
 
     }else{
+      
+      //TODO: Store the link to the official site resource if it is found to be an incompatible type.
+      // This will prevent the need to hit DYP-Flask server, and can instead request the resource directly
+      // from the official site, speeding up the whole process. 
+
 
       showSnackBar("Redirecting to Official Site", 500);
       //The case where the link is not actually a downloadable resource
