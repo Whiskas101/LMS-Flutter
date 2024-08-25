@@ -8,3 +8,9 @@ It also supports directly downloading and saving, preventing the need to go thro
 pdf viewer available on the Old Site.
 
 
+# Todo
+    - Update the ApiService Class to be in line with the rest of the application by using riverpod providers instead of static methods.     
+    - Improve caching and minimize number of request to the proxy authentication (dyp-flask)
+    - Add a more extensive Attendance Tab 
+    - Dark Mode (Rivepod Provider based theming, I supposed) 
+

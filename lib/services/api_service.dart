@@ -178,7 +178,7 @@ class ApiService{
     return Semester();
   }
 
-
+  /// !!! UPDATE THE FUNCTION FOR THE CASE WHEN THE MATERIAL IS INCOMPATIBLE, IMPLEMENT A CACHE.
   /// Fetches Materials for a given subject, returns a List of JSON Objects
   /// Each JSON Object within the list is of the form: { name, link, type }
   static Future<List<CourseMaterial>> getSubjectMaterial(String link, {bool forceReFetch = false}) async {
