@@ -12,7 +12,7 @@ class HeadSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final timeTable = ref.watch(timetableNotifierProvider);
-    final semester = ref.read(semesterNotifierProvider);
+    final semester = ref.watch(semesterNotifierProvider);
 
     return Column(
       children: [
@@ -167,7 +167,7 @@ class HeadSection extends ConsumerWidget {
                           child: TimetableBlock(subjects: subjects)),
                     ));
               } else {
-                return const Text("No lectures for today");
+                return const Text("No lectures for Today");
               }
             },
             error: (error, stackTrace) => const Text("Something went wrong"),
