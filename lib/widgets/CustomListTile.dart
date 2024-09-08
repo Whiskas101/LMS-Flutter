@@ -1,3 +1,4 @@
+import 'package:dy_integrated_5/providers/ApiServiceProvider.dart';
 import 'package:dy_integrated_5/utils/debouncer.dart';
 import 'package:dy_integrated_5/utils/snackbar.dart';
 import 'package:flutter/material.dart';
@@ -8,31 +9,32 @@ import '../models/Subject.dart';
 import '../providers/DatabaseProvider.dart';
 import '../services/api_service.dart';
 
-
 class CustomListTile extends ConsumerWidget {
   final int index;
   final List<CourseMaterial> filteredMaterials;
   final Subject subject;
-  const CustomListTile({super.key, required this.index, required this.filteredMaterials, required this.subject});
-
-
+  const CustomListTile(
+      {super.key,
+      required this.index,
+      required this.filteredMaterials,
+      required this.subject});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     Throttler _throttler = Throttler();
+    final apiService = ref.read(apiServiceProvider);
 
     return ListTile(
-      onTap: (){
-
-        ref.read(databaseNotifierProvider.notifier).insert(filteredMaterials[index], subject.name);
-        _throttler.run((){
-          ApiService.downloadResource(subject.name, filteredMaterials[index].name, filteredMaterials[index].link);
+      onTap: () {
+        ref
+            .read(databaseNotifierProvider.notifier)
+            .insert(filteredMaterials[index], subject.name);
+        _throttler.run(() {
+          apiService.downloadResource(subject.name,
+              filteredMaterials[index].name, filteredMaterials[index].link);
         });
         // ApiService.downloadResource(subject.name, filteredMaterials[index].name, filteredMaterials[index].link);
-
       },
-
 
       leading: Icon(
         Icons.dashboard,
@@ -53,35 +55,26 @@ class CustomListTile extends ConsumerWidget {
             ),
           ),
         ],
-      ),//File Type
+      ), //File Type
       subtitle: Text(
-          filteredMaterials[index].type,
+        filteredMaterials[index].type,
         style: const TextStyle(
-            fontSize: 10,
+          fontSize: 10,
         ),
       ),
       trailing: IconButton(
         iconSize: 32,
-        onPressed: ()=>{
-
-          ApiService.downloadResource(subject.name, filteredMaterials[index].name, filteredMaterials[index].link, forceReFetch: true)
+        onPressed: () => {
+          apiService.downloadResource(subject.name,
+              filteredMaterials[index].name, filteredMaterials[index].link,
+              forceReFetch: true)
         },
         style: IconButton.styleFrom(
-            side: const BorderSide(
-                color: Colors.lightBlueAccent,
-                width: 0
-
-            )
-        ),
+            side: const BorderSide(color: Colors.lightBlueAccent, width: 0)),
         icon: const Icon(
           Icons.refresh_sharp,
-
-
         ),
       ),
-
-
-
     );
   }
 }

@@ -1,29 +1,27 @@
-
-
 import 'package:dy_integrated_5/models/Semester.dart';
+import 'package:dy_integrated_5/providers/ApiServiceProvider.dart';
 import 'package:dy_integrated_5/services/api_service.dart';
 
 // for State management
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
-
-class SemesterNotifier extends AsyncNotifier<Semester>{
-
+class SemesterNotifier extends AsyncNotifier<Semester> {
   @override
   Future<Semester> build() async {
-    return await ApiService.getSemesterData();
+    final apiService = ref.read(apiServiceProvider);
+    return await apiService.getSemesterData();
   }
 
-  void getSemesterData({bool forceReFetch = false})async {
+  void getSemesterData({bool forceReFetch = false}) async {
     state = const AsyncLoading<Semester>();
-    Semester sem = await ApiService.getSemesterData(forceReFetch: forceReFetch);
+    final apiService = ref.read(apiServiceProvider);
+    Semester sem = await apiService.getSemesterData(forceReFetch: forceReFetch);
     print(sem);
     state = AsyncData(sem);
   }
-
 }
 
-final semesterNotifierProvider = AsyncNotifierProvider<SemesterNotifier, Semester>((){
+final semesterNotifierProvider =
+    AsyncNotifierProvider<SemesterNotifier, Semester>(() {
   return SemesterNotifier();
 });

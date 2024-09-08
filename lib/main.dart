@@ -1,8 +1,8 @@
+import 'package:dy_integrated_5/providers/ApiServiceProvider.dart';
 import 'package:dy_integrated_5/screens/Dashboard/Dashboard.dart';
 import 'package:dy_integrated_5/screens/Login/LoginScreen.dart';
 import 'package:dy_integrated_5/screens/playground.dart';
 import 'package:dy_integrated_5/utils/globals.dart';
-
 import 'package:dy_integrated_5/services/api_service.dart';
 import 'package:flutter/foundation.dart';
 
@@ -23,14 +23,29 @@ void main() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
   }
-
-  Map<String, String?> user = await ApiService.getCredentials();
-  if ((user['username'] != null && user['password'] != null)) {
-    runApp(const MyApp(home: Dashboard()));
-  } else {
-    runApp(MyApp(home: LoginScreen()));
-  }
+  runApp(const MyApp(home: AuthCheck()));
   // runApp(MyApp(home: Playground()));
+}
+
+class AuthCheck extends ConsumerWidget {
+  const AuthCheck({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final creds = ref.watch(credentialProvider);
+
+    return creds.when(
+        data: (user) {
+          if ((user['username'] != null && user['password'] != null)) {
+            return const Dashboard();
+          } else {
+            return LoginScreen();
+          }
+        },
+        error: (error, stackTrace) =>
+            const Text("Something Went HORRIBLY Wrong."),
+        loading: () => const CircularProgressIndicator());
+  }
 }
 
 class MyApp extends StatelessWidget {

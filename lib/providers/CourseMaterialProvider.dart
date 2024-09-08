@@ -1,29 +1,26 @@
-
 import 'package:dy_integrated_5/models/CourseMaterial.dart';
+import 'package:dy_integrated_5/providers/ApiServiceProvider.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../services/api_service.dart';
 
-class CourseMaterialNotifier extends AsyncNotifier<List<CourseMaterial>>{
-
-
+class CourseMaterialNotifier extends AsyncNotifier<List<CourseMaterial>> {
   @override
-  List<CourseMaterial> build()  {
+  List<CourseMaterial> build() {
     return []; //default is an empty list
   }
 
-  void getCourseMaterials(String link, { bool forceReFetch = false}) async {
+  void getCourseMaterials(String link, {bool forceReFetch = false}) async {
     state = const AsyncLoading<List<CourseMaterial>>();
-    List<CourseMaterial> materials = await ApiService.getSubjectMaterial(link, forceReFetch: forceReFetch);
+    final apiService = ref.read(apiServiceProvider);
+    List<CourseMaterial> materials =
+        await apiService.getSubjectMaterial(link, forceReFetch: forceReFetch);
     state = AsyncData(materials);
   }
-
-
 }
 
-final courseMaterialProvider = AsyncNotifierProvider<CourseMaterialNotifier, List<CourseMaterial>>(
-      () => CourseMaterialNotifier(),
+final courseMaterialProvider =
+    AsyncNotifierProvider<CourseMaterialNotifier, List<CourseMaterial>>(
+  () => CourseMaterialNotifier(),
 );
-
-

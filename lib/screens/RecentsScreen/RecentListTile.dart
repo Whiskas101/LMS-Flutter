@@ -1,3 +1,4 @@
+import 'package:dy_integrated_5/providers/ApiServiceProvider.dart';
 import 'package:dy_integrated_5/utils/debouncer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -7,47 +8,45 @@ import '../../providers/DatabaseProvider.dart';
 import '../../services/api_service.dart';
 import '../../utils/constants.dart';
 
-
 class RecentListTile extends ConsumerWidget {
   final int index;
   final List<Recent> filteredMaterials;
-  RecentListTile({super.key, required this.index, required this.filteredMaterials});
+  RecentListTile(
+      {super.key, required this.index, required this.filteredMaterials});
 
-  final Throttler refreshThrottler =  Throttler();
+  final Throttler refreshThrottler = Throttler();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
+    final apiService = ref.read(apiServiceProvider);
 
+    return Container(
       // margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
       decoration: BoxDecoration(
-          // borderRadius: BorderRadius.vertical(
-          //   bottom: Radius.circular(15)
-          // ),
+        // borderRadius: BorderRadius.vertical(
+        //   bottom: Radius.circular(15)
+        // ),
 
+        border: Border.symmetric(
+            horizontal: BorderSide(width: 2, color: Colors.grey.shade300)),
 
-          border: Border.symmetric(
-            horizontal: BorderSide(
-              width: 2,
-              color: Colors.grey.shade300
-            )
-          ),
-
-
-
-          // boxShadow: [BoxShadow(
-          //   color: CustomColors.customGray,
-          //   blurRadius: 5,
-          // )]
+        // boxShadow: [BoxShadow(
+        //   color: CustomColors.customGray,
+        //   blurRadius: 5,
+        // )]
       ),
       child: ListTile(
         onTap: () async {
-          refreshThrottler.run((){
-            ref.read(databaseNotifierProvider.notifier).insert(filteredMaterials[index].material, filteredMaterials[index].subject);
-            ApiService.downloadResource(filteredMaterials[index].subject, filteredMaterials[index].material.name, filteredMaterials[index].material.link);
+          refreshThrottler.run(() {
+            ref.read(databaseNotifierProvider.notifier).insert(
+                filteredMaterials[index].material,
+                filteredMaterials[index].subject);
+            apiService.downloadResource(
+                filteredMaterials[index].subject,
+                filteredMaterials[index].material.name,
+                filteredMaterials[index].material.link);
           });
         },
-
 
         leading: Icon(
           Icons.dashboard,
@@ -62,21 +61,15 @@ class RecentListTile extends ConsumerWidget {
                 filteredMaterials[index].material.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 14
-                ),
-
+                style: const TextStyle(fontSize: 14),
               ),
             ),
           ],
-        ),//File Type
+        ), //File Type
 
         subtitle: Text(
-            filteredMaterials[index].material.type,
-          style: const TextStyle(
-            fontSize: 12
-          ),
-
+          filteredMaterials[index].material.type,
+          style: const TextStyle(fontSize: 12),
         ),
         // trailing: IconButton(
         //   iconSize: 32,
@@ -93,9 +86,6 @@ class RecentListTile extends ConsumerWidget {
         //       Icons.refresh_sharp
         //   ),
         // ),
-
-
-
       ),
     );
   }
