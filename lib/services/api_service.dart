@@ -25,7 +25,7 @@ class ApiService {
   // Chose to avoid the overhead of a library, since there will only ever be these two cookies needed
   // The API deals with the rest.
   late String sessionCookie;
-  late String moodleCookie;
+  late String moodleCookie = "No cookie yet";
 
   //Im assuming the actual official session limit is longer but eh.
   late Duration _sessionLength;
@@ -33,9 +33,11 @@ class ApiService {
   //Variables for handling the automatic login
   late DateTime lastLoginAttempt;
 
+  // Constructor needed now as the class is not static anymore.
   ApiService() {
     _sessionLength = const Duration(minutes: 30);
-    DateTime.now().subtract(_sessionLength * 2); // Just to be safe.
+    lastLoginAttempt =
+        DateTime.now().subtract(_sessionLength * 2); // Just to be safe.
   }
   //  !!!Subject to change or move out of this Class entirely!!!
   // REMEMBER TO CHANGE THIS WHEN TESTING ON EMULATOR VS WHEN ON USB DEBUGGING !!!
@@ -244,7 +246,7 @@ class ApiService {
     }
     print("Cache miss");
     //If cache miss, notify the user and mention download
-    showSnackBar("Downloading $name}", 5000);
+    showSnackBar("Downloading $name", 5000);
     await ensureSessionValidity(); // Make sure we are logged in before sending the download request.
 
     Uri uri = Uri.http(host, '/download');

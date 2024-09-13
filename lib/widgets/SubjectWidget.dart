@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 // import 'package:percent_indicator/circular_percent_indicator.dart';
 
-import '../utils/constants.dart';
 import '../utils/helpers.dart';
 
 class SubjectWidget extends StatelessWidget {
@@ -28,27 +27,26 @@ class SubjectWidget extends StatelessWidget {
       // ),
 
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.all(Radius.circular(12), ),
-          border: Border.all(
-            width: 2,
-            color: Colors.black12
-
+          color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.25),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(12),
           ),
-        // boxShadow: [
-        //   BoxShadow(
-        //       color: Colors.grey.shade300,
-        //       spreadRadius: 0.0,
-        //       blurRadius: 5.0,
-        //       offset: const Offset(3.0, 3.0)),
-        //   BoxShadow(
-        //       color: Colors.grey.shade400,
-        //       spreadRadius: 0.0,
-        //       blurRadius: 5 / 2.0,
-        //       offset: const Offset(3.0, 3.0)),
-        //
-        // ],
-      ),
+          border:
+              Border.all(width: 2, color: Theme.of(context).colorScheme.surface)
+          // boxShadow: [
+          //   BoxShadow(
+          //       color: Colors.grey.shade300,
+          //       spreadRadius: 0.0,
+          //       blurRadius: 5.0,
+          //       offset: const Offset(3.0, 3.0)),
+          //   BoxShadow(
+          //       color: Colors.grey.shade400,
+          //       spreadRadius: 0.0,
+          //       blurRadius: 5 / 2.0,
+          //       offset: const Offset(3.0, 3.0)),
+          //
+          // ],
+          ),
 
       child: Row(
         children: [
@@ -61,19 +59,17 @@ class SubjectWidget extends StatelessWidget {
                       Expanded(
                           child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                           child: Text(
-                            shortFormOf(subject.name),
-                            // subject.name,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            style: TextStyle(
-                                color: CustomColors.customDarkGrey2,
-                                fontWeight: FontWeight.normal,
-                              letterSpacing: -0.5
-                            ),
-                           ),
-                        )
-                      ),
+                        child: Text(
+                          shortFormOf(subject.name),
+                          // subject.name,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.secondary,
+                              fontWeight: FontWeight.normal,
+                              letterSpacing: -0.5),
+                        ),
+                      )),
                     ],
                   ),
                 ),
@@ -81,14 +77,17 @@ class SubjectWidget extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 3),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 3),
                         child: Text(
                           subject.instructor,
-                          style: const TextStyle(
-                              fontSize: 10,
-                              color: Colors.grey,
-                              overflow: TextOverflow.visible,
-
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .secondary
+                                .withOpacity(0.8),
+                            overflow: TextOverflow.visible,
                           ),
                         ),
                       ),
@@ -96,16 +95,17 @@ class SubjectWidget extends StatelessWidget {
                   ],
                 ),
                 LinearProgressIndicator(
-                  color: Colors.lightBlue,
-                  minHeight: 15,
+                  color: Theme.of(context).colorScheme.primary.withOpacity(1),
+                  minHeight: 10,
                   value: handlePercentage(subject.attendance),
-                  backgroundColor: Colors.lightBlue.withOpacity(0.3),
-                  borderRadius: const BorderRadius.vertical(bottom: Radius.circular(10)),
+                  backgroundColor:
+                      Theme.of(context).colorScheme.primary.withOpacity(0.05),
+                  borderRadius:
+                      const BorderRadius.vertical(bottom: Radius.circular(10)),
                 )
               ],
             ),
           ),
-
 
           // Circular Attendance Indicator
           // Column(

@@ -3,8 +3,6 @@ import 'package:dy_integrated_5/providers/ApiServiceProvider.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../services/api_service.dart';
-
 class CourseMaterialNotifier extends AsyncNotifier<List<CourseMaterial>> {
   @override
   List<CourseMaterial> build() {

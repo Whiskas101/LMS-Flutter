@@ -10,33 +10,29 @@ class TopBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 8.0),
           child: Icon(
-            Icons.line_style_sharp,
+            Icons.gradient,
             size: 32,
           ),
         ),
-
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-          child: IconButton(
-              onPressed: (){
-                refreshThrottler.run((){
-                  ref.read(semesterNotifierProvider.notifier).getSemesterData(forceReFetch: true);
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: IconButton(
+              onPressed: () {
+                refreshThrottler.run(() {
+                  ref
+                      .read(semesterNotifierProvider.notifier)
+                      .getSemesterData(forceReFetch: true);
                 });
               },
-              icon: const Icon(
-                Icons.refresh,
-                size: 32,
-              ),
-          )
-        ),
+              icon: Icon(Icons.refresh,
+                  size: 32, color: Theme.of(context).colorScheme.onSurface),
+            )),
       ],
     );
   }

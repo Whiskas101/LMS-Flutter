@@ -14,22 +14,24 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
       resizeToAvoidBottomInset: false,
       body: Container(
-        decoration: BoxDecoration(color: Colors.grey.shade200),
         child: Column(
           children: [
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 28),
               decoration: BoxDecoration(
-                  color: Colors.lightBlue,
-                  borderRadius:
-                      const BorderRadius.vertical(bottom: Radius.circular(16)),
-                  boxShadow: [
-                    BoxShadow(
-                        color: CustomColors.customDarkGrey3, blurRadius: 3)
-                  ]),
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                borderRadius:
+                    const BorderRadius.vertical(bottom: Radius.circular(16)),
+                border: BorderDirectional(
+                    bottom: BorderSide(
+                        width: 7,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.5))),
+              ),
               child: Column(
                 children: [
                   const SizedBox(

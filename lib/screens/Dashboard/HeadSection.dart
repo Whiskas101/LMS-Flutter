@@ -21,8 +21,8 @@ class HeadSection extends ConsumerWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -31,14 +31,14 @@ class HeadSection extends ConsumerWidget {
                     style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w600,
-                        color: Colors.white),
+                        color: Theme.of(context).colorScheme.onPrimary),
                   ),
                   Text(
                     "LMS Wrapper",
                     style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w100,
-                        color: Colors.white60),
+                        color: Theme.of(context).colorScheme.onPrimary),
                   ),
                 ],
               ),
@@ -50,18 +50,18 @@ class HeadSection extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Text(
                       overallAttendance(sem),
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w400,
-                          color: Colors.white),
+                          color: Theme.of(context).colorScheme.onPrimary),
                     ),
                   ),
-                  const Text(
+                  Text(
                     "Overall",
                     style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w100,
-                        color: Colors.white60),
+                        color: Theme.of(context).colorScheme.onPrimary),
                   ),
                 ]);
               },

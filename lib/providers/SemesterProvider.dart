@@ -1,6 +1,5 @@
 import 'package:dy_integrated_5/models/Semester.dart';
 import 'package:dy_integrated_5/providers/ApiServiceProvider.dart';
-import 'package:dy_integrated_5/services/api_service.dart';
 
 // for State management
 import 'package:flutter_riverpod/flutter_riverpod.dart';

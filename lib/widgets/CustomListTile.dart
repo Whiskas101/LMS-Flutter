@@ -36,11 +36,9 @@ class CustomListTile extends ConsumerWidget {
         // ApiService.downloadResource(subject.name, filteredMaterials[index].name, filteredMaterials[index].link);
       },
 
-      leading: Icon(
-        Icons.dashboard,
-        size: 32,
-        color: Colors.lightBlueAccent[200],
-      ),
+      leading: Icon(Icons.dashboard,
+          size: 32,
+          color: Theme.of(context).colorScheme.tertiary.withOpacity(0.8)),
       title: Row(
         children: [
           Expanded(
@@ -49,30 +47,26 @@ class CustomListTile extends ConsumerWidget {
               filteredMaterials[index].name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 14,
-              ),
+              style: TextStyle(
+                  fontSize: 14, color: Theme.of(context).colorScheme.secondary),
             ),
           ),
         ],
       ), //File Type
-      subtitle: Text(
-        filteredMaterials[index].type,
-        style: const TextStyle(
-          fontSize: 10,
-        ),
-      ),
+      subtitle: Text(filteredMaterials[index].type,
+          style: TextStyle(
+              fontSize: 10,
+              color: Theme.of(context).colorScheme.tertiary.withOpacity(0.4))),
       trailing: IconButton(
-        iconSize: 32,
+        iconSize: 28,
         onPressed: () => {
           apiService.downloadResource(subject.name,
               filteredMaterials[index].name, filteredMaterials[index].link,
               forceReFetch: true)
         },
-        style: IconButton.styleFrom(
-            side: const BorderSide(color: Colors.lightBlueAccent, width: 0)),
-        icon: const Icon(
-          Icons.refresh_sharp,
+        icon: Icon(
+          Icons.more_vert_rounded,
+          color: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
         ),
       ),
     );

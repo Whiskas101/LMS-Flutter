@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:dy_integrated_5/utils/constants.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:dy_integrated_5/utils/helpers.dart';
 
@@ -8,8 +7,6 @@ import '../../models/Subject.dart';
 class BigSubjectCard extends StatelessWidget {
   final Subject subject;
   const BigSubjectCard({super.key, required this.subject});
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +28,6 @@ class BigSubjectCard extends StatelessWidget {
 
       height: 175,
 
-
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -42,9 +38,8 @@ class BigSubjectCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-
-
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   child: Row(
                     children: [
                       Expanded(
@@ -55,10 +50,11 @@ class BigSubjectCard extends StatelessWidget {
                           maxLines: 3,
                           softWrap: true,
                           style: TextStyle(
-                              color: CustomColors.customDarkGrey3,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant,
                               fontSize: 18,
-                            letterSpacing: -0.5
-                          ),
+                              letterSpacing: -0.5),
                         ),
                       ),
                     ],
@@ -67,49 +63,39 @@ class BigSubjectCard extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-
-                      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 4),
 
                       // Faculty/Instructor name
                       child: Text(
                         subject.instructor,
                         overflow: TextOverflow.fade,
                         style: TextStyle(
-                            color: CustomColors.customDarkGrey3,
-                            fontSize: 10
-                        ),
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant,
+                            fontSize: 10),
                       ),
                     ),
                   ],
                 ),
-
-
               ],
             ),
           ),
 
-
           // Percentage Visualisation section
           Container(
               padding: const EdgeInsets.symmetric(horizontal: 15),
-
               decoration: BoxDecoration(
-                // color: Colors.grey.shade100,
-                  borderRadius: const BorderRadius.only(
-                    bottomRight: Radius.circular(15)
-                  ),
-
-                border: Border(
-                    left: BorderSide(width: 5,
-                    color: Colors.grey.shade300)
-                )
-
-
-
-              ),
-
-
-
+                  color: Theme.of(context)
+                      .colorScheme
+                      .surfaceVariant
+                      .withOpacity(0.2),
+                  borderRadius:
+                      const BorderRadius.only(bottomRight: Radius.circular(15)),
+                  border: Border(
+                      left: BorderSide(
+                          width: 5,
+                          color: Theme.of(context).colorScheme.surface))),
               child: CircularPercentIndicator(
                 radius: 55,
                 lineWidth: 12,
@@ -118,22 +104,21 @@ class BigSubjectCard extends StatelessWidget {
                 animation: true,
                 // animateFromLastPercent: true,
                 center: Text(
-                  "${(handlePercentage(subject.attendance, floor: true)*100).toInt()}%",
+                  "${(handlePercentage(subject.attendance, floor: true) * 100).toInt()}%",
                   style: TextStyle(
-                    fontSize: 18,
-                    color: handlePercentage(subject.attendance) > 0.75 ? Colors.lightBlueAccent : Colors.redAccent,
-
-                  ),
+                      fontSize: 18,
+                      color: handlePercentage(subject.attendance) > 0.75
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context).colorScheme.tertiary),
                 ),
 
-                progressColor: handlePercentage(subject.attendance) > 0.75 ? Colors.lightBlueAccent : Colors.redAccent,
+                progressColor: handlePercentage(subject.attendance) > 0.75
+                    ? Theme.of(context).colorScheme.primary
+                    : Theme.of(context).colorScheme.tertiary,
+                backgroundColor:
+                    Theme.of(context).colorScheme.scrim.withOpacity(0.5),
                 curve: Curves.easeInOutCubicEmphasized,
-
-
-              )
-          )
-
-
+              ))
         ],
       ),
     );
