@@ -50,9 +50,7 @@ class BigSubjectCard extends StatelessWidget {
                           maxLines: 3,
                           softWrap: true,
                           style: TextStyle(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurfaceVariant,
+                              color: Theme.of(context).colorScheme.tertiary,
                               fontSize: 18,
                               letterSpacing: -0.5),
                         ),
@@ -71,8 +69,7 @@ class BigSubjectCard extends StatelessWidget {
                         subject.instructor,
                         overflow: TextOverflow.fade,
                         style: TextStyle(
-                            color:
-                                Theme.of(context).colorScheme.onSurfaceVariant,
+                            color: Theme.of(context).colorScheme.secondary,
                             fontSize: 10),
                       ),
                     ),
