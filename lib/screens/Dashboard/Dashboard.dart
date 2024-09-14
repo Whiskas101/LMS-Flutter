@@ -1,9 +1,10 @@
+import 'package:dy_integrated_5/providers/SemesterProvider.dart';
 import 'package:dy_integrated_5/screens/Dashboard/QuickJump.dart';
 import 'package:dy_integrated_5/screens/Dashboard/SubjectGridSection.dart';
-import 'package:dy_integrated_5/utils/constants.dart';
-import 'package:dy_integrated_5/widgets/LimitWidth.dart';
+import 'package:dy_integrated_5/widgets/SideBar.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'HeadSection.dart';
 import 'TopBar.dart';
@@ -14,9 +15,10 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const SideBar(),
       resizeToAvoidBottomInset: false,
-      body: Container(
-        child: Column(
+      body: Stack(children: [
+        Column(
           children: [
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 28),
@@ -73,7 +75,31 @@ class Dashboard extends StatelessWidget {
             ),
           ],
         ),
-      ),
+
+        /// BORDER FOR INDICATING REFRESH
+        /// IDK
+
+        IgnorePointer(
+          child: Consumer(builder: (context, ref, child) {
+            final semester = ref.watch(semesterNotifierProvider);
+
+            return AnimatedContainer(
+              curve: Curves.easeInOutQuint,
+              duration: const Duration(milliseconds: 1000),
+              decoration: BoxDecoration(
+                  border: Border.symmetric(
+                      horizontal: BorderSide(
+                          width: semester.isRefreshing ? 25 : 0,
+                          color: semester.isRefreshing
+                              ? Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withOpacity(0.8)
+                              : Colors.transparent))),
+            );
+          }),
+        )
+      ]),
     );
   }
 }

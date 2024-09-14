@@ -28,12 +28,13 @@ class DaysHeader extends ConsumerWidget {
             margin: const EdgeInsets.all(2),
             padding: const EdgeInsets.all(2),
             decoration: BoxDecoration(
-                color: Colors.grey.shade50,
+                color: Theme.of(context).colorScheme.scrim,
                 borderRadius: BorderRadius.circular(10)),
             child: Center(
               child: Text(
                 dayAtIndex(index),
-                style: TextStyle(color: CustomColors.customDarkGrey3),
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
             ),
           );

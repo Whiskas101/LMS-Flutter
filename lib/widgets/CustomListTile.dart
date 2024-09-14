@@ -57,12 +57,31 @@ class CustomListTile extends ConsumerWidget {
           style: TextStyle(
               fontSize: 10,
               color: Theme.of(context).colorScheme.tertiary.withOpacity(0.4))),
-      trailing: IconButton(
+      trailing: PopupMenuButton(
+        enableFeedback: true,
         iconSize: 28,
-        onPressed: () => {
-          apiService.downloadResource(subject.name,
-              filteredMaterials[index].name, filteredMaterials[index].link,
-              forceReFetch: true)
+        // onPressed: () => {
+        //   apiService.downloadResource(subject.name,
+        //       filteredMaterials[index].name, filteredMaterials[index].link,
+        //       forceReFetch: true)
+        // },
+        itemBuilder: (context) {
+          return [
+            PopupMenuItem(
+                child: const Text("Download"),
+                onTap: () => {
+                      apiService.downloadResource(
+                          subject.name,
+                          filteredMaterials[index].name,
+                          filteredMaterials[index].link,
+                          forceReFetch: true)
+                    }),
+            PopupMenuItem(
+              child: const Text("Delete"),
+              onTap: () =>
+                  {showSnackBar("This feature is currently unavailable", 500)},
+            )
+          ];
         },
         icon: Icon(
           Icons.more_vert_rounded,

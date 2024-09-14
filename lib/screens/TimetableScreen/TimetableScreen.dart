@@ -23,7 +23,7 @@ class TimetableScreen extends ConsumerWidget {
     final semester = ref.watch(semesterNotifierProvider);
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: LimitWidth(
         child: Column(
           children: [
@@ -32,17 +32,18 @@ class TimetableScreen extends ConsumerWidget {
               flex: 2,
               child: Container(
                 padding: const EdgeInsets.fromLTRB(12.0, 20, 12, 0),
-                decoration: const BoxDecoration(
-                    color: Colors.lightBlue,
-                    borderRadius:
-                        BorderRadius.vertical(bottom: Radius.circular(15)),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black87,
-                          blurRadius: 8,
-                          offset: Offset(0, -3),
-                          spreadRadius: 1)
-                    ]),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
+                  borderRadius:
+                      const BorderRadius.vertical(bottom: Radius.circular(15)),
+                  // boxShadow: const [
+                  //   BoxShadow(
+                  //       color: Colors.black87,
+                  //       blurRadius: 8,
+                  //       offset: Offset(0, -3),
+                  //       spreadRadius: 1)
+                  // ]
+                ),
                 child: const Column(
                   children: [
                     SizedBox(
@@ -69,30 +70,34 @@ class TimetableScreen extends ConsumerWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 8),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        gradient: LinearGradient(
-                            colors: [
-                              Colors.grey.shade100,
-                              Colors.grey.shade50,
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
-                        boxShadow: [
-                          //top left shadow
-                          BoxShadow(
-                              color: Colors.grey.shade50,
-                              offset: const Offset(-10, -1),
-                              blurRadius: 15,
-                              spreadRadius: 1),
+                          borderRadius: BorderRadius.circular(15),
+                          color: Theme.of(context)
+                              .colorScheme
+                              .surfaceVariant
+                              .withOpacity(0.2)
+                          // gradient: LinearGradient(
+                          //     colors: [
+                          //       Colors.grey.shade100,
+                          //       Colors.grey.shade50,
+                          //     ],
+                          //     begin: Alignment.topLeft,
+                          //     end: Alignment.bottomRight),
+                          // boxShadow: [
+                          //   //top left shadow
+                          //   BoxShadow(
+                          //       color: Colors.grey.shade50,
+                          //       offset: const Offset(-10, -1),
+                          //       blurRadius: 15,
+                          //       spreadRadius: 1),
 
-                          //Bottom right shadow
-                          BoxShadow(
-                              color: Colors.grey.shade300,
-                              offset: const Offset(15, 15),
-                              blurRadius: 15,
-                              spreadRadius: 14)
-                        ],
-                      ),
+                          //   //Bottom right shadow
+                          //   BoxShadow(
+                          //       color: Colors.grey.shade300,
+                          //       offset: const Offset(15, 15),
+                          //       blurRadius: 15,
+                          //       spreadRadius: 14)
+                          // ],
+                          ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
                         child: GridView.builder(

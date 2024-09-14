@@ -145,16 +145,16 @@ class HeadSection extends ConsumerWidget {
                     child: ShaderMask(
                       blendMode: BlendMode.dstOut,
                       shaderCallback: (Rect bounds) {
-                        return const LinearGradient(
+                        return LinearGradient(
                           begin: Alignment.centerLeft,
                           end: Alignment.centerRight,
                           colors: [
-                            Colors.purple,
+                            Theme.of(context).colorScheme.primary,
                             Colors.transparent,
                             Colors.transparent,
-                            Colors.purple
+                            Theme.of(context).colorScheme.primary
                           ],
-                          stops: [
+                          stops: const [
                             0.0,
                             0.02,
                             0.9,
@@ -167,7 +167,7 @@ class HeadSection extends ConsumerWidget {
                           child: TimetableBlock(subjects: subjects)),
                     ));
               } else {
-                return const Text("No lectures for Today");
+                return const Text("");
               }
             },
             error: (error, stackTrace) => const Text("Something went wrong"),

@@ -25,7 +25,7 @@ class ApiService {
   // Chose to avoid the overhead of a library, since there will only ever be these two cookies needed
   // The API deals with the rest.
   late String sessionCookie;
-  late String moodleCookie = "No cookie yet";
+  late String moodleCookie;
 
   //Im assuming the actual official session limit is longer but eh.
   late Duration _sessionLength;
@@ -42,10 +42,10 @@ class ApiService {
   //  !!!Subject to change or move out of this Class entirely!!!
   // REMEMBER TO CHANGE THIS WHEN TESTING ON EMULATOR VS WHEN ON USB DEBUGGING !!!
   // static String host = "192.168.29.137:5000"; //for external device
-  String host = "10.0.2.2:8000"; // for emulator
+  // String host = "10.0.2.2:8000"; // for emulator
   // static String host = "127.0.0.1:5000";                  // for windows executable testing
   // static String host = "dfe4-49-36-98-69.ngrok-free.app"; //ngrok for temp
-  // static String host = HOST;
+  static String host = HOST;
 
   // Secure storage to store and access the username and password for future automated login.
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
@@ -63,6 +63,13 @@ class ApiService {
     print("Stored username: $username");
     print(password);
     return {'username': username, 'password': password};
+  }
+
+  /// Fetches just the username
+  Future<String?> getCurrentUser() async {
+    String? username = await _storage.read(key: 'username');
+    print("Stored username: $username");
+    return username;
   }
 
   /// Uses the [LastLoginAttempt] attribute to check whether if a Re-Authentication is necessary.
@@ -203,7 +210,6 @@ class ApiService {
     });
 
     if (response.statusCode == 200) {
-      print("nice reponse");
       List<Map<String, dynamic>> jsonData =
           jsonDecode(response.body).cast<Map<String, dynamic>>();
       // print("raw data: $jsonData");

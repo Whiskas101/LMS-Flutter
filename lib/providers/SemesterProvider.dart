@@ -12,10 +12,14 @@ class SemesterNotifier extends AsyncNotifier<Semester> {
   }
 
   void getSemesterData({bool forceReFetch = false}) async {
-    state = const AsyncLoading<Semester>();
+    // this var is to make it easier to animate a visual indication when the refresh is taking place
+
+    // Keep the current (stale) data there, so user doesn't lose interactivity when the connection is slow or fetch takes a long time
+    state = const AsyncLoading<Semester>().copyWithPrevious(state);
+
     final apiService = ref.read(apiServiceProvider);
     Semester sem = await apiService.getSemesterData(forceReFetch: forceReFetch);
-    print(sem);
+    // print(sem);
     state = AsyncData(sem);
   }
 }

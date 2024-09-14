@@ -90,7 +90,7 @@ class SubjectGridSection extends ConsumerWidget {
           //Subject Grid
           Expanded(
               child: semester.when(
-                  data: (semester) {
+                  data: (sem) {
                     return GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount:
@@ -100,7 +100,7 @@ class SubjectGridSection extends ConsumerWidget {
                           // mainAxisSpacing: 20,
                           crossAxisSpacing: 10),
                       padding: const EdgeInsets.symmetric(horizontal: 0),
-                      itemCount: semester.subjects.length,
+                      itemCount: sem.subjects.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
                             onTap: () async {
@@ -108,7 +108,7 @@ class SubjectGridSection extends ConsumerWidget {
                                 ref
                                     .read(courseMaterialProvider.notifier)
                                     .getCourseMaterials(
-                                        semester.subjects[index].link);
+                                        sem.subjects[index].link);
                               });
                               ref
                                   .read(searchProvider.notifier)
@@ -118,10 +118,9 @@ class SubjectGridSection extends ConsumerWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => SubjectScreen(
-                                          subject: semester.subjects[index])));
+                                          subject: sem.subjects[index])));
                             },
-                            child: SubjectWidget(
-                                subject: semester.subjects[index]));
+                            child: SubjectWidget(subject: sem.subjects[index]));
                       },
                     );
                   },
