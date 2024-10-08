@@ -1,16 +1,20 @@
 // for handling json strings
 import 'dart:convert';
+import 'dart:io';
 
 // for loading data into their appropriate data models
 import 'package:dy_integrated_5/models/CourseMaterial.dart';
 import 'package:dy_integrated_5/models/Semester.dart';
+import 'package:dy_integrated_5/screens/WebViewScreen/WebViewScreen.dart';
 import 'package:dy_integrated_5/services/file_handler.dart';
 
 // For stuff not meant to be on github
+// Do not remove.
 import 'package:dy_integrated_5/secrets/secrets.dart';
 
 // Custom Http for separating the exception handling logic
 import 'package:dy_integrated_5/utils/customHttp.dart';
+import 'package:dy_integrated_5/utils/globals.dart';
 import 'package:dy_integrated_5/utils/snackbar.dart';
 import 'package:flutter/material.dart';
 
@@ -41,9 +45,9 @@ class ApiService {
   }
   //  !!!Subject to change or move out of this Class entirely!!!
   // REMEMBER TO CHANGE THIS WHEN TESTING ON EMULATOR VS WHEN ON USB DEBUGGING !!!
-  // static String host = "192.168.29.137:5000"; //for external device
+  // static String host = "192.168.29.137:8000"; //for external device
   // String host = "10.0.2.2:8000"; // for emulator
-  // static String host = "127.0.0.1:5000";                  // for windows executable testing
+  // static String host = "127.0.0.1:8000"; // for windows executable testing
   // static String host = "dfe4-49-36-98-69.ngrok-free.app"; //ngrok for temp
   static String host = HOST;
 
@@ -216,7 +220,7 @@ class ApiService {
       List<CourseMaterial> materials = jsonData
           .map((jsonObject) => CourseMaterial.fromJSON(jsonObject))
           .toList(); // Putting data into Course Material class
-      print("setting string, $link, ${jsonData}");
+
       prefs.setString(link, jsonEncode(jsonData));
       // print(materials);
       return materials;
@@ -230,19 +234,53 @@ class ApiService {
   /// and stores it to a path
   void downloadResource(String subject, String name, String link,
       {bool forceReFetch = false}) async {
+    // Helper function to open a link, in a compatible browser or webview, whichever is available
+    void openLink(link) async {
+      Uri targetUri = Uri.parse(
+        link, // The link to the actual non downloadable resource, like a video embedded on the official site
+      );
+      if (!(Platform.isAndroid || Platform.isIOS)) {
+        if (await canLaunchUrl(targetUri)) {
+          await launchUrl(targetUri);
+        } else {
+          print("Couldn't launch");
+        }
+        return;
+      }
+
+      //For iOS and Android, can use webview with cookies.
+      navigatorKey.currentState!.push(MaterialPageRoute(builder: (context) {
+        var cookieData = moodleCookie.split("=");
+        return WebViewScreen(
+            cookieName: cookieData[0],
+            value: cookieData[1],
+            domain: "mydy.dypatil.edu",
+            path: "/",
+
+            // https://mydy.dypatil.edu/rait/mod/url/view.php?id=618621
+            url: link);
+      }));
+    }
+
     //Try opening the file, if it exists, it will be opened, otherwise, we make a fetch
     if (forceReFetch == false) {
       // name = removeFileExtension(name);
       // print("attempting - Reading $subject, $name ");
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      print(name);
-
       String? nameWithExtension = prefs.getString(link);
 
       print('Trying out Key: $link');
+      print('Value returned: $nameWithExtension');
 
       if (nameWithExtension != null) {
+        // Check if it its a link type, or a saved file type
+        if (nameWithExtension == "link") {
+          print("Cache hit: Type: link");
+          await ensureSessionValidity();
+          openLink(link);
+          return;
+        }
         if (await FileHandler.readFile(subject, nameWithExtension)) {
           print("Cache hit");
           //successful read, no need to proceed further and download again
@@ -252,7 +290,7 @@ class ApiService {
     }
     print("Cache miss");
     //If cache miss, notify the user and mention download
-    showSnackBar("Downloading $name", 5000);
+    showSnackBar("Opening $name", 5000);
     await ensureSessionValidity(); // Make sure we are logged in before sending the download request.
 
     Uri uri = Uri.http(host, '/download');
@@ -284,17 +322,16 @@ class ApiService {
 
       showSnackBar("Redirecting to Official Site", 500);
       //The case where the link is not actually a downloadable resource
-      print("Not making a download request, IMPLEMENT LAUNCHER");
+      print("Not making a download request, redirecting to official site.");
       print(link);
-      Uri targetUri = Uri.parse(
-          link // The link to the actual non downloadable resource, like a video embedded on the official site
-          );
 
-      if (await canLaunchUrl(targetUri)) {
-        await launchUrl(targetUri);
-      } else {
-        print("Couldn't launch");
-      }
+      print("Caching link");
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString(link, "link");
+
+      // For non android/ios, simple browser launch
+
+      openLink(link);
     }
   }
 }

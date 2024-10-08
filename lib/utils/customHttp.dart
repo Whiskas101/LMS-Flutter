@@ -10,6 +10,7 @@ class CustomHttp {
   static Future<http.Response> get(Uri uri,
       {Map<String, String>? headers}) async {
     try {
+      // await Future.delayed(Duration(milliseconds: 2000));
       return http.get(
         uri,
         headers: headers,

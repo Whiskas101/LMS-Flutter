@@ -48,13 +48,17 @@ class LoginScreen extends ConsumerWidget {
                     TextField(
                       controller: usernameController,
                       cursorColor: Colors.blue,
-                      decoration: const InputDecoration(
-                          labelText: "Username",
-                          labelStyle: TextStyle(color: Colors.blueGrey),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blueAccent)),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black87))),
+                      decoration: InputDecoration(
+                        labelText: "Username",
+                        labelStyle: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueAccent),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black87),
+                        ),
+                      ),
                     ),
 
                     const SizedBox(
@@ -66,13 +70,17 @@ class LoginScreen extends ConsumerWidget {
                       obscureText: true,
                       controller: passwordController,
                       cursorColor: Colors.blue,
-                      decoration: const InputDecoration(
-                          labelText: "Password",
-                          labelStyle: TextStyle(color: Colors.blueGrey),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blueAccent)),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black87))),
+                      decoration: InputDecoration(
+                        labelText: "Password",
+                        labelStyle: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueAccent),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black87),
+                        ),
+                      ),
                     ),
                   ],
                 ),

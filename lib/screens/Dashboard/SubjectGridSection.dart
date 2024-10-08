@@ -94,7 +94,7 @@ class SubjectGridSection extends ConsumerWidget {
                     return GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount:
-                              (MediaQuery.sizeOf(context).longestSide ~/ 300)
+                              (MediaQuery.sizeOf(context).longestSide ~/ 350)
                                   .floor(),
                           childAspectRatio: 1.8 / 1, // Width : Height ratio
                           // mainAxisSpacing: 20,

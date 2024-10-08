@@ -1,5 +1,6 @@
 import 'package:dy_integrated_5/providers/ApiServiceProvider.dart';
 import 'package:dy_integrated_5/providers/ThemeProvider.dart';
+import 'package:dy_integrated_5/screens/AttendanceScreen/AttendanceScreen.dart';
 import 'package:dy_integrated_5/screens/Dashboard/Dashboard.dart';
 import 'package:dy_integrated_5/screens/Login/LoginScreen.dart';
 import 'package:dy_integrated_5/screens/playground.dart';
@@ -24,6 +25,9 @@ void main() async {
     databaseFactory = databaseFactoryFfi;
   }
   runApp(const ProviderScope(child: MyApp(home: AuthCheck())));
+
+  // runApp(MyApp(home: AttendanceScreen()));
+
   // runApp(ProviderScope(
   //   child: MyApp(home: Playground()),
   // ));
@@ -63,6 +67,7 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       title: 'FDY',
       scaffoldMessengerKey: snackbarKey,
+      navigatorKey: navigatorKey,
       theme: darkTheme,
       themeMode: ThemeMode.system,
       home: home,

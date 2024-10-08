@@ -11,7 +11,7 @@ class SemesterNotifier extends AsyncNotifier<Semester> {
     return await apiService.getSemesterData();
   }
 
-  void getSemesterData({bool forceReFetch = false}) async {
+  Future<void> getSemesterData({bool forceReFetch = false}) async {
     // this var is to make it easier to animate a visual indication when the refresh is taking place
 
     // Keep the current (stale) data there, so user doesn't lose interactivity when the connection is slow or fetch takes a long time

@@ -77,7 +77,7 @@ class Dashboard extends StatelessWidget {
         ),
 
         /// BORDER FOR INDICATING REFRESH
-        /// IDK
+        /// Making animations is boring.
 
         IgnorePointer(
           child: Consumer(builder: (context, ref, child) {
@@ -87,15 +87,17 @@ class Dashboard extends StatelessWidget {
               curve: Curves.easeInOutQuint,
               duration: const Duration(milliseconds: 1000),
               decoration: BoxDecoration(
-                  border: Border.symmetric(
-                      horizontal: BorderSide(
-                          width: semester.isRefreshing ? 25 : 0,
-                          color: semester.isRefreshing
-                              ? Theme.of(context)
-                                  .colorScheme
-                                  .primary
-                                  .withOpacity(0.8)
-                              : Colors.transparent))),
+                border: Border.symmetric(
+                  horizontal: BorderSide(
+                      width: semester.isRefreshing ? 25 : 0,
+                      color: semester.isRefreshing
+                          ? Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(0.8)
+                          : Colors.transparent),
+                ),
+              ),
             );
           }),
         )

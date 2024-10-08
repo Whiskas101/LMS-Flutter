@@ -7,7 +7,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/CourseMaterial.dart';
 import '../models/Subject.dart';
 import '../providers/DatabaseProvider.dart';
-import '../services/api_service.dart';
 
 class CustomListTile extends ConsumerWidget {
   final int index;
@@ -18,6 +17,14 @@ class CustomListTile extends ConsumerWidget {
       required this.index,
       required this.filteredMaterials,
       required this.subject});
+
+  IconData getIconFor(String item) {
+    if (item == "url") {
+      return Icons.link;
+    }
+
+    return Icons.dashboard;
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,7 +43,7 @@ class CustomListTile extends ConsumerWidget {
         // ApiService.downloadResource(subject.name, filteredMaterials[index].name, filteredMaterials[index].link);
       },
 
-      leading: Icon(Icons.dashboard,
+      leading: Icon(getIconFor(filteredMaterials[index].type),
           size: 32,
           color: Theme.of(context).colorScheme.tertiary.withOpacity(0.8)),
       title: Row(

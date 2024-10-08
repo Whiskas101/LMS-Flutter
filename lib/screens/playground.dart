@@ -5,6 +5,7 @@ import 'package:dy_integrated_5/providers/ApiServiceProvider.dart';
 import 'package:dy_integrated_5/providers/CourseMaterialProvider.dart';
 import 'package:dy_integrated_5/providers/SemesterProvider.dart';
 import 'package:dy_integrated_5/providers/TimetableProvider.dart';
+import 'package:dy_integrated_5/screens/WebViewScreen/WebViewScreen.dart';
 
 import 'package:dy_integrated_5/services/api_service.dart';
 import 'package:dy_integrated_5/services/db_service.dart';
@@ -58,6 +59,14 @@ class _PlaygroundState extends State<Playground> {
 
     var res = WebViewCookieManager().setCookie(cookie);
     print(res);
+
+    return WebViewScreen(
+        cookieName: "thest",
+        value: "test",
+        domain: "test",
+        path: "path",
+        url: "https://google.com");
+
     return Scaffold(
       appBar: AppBar(
         title: Text(

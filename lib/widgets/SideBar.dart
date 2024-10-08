@@ -1,7 +1,11 @@
 import 'package:dy_integrated_5/providers/ApiServiceProvider.dart';
+import 'package:dy_integrated_5/screens/Login/LoginScreen.dart';
+import 'package:dy_integrated_5/utils/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:dy_integrated_5/utils/snackbar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SideBar extends StatelessWidget {
   const SideBar({super.key});
@@ -84,9 +88,12 @@ class SideBar extends StatelessWidget {
                   Theme.of(context).colorScheme.surfaceTint.withOpacity(0.1),
               title: const Text("Application"),
               subtitle: const Text("Source Code"),
-              onTap: () {
-                showSnackBar("Not Implemented", 1000);
-                Scaffold.of(context).closeDrawer();
+              onTap: () async {
+                Uri uri =
+                    Uri.parse("https://github.com/whiskas101/LMS-Flutter");
+                if (await canLaunchUrl(uri)) {
+                  await launchUrl(uri);
+                }
               },
             ),
             const SizedBox(
@@ -99,9 +106,11 @@ class SideBar extends StatelessWidget {
               tileColor:
                   Theme.of(context).colorScheme.surfaceTint.withOpacity(0.1),
               title: const Text("Backend"),
-              onTap: () {
-                showSnackBar("Not Implemented", 1000);
-                Scaffold.of(context).closeDrawer();
+              onTap: () async {
+                Uri uri = Uri.parse("https://github.com/whiskas101/DYP-flask");
+                if (await canLaunchUrl(uri)) {
+                  await launchUrl(uri);
+                }
               },
               subtitle: const Text("Source Code"),
             ),
@@ -116,8 +125,9 @@ class SideBar extends StatelessWidget {
                   Theme.of(context).colorScheme.surfaceTint.withOpacity(0.1),
               title: const Text("Log Out"),
               onTap: () {
-                showSnackBar("Not Implemented", 1000);
-                Scaffold.of(context).closeDrawer();
+                const FlutterSecureStorage().deleteAll();
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
               },
               subtitle: const Text("Data will persist"),
             ),
