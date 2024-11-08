@@ -334,4 +334,11 @@ class ApiService {
       openLink(link);
     }
   }
+
+  Future<void> getAttendanceSummary() async {
+    await ensureSessionValidity();
+    Uri attendanceEndpoint = Uri.http(host, '/attendance');
+    var response = await CustomHttp.post(attendanceEndpoint);
+    print(response);
+  }
 }

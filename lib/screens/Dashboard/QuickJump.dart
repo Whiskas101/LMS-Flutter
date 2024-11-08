@@ -2,7 +2,8 @@ import 'dart:ffi';
 
 import 'package:dy_integrated_5/providers/DatabaseProvider.dart';
 import 'package:dy_integrated_5/providers/SearchProvider.dart';
-import 'package:dy_integrated_5/screens/RecentsScreen/RecentsScreen.dart';
+import 'package:dy_integrated_5/screens/AttendanceScreen/AttendanceScreen.dart';
+// import 'package:dy_integrated_5/screens/RecentsScreen/RecentsScreen.dart';
 import 'package:dy_integrated_5/screens/TimetableScreen/TimetableScreen.dart';
 import 'package:dy_integrated_5/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -134,7 +135,7 @@ class QuickJump extends StatelessWidget {
                   ),
                 ),
 
-                //TO REPLACE WITH LISTENER HERE [Recents]
+                // TO REPLACE WITH LISTENER HERE, the weird tap glitch occurs due to this
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -148,7 +149,7 @@ class QuickJump extends StatelessWidget {
                       border: Border.fromBorderSide(BorderSide(
                           color: Theme.of(context).colorScheme.surface,
                           width: 2))
-                      // boxShado/w: const [
+                      // boxShadow: const [
                       //   BoxShadow(color: Colors.grey, blurRadius: 1)
                       // ]
                       ),
@@ -156,16 +157,11 @@ class QuickJump extends StatelessWidget {
                     builder: (context, ref, child) {
                       return GestureDetector(
                         onTap: () {
-                          ref
-                              .read(searchProvider.notifier)
-                              .updateSearchTerm("");
-                          ref
-                              .read(databaseNotifierProvider.notifier)
-                              .getRecent();
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const RecentsScreen()));
+                                  builder: (context) =>
+                                      const AttendanceScreen()));
                         },
                         child: Row(
                           children: [
@@ -178,7 +174,7 @@ class QuickJump extends StatelessWidget {
                               width: 4,
                             ),
                             Text(
-                              "Recent",
+                              "Attendance",
                               style: TextStyle(
                                   color: Theme.of(context)
                                       .colorScheme
