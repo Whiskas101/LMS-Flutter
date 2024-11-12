@@ -1,3 +1,4 @@
+import 'package:dy_integrated_5/models/Attendance.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../services/api_service.dart';
 
@@ -11,4 +12,10 @@ final credentialProvider = FutureProvider<Map<String, String?>>((ref) async {
 final usernameProvider = FutureProvider<String?>((ref) {
   final apiService = ref.read(apiServiceProvider);
   return apiService.getCurrentUser();
+});
+
+final attendanceSummaryProvider =
+    FutureProvider<AttendanceSummary>((ref) async {
+  final apiService = ref.read(apiServiceProvider);
+  return await apiService.getAttendanceSummary();
 });

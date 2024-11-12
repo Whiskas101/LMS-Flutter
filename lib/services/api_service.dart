@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 // for loading data into their appropriate data models
+import 'package:dy_integrated_5/models/Attendance.dart';
 import 'package:dy_integrated_5/models/CourseMaterial.dart';
 import 'package:dy_integrated_5/models/Semester.dart';
 import 'package:dy_integrated_5/screens/WebViewScreen/WebViewScreen.dart';
@@ -20,6 +21,7 @@ import 'package:flutter/material.dart';
 
 //for caching data
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -46,10 +48,10 @@ class ApiService {
   //  !!!Subject to change or move out of this Class entirely!!!
   // REMEMBER TO CHANGE THIS WHEN TESTING ON EMULATOR VS WHEN ON USB DEBUGGING !!!
   // static String host = "192.168.29.137:8000"; //for external device
-  // String host = "10.0.2.2:8000"; // for emulator
+  String host = "10.0.2.2:8000"; // for emulator
   // static String host = "127.0.0.1:8000"; // for windows executable testing
   // static String host = "dfe4-49-36-98-69.ngrok-free.app"; //ngrok for temp
-  static String host = HOST;
+  // static String host = HOST;
 
   // Secure storage to store and access the username and password for future automated login.
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
@@ -110,7 +112,7 @@ class ApiService {
   /// Returns a boolean based on whether the login was successful or not.
   Future<bool> attemptLogin(String username, String password,
       {bool storePassword = true}) async {
-    Uri baseUri = Uri.https(host, '/login');
+    Uri baseUri = Uri.http(host, '/login');
     print(baseUri);
     var response = await CustomHttp.post(
       baseUri,
@@ -161,7 +163,7 @@ class ApiService {
 
     // If data wasn't in shared preferences, we just get the data by calling the API
     await ensureSessionValidity();
-    Uri uri = Uri.https(host, '/subjects');
+    Uri uri = Uri.http(host, '/subjects');
 
     var response = await CustomHttp.get(uri, headers: {
       'Cookie': sessionCookie,
@@ -205,7 +207,7 @@ class ApiService {
 
     await ensureSessionValidity();
 
-    Uri uri = Uri.https(host, '/materials');
+    Uri uri = Uri.http(host, '/materials');
 
     var response = await CustomHttp.post(uri, body: {
       'link': link
@@ -293,7 +295,7 @@ class ApiService {
     showSnackBar("Opening $name", 5000);
     await ensureSessionValidity(); // Make sure we are logged in before sending the download request.
 
-    Uri uri = Uri.https(host, '/download');
+    Uri uri = Uri.http(host, '/download');
     String type = link.split("/")[5]; // Extracting the type of the resource
 
     var response = await CustomHttp.post(uri,
@@ -308,7 +310,7 @@ class ApiService {
 
       Uri uri = Uri.parse(resourceLink);
 
-      // Once the resource link is received, we can initiate a download
+      // Once the resource link is received, initiate a download
       response = await CustomHttp.get(uri, headers: {
         'Cookie': moodleCookie,
       });
@@ -335,10 +337,23 @@ class ApiService {
     }
   }
 
-  Future<void> getAttendanceSummary() async {
+  Future<AttendanceSummary> getAttendanceSummary() async {
+    print("Hit attendance summary");
     await ensureSessionValidity();
     Uri attendanceEndpoint = Uri.http(host, '/attendance');
-    var response = await CustomHttp.post(attendanceEndpoint);
-    print(response);
+    print(attendanceEndpoint);
+    var response = await CustomHttp.get(attendanceEndpoint,
+        headers: {'Cookie': sessionCookie});
+    // print("Request complete ${response.statusCode}");
+    // print(response.body);
+    // print(response.headers);
+    // print(response.body);
+    List<Map<String, dynamic>> jsonAttendanceData =
+        jsonDecode(response.body).cast<Map<String, dynamic>>();
+
+    // Shove the data into the [Attendance] data model
+
+    // populate the attendance summary
+    return AttendanceSummary(jsonAttendanceData);
   }
 }
