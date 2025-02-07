@@ -112,7 +112,7 @@ class ApiService {
   /// Returns a boolean based on whether the login was successful or not.
   Future<bool> attemptLogin(String username, String password,
       {bool storePassword = true}) async {
-    Uri baseUri = Uri.https(host, '/login');
+    Uri baseUri = Uri.http(host, '/login');
     print(baseUri);
     var response = await CustomHttp.post(
       baseUri,
@@ -164,7 +164,7 @@ class ApiService {
 
     // If data wasn't in shared preferences, we just get the data by calling the API
     await ensureSessionValidity();
-    Uri uri = Uri.https(host, '/subjects');
+    Uri uri = Uri.http(host, '/subjects');
     print("calling endpoint $uri");
     var response = await CustomHttp.get(uri, headers: {
       'Cookie': sessionCookie,
@@ -208,7 +208,7 @@ class ApiService {
 
     await ensureSessionValidity();
 
-    Uri uri = Uri.https(host, '/materials');
+    Uri uri = Uri.http(host, '/materials');
 
     var response = await CustomHttp.post(uri, body: {
       'link': link
@@ -298,7 +298,7 @@ class ApiService {
     showSnackBar("Opening $name", 5000);
     await ensureSessionValidity(); // Make sure we are logged in before sending the download request.
 
-    Uri uri = Uri.https(host, '/download');
+    Uri uri = Uri.http(host, '/download');
     String type = link.split("/")[5]; // Extracting the type of the resource
 
     var response = await CustomHttp.post(uri,
@@ -343,7 +343,7 @@ class ApiService {
   Future<AttendanceSummary> getAttendanceSummary() async {
     print("Hit attendance summary");
     await ensureSessionValidity();
-    Uri attendanceEndpoint = Uri.https(host, '/attendance');
+    Uri attendanceEndpoint = Uri.http(host, '/attendance');
     print(attendanceEndpoint);
     var response = await CustomHttp.get(attendanceEndpoint,
         headers: {'Cookie': sessionCookie});
