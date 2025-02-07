@@ -1,4 +1,4 @@
-import 'dart:ffi';
+// import 'dart:ffi';
 
 import 'package:dy_integrated_5/providers/DatabaseProvider.dart';
 import 'package:dy_integrated_5/providers/SearchProvider.dart';
@@ -20,45 +20,48 @@ class QuickJump extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 18),
       padding: const EdgeInsets.symmetric(vertical: 0),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.2)
-          // border: Border.all(
-          //     width: 2,
-          //   color: CustomColors.customDarkGrey3.withOpacity(0.7)
-          // ),
-          // gradient: LinearGradient(colors: [
-          //   Colors.grey.shade100,
-          //   Colors.grey.shade50,
-          // ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-          // boxShadow: [
-          //   //top left shadow
-          //   BoxShadow(
-          //       color: Colors.grey.shade50,
-          //       offset: const Offset(-15, -15),
-          //       blurRadius: 15,
-          //       spreadRadius: 1),
+        borderRadius: BorderRadius.circular(10),
+        color: Theme.of(context).colorScheme.surface,
 
-          //   //Bottom right shadow
-          //   BoxShadow(
-          //       color: Colors.grey.shade300,
-          //       offset: const Offset(15, 15),
-          //       blurRadius: 15,
-          //       spreadRadius: 1)
-          // ],
-          ),
+        // border: Border.all(
+        //     width: 2,
+        //   color: CustomColors.customDarkGrey3.withOpacity(0.7)
+        // ),
+        // gradient: LinearGradient(colors: [
+        //   Colors.grey.shade100,
+        //   Colors.grey.shade50,
+        // ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+        // boxShadow: [
+        //   //top left shadow
+        //   BoxShadow(
+        //       color: Colors.grey.shade50,
+        //       offset: const Offset(-15, -15),
+        //       blurRadius: 15,
+        //       spreadRadius: 1),
+
+        //   //Bottom right shadow
+        //   BoxShadow(
+        //       color: Colors.grey.shade300,
+        //       offset: const Offset(15, 15),
+        //       blurRadius: 15,
+        //       spreadRadius: 1)
+        // ],
+      ),
       child: Column(
         children: [
           //QUICK JUMP [JUST TITLE]
           Container(
             padding: const EdgeInsets.symmetric(vertical: 4),
             decoration: BoxDecoration(
-                // color: CustomColors.customDarkGrey.withOpacity(0.9),
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(8)),
-                border: Border(
-                    bottom: BorderSide(
-                        width: 3,
-                        color: Theme.of(context).colorScheme.surface))),
+              // color: CustomColors.customDarkGrey.withOpacity(0.9),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(8),
+              ),
+              border: Border(
+                bottom: BorderSide(
+                    width: 3, color: Theme.of(context).colorScheme.surface),
+              ),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -146,9 +149,11 @@ class QuickJump extends StatelessWidget {
                           .surfaceVariant
                           .withOpacity(0.25),
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.fromBorderSide(BorderSide(
-                          color: Theme.of(context).colorScheme.surface,
-                          width: 2))
+                      border: Border.fromBorderSide(
+                        BorderSide(
+                            color: Theme.of(context).colorScheme.surface,
+                            width: 2),
+                      )
                       // boxShadow: const [
                       //   BoxShadow(color: Colors.grey, blurRadius: 1)
                       // ]
@@ -158,10 +163,11 @@ class QuickJump extends StatelessWidget {
                       return GestureDetector(
                         onTap: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const AttendanceScreen()));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AttendanceScreen(),
+                            ),
+                          );
                         },
                         child: Row(
                           children: [
@@ -176,9 +182,10 @@ class QuickJump extends StatelessWidget {
                             Text(
                               "Attendance",
                               style: TextStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurfaceVariant),
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurfaceVariant,
+                              ),
                             )
                           ],
                         ),

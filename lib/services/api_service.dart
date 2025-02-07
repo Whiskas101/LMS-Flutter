@@ -1,12 +1,13 @@
 // for handling json strings
 import 'dart:convert';
-import 'dart:io';
+import 'dart:io' show Platform;
 
 // for loading data into their appropriate data models
 import 'package:dy_integrated_5/models/Attendance.dart';
 import 'package:dy_integrated_5/models/CourseMaterial.dart';
 import 'package:dy_integrated_5/models/Semester.dart';
-import 'package:dy_integrated_5/screens/WebViewScreen/WebViewScreen.dart';
+
+// import 'package:dy_integrated_5/screens/WebViewScreen/WebViewScreen.dart';
 import 'package:dy_integrated_5/services/file_handler.dart';
 
 // For stuff not meant to be on github
@@ -21,7 +22,6 @@ import 'package:flutter/material.dart';
 
 //for caching data
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -48,10 +48,10 @@ class ApiService {
   //  !!!Subject to change or move out of this Class entirely!!!
   // REMEMBER TO CHANGE THIS WHEN TESTING ON EMULATOR VS WHEN ON USB DEBUGGING !!!
   // static String host = "192.168.29.137:8000"; //for external device
-  String host = "10.0.2.2:8000"; // for emulator
+  // String host = "10.0.2.2:8000"; // for emulator
   // static String host = "127.0.0.1:8000"; // for windows executable testing
-  // static String host = "dfe4-49-36-98-69.ngrok-free.app"; //ngrok for temp
-  // static String host = HOST;
+  static String host = HOST;
+  // static String host = "27ad-49-36-98-205.ngrok-free.app";
 
   // Secure storage to store and access the username and password for future automated login.
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
@@ -112,7 +112,7 @@ class ApiService {
   /// Returns a boolean based on whether the login was successful or not.
   Future<bool> attemptLogin(String username, String password,
       {bool storePassword = true}) async {
-    Uri baseUri = Uri.http(host, '/login');
+    Uri baseUri = Uri.https(host, '/login');
     print(baseUri);
     var response = await CustomHttp.post(
       baseUri,
@@ -122,7 +122,8 @@ class ApiService {
     if (response.statusCode == 200) {
       // For a valid login, parse the cookies, and store them for future data requests
       Map<String, dynamic> responseBody = jsonDecode(response.body);
-      sessionCookie = response.headers['set-cookie']!;
+      sessionCookie = response
+          .headers['set-cookie']!; // default value, for the browser scenario
       moodleCookie = "MoodleSession=${responseBody['MoodleSession']}";
 
       //Update the last successful login time
@@ -163,8 +164,8 @@ class ApiService {
 
     // If data wasn't in shared preferences, we just get the data by calling the API
     await ensureSessionValidity();
-    Uri uri = Uri.http(host, '/subjects');
-
+    Uri uri = Uri.https(host, '/subjects');
+    print("calling endpoint $uri");
     var response = await CustomHttp.get(uri, headers: {
       'Cookie': sessionCookie,
     });
@@ -207,7 +208,7 @@ class ApiService {
 
     await ensureSessionValidity();
 
-    Uri uri = Uri.http(host, '/materials');
+    Uri uri = Uri.https(host, '/materials');
 
     var response = await CustomHttp.post(uri, body: {
       'link': link
@@ -241,27 +242,29 @@ class ApiService {
       Uri targetUri = Uri.parse(
         link, // The link to the actual non downloadable resource, like a video embedded on the official site
       );
-      if (!(Platform.isAndroid || Platform.isIOS)) {
+
+      if (Platform.isWindows || Platform.isLinux) {
         if (await canLaunchUrl(targetUri)) {
           await launchUrl(targetUri);
         } else {
           print("Couldn't launch");
         }
-        return;
       }
 
-      //For iOS and Android, can use webview with cookies.
-      navigatorKey.currentState!.push(MaterialPageRoute(builder: (context) {
-        var cookieData = moodleCookie.split("=");
-        return WebViewScreen(
-            cookieName: cookieData[0],
-            value: cookieData[1],
-            domain: "mydy.dypatil.edu",
-            path: "/",
+      // if (Platform.isAndroid || Platform.isIOS) {
+      //   //For iOS and Android, can use webview with cookies.
+      //   navigatorKey.currentState!.push(MaterialPageRoute(builder: (context) {
+      //     var cookieData = moodleCookie.split("=");
+      //     return WebViewScreen(
+      //         cookieName: cookieData[0],
+      //         value: cookieData[1],
+      //         domain: "mydy.dypatil.edu",
+      //         path: "/",
 
-            // https://mydy.dypatil.edu/rait/mod/url/view.php?id=618621
-            url: link);
-      }));
+      //         // https://mydy.dypatil.edu/rait/mod/url/view.php?id=618621
+      //         url: link);
+      //   }));
+      // }
     }
 
     //Try opening the file, if it exists, it will be opened, otherwise, we make a fetch
@@ -295,7 +298,7 @@ class ApiService {
     showSnackBar("Opening $name", 5000);
     await ensureSessionValidity(); // Make sure we are logged in before sending the download request.
 
-    Uri uri = Uri.http(host, '/download');
+    Uri uri = Uri.https(host, '/download');
     String type = link.split("/")[5]; // Extracting the type of the resource
 
     var response = await CustomHttp.post(uri,
@@ -340,7 +343,7 @@ class ApiService {
   Future<AttendanceSummary> getAttendanceSummary() async {
     print("Hit attendance summary");
     await ensureSessionValidity();
-    Uri attendanceEndpoint = Uri.http(host, '/attendance');
+    Uri attendanceEndpoint = Uri.https(host, '/attendance');
     print(attendanceEndpoint);
     var response = await CustomHttp.get(attendanceEndpoint,
         headers: {'Cookie': sessionCookie});
@@ -354,6 +357,6 @@ class ApiService {
     // Shove the data into the [Attendance] data model
 
     // populate the attendance summary
-    return AttendanceSummary(jsonAttendanceData);
+    return AttendanceSummary(attendanceList: jsonAttendanceData);
   }
 }

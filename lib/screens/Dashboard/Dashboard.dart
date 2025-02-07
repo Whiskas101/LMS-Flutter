@@ -9,6 +9,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'HeadSection.dart';
 import 'TopBar.dart';
 
+import 'dart:math';
+
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
 
@@ -23,32 +25,34 @@ class Dashboard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 28),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                color: Theme.of(context).colorScheme.background,
                 borderRadius:
                     const BorderRadius.vertical(bottom: Radius.circular(16)),
-                border: BorderDirectional(
-                    bottom: BorderSide(
-                        width: 7,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withOpacity(0.5))),
+                // border: BorderDirectional(
+                //   bottom: BorderSide(
+                //     width: 7,
+                //     color: Theme.of(context)
+                //         .colorScheme
+                //         .background
+                //         .withOpacity(0.5),
+                //   ),
+                // ),
               ),
-              child: Column(
+              child: const Column(
                 children: [
-                  const SizedBox(
+                  SizedBox(
                     height: 16,
                   ),
 
                   //Upper most layer, with the two buttons
                   TopBar(),
 
-                  const SizedBox(
+                  SizedBox(
                     height: 18,
                   ),
 
                   // Weird ahh message that makes no sense but yes
-                  const HeadSection(),
+                  HeadSection(),
                 ],
               ),
             ),
@@ -66,7 +70,9 @@ class Dashboard extends StatelessWidget {
                   ),
 
                   //Subjects
-                  Expanded(child: SubjectGridSection()),
+                  Expanded(
+                    child: SubjectGridSection(),
+                  ),
                 ],
               ),
             ),
@@ -77,7 +83,7 @@ class Dashboard extends StatelessWidget {
         ),
 
         /// BORDER FOR INDICATING REFRESH
-        /// Making animations is boring.
+        /// Making animations is boring. To be replaced later.
 
         IgnorePointer(
           child: Consumer(builder: (context, ref, child) {

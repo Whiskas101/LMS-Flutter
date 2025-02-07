@@ -48,10 +48,11 @@ class LoginScreen extends ConsumerWidget {
                     TextField(
                       controller: usernameController,
                       cursorColor: Colors.blue,
+                      style: TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                         labelText: "Username",
                         labelStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.onSurface),
+                            color: Theme.of(context).colorScheme.primary),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.blueAccent),
                         ),
@@ -70,6 +71,7 @@ class LoginScreen extends ConsumerWidget {
                       obscureText: true,
                       controller: passwordController,
                       cursorColor: Colors.blue,
+                      style: TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                         labelText: "Password",
                         labelStyle: TextStyle(

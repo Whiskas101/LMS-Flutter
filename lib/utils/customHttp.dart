@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dy_integrated_5/utils/snackbar.dart';
+// import 'package:http/browser_client.dart';
 import 'package:http/http.dart' as http;
 
 /// Helper class so I can handle any exceptions originating from the http class
@@ -10,7 +11,6 @@ class CustomHttp {
   static Future<http.Response> get(Uri uri,
       {Map<String, String>? headers}) async {
     try {
-      // await Future.delayed(Duration(milliseconds: 2000));
       return http.get(
         uri,
         headers: headers,

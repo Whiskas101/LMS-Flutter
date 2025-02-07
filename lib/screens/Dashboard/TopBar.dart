@@ -34,7 +34,10 @@ class _TopBarState extends ConsumerState<TopBar> {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            child: const Icon(Icons.menu),
+            child: Icon(
+              Icons.menu,
+              color: Theme.of(context).colorScheme.tertiary,
+            ),
             onPressed: () {
               Scaffold.of(context).openDrawer();
             },
@@ -54,7 +57,10 @@ class _TopBarState extends ConsumerState<TopBar> {
           onPressed: () {},
           child: DateTime.now().difference(apiService.lastLoginAttempt) <
                   const Duration(minutes: 30)
-              ? const Icon(Icons.signal_cellular_alt_rounded)
+              ? Icon(
+                  Icons.signal_cellular_alt_rounded,
+                  color: Theme.of(context).colorScheme.tertiary,
+                )
               : Icon(
                   Icons.signal_cellular_alt_rounded,
                   color: Theme.of(context).colorScheme.error,
@@ -79,8 +85,9 @@ class _TopBarState extends ConsumerState<TopBar> {
               });
             });
           },
-          child: const Icon(
+          child: Icon(
             Icons.refresh,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
       ],

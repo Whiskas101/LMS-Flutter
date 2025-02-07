@@ -1,6 +1,7 @@
 import 'package:dy_integrated_5/providers/CourseMaterialProvider.dart';
 import 'package:dy_integrated_5/providers/SemesterProvider.dart';
 import 'package:dy_integrated_5/providers/TimetableProvider.dart';
+import 'package:dy_integrated_5/screens/Dashboard/AnimatedGradientText.dart';
 import 'package:dy_integrated_5/utils/helpers.dart';
 import 'package:dy_integrated_5/widgets/TimetableBlock.dart';
 import 'package:flutter/material.dart';
@@ -26,19 +27,26 @@ class HeadSection extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "FDY",
+                  AnimatedGradientText(
+                    text: "FDY",
+                    radius: 0.50,
                     style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context).colorScheme.onPrimary),
+                        fontSize: 30,
+                        fontWeight: FontWeight.w800,
+                        color: Theme.of(context).colorScheme.primary),
+                    duration: const Duration(seconds: 5),
+                    colors: [
+                      Theme.of(context).colorScheme.surfaceTint,
+                      Theme.of(context).colorScheme.primary.withOpacity(0.70),
+                      Theme.of(context).colorScheme.tertiary,
+                    ],
                   ),
                   Text(
                     "LMS Wrapper",
                     style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w100,
-                        color: Theme.of(context).colorScheme.onPrimary),
+                        color: Theme.of(context).colorScheme.tertiary),
                   ),
                 ],
               ),
@@ -53,7 +61,7 @@ class HeadSection extends ConsumerWidget {
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w400,
-                          color: Theme.of(context).colorScheme.onPrimary),
+                          color: Theme.of(context).colorScheme.tertiary),
                     ),
                   ),
                   Text(
@@ -61,7 +69,7 @@ class HeadSection extends ConsumerWidget {
                     style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w100,
-                        color: Theme.of(context).colorScheme.onPrimary),
+                        color: Theme.of(context).colorScheme.secondary),
                   ),
                 ]);
               },
@@ -137,7 +145,7 @@ class HeadSection extends ConsumerWidget {
                 for (i = 0; i < data.timetable.length; i++) {
                   subjects.add(data.timetable[i][day]);
                 }
-                print(subjects.length);
+                // print(subjects.length);
               }
               if (day < 5) {
                 return SizedBox(
@@ -149,10 +157,10 @@ class HeadSection extends ConsumerWidget {
                           begin: Alignment.centerLeft,
                           end: Alignment.centerRight,
                           colors: [
-                            Theme.of(context).colorScheme.primary,
+                            Theme.of(context).colorScheme.tertiary,
                             Colors.transparent,
                             Colors.transparent,
-                            Theme.of(context).colorScheme.primary
+                            Theme.of(context).colorScheme.tertiary
                           ],
                           stops: const [
                             0.0,

@@ -1,4 +1,5 @@
 import 'package:dy_integrated_5/providers/ApiServiceProvider.dart';
+import 'package:dy_integrated_5/screens/Dashboard/AnimatedGradientText.dart';
 import 'package:dy_integrated_5/screens/Login/LoginScreen.dart';
 import 'package:dy_integrated_5/utils/globals.dart';
 import 'package:flutter/material.dart';
@@ -23,9 +24,16 @@ class SideBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "FDY",
-              textScaler: const TextScaler.linear(1.5),
+            AnimatedGradientText(
+              text: "FDY",
+              duration: const Duration(seconds: 4),
+              radius: 2,
+              colors: [
+                Theme.of(context).colorScheme.tertiary,
+                Theme.of(context).colorScheme.primary.withOpacity(0.35),
+                Theme.of(context).colorScheme.tertiary
+              ],
+              // textScaler: const TextScaler.linear(1.5),
               style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,
                   fontSize: 36,
@@ -48,6 +56,7 @@ class SideBar extends StatelessWidget {
                         if (data == null) {
                           return const Text("No user");
                         } else {
+                          // TO DO : Use the Profile API to get better information about the user
                           // username is basically a mail ID
                           // Splitting the domain and the username to access the username for display
                           data = data.split("@")[0];

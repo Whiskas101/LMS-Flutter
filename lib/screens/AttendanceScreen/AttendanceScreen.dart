@@ -22,7 +22,7 @@ class AttendanceScreen extends StatelessWidget {
                     var res = await ref
                         .read(apiServiceProvider)
                         .getAttendanceSummary();
-                    print("frontend response: ${res.data}");
+                    print("frontend response: ${res.rawAttendanceData}");
                   },
                   child: const Text("fetch attendance data")),
             ),

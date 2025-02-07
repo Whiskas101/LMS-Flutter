@@ -5,7 +5,7 @@ import 'package:dy_integrated_5/providers/ApiServiceProvider.dart';
 import 'package:dy_integrated_5/providers/CourseMaterialProvider.dart';
 import 'package:dy_integrated_5/providers/SemesterProvider.dart';
 import 'package:dy_integrated_5/providers/TimetableProvider.dart';
-import 'package:dy_integrated_5/screens/WebViewScreen/WebViewScreen.dart';
+// import 'package:dy_integrated_5/screens/WebViewScreen/WebViewScreen.dart';
 
 import 'package:dy_integrated_5/services/api_service.dart';
 import 'package:dy_integrated_5/services/db_service.dart';
@@ -13,7 +13,7 @@ import 'package:dy_integrated_5/services/db_service.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+// import 'package:webview_flutter/webview_flutter.dart';
 
 class Playground extends StatefulWidget {
   Playground({super.key});
