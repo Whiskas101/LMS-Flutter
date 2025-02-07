@@ -27,7 +27,10 @@ class SubjectWidget extends StatelessWidget {
       // ),
 
       decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.25),
+          color: Theme.of(context)
+              .colorScheme
+              .surfaceContainerHighest
+              .withOpacity(0.25),
           borderRadius: const BorderRadius.all(
             Radius.circular(12),
           ),

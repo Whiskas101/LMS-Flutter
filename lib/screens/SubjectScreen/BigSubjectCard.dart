@@ -85,7 +85,7 @@ class BigSubjectCard extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Theme.of(context)
                       .colorScheme
-                      .surfaceVariant
+                      .surfaceContainerHighest
                       .withOpacity(0.2),
                   borderRadius:
                       const BorderRadius.only(bottomRight: Radius.circular(15)),

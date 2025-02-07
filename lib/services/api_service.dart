@@ -16,6 +16,7 @@ import 'package:dy_integrated_5/secrets/secrets.dart';
 
 // Custom Http for separating the exception handling logic
 import 'package:dy_integrated_5/utils/customHttp.dart';
+
 import 'package:dy_integrated_5/utils/globals.dart';
 import 'package:dy_integrated_5/utils/snackbar.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 /// Simple Static Class for handling data returned from the backend API.
 class ApiService {
-  //Variables for cookie persistence across subsequent requests.
+  // Variables for cookie persistence across subsequent requests.
   // Chose to avoid the overhead of a library, since there will only ever be these two cookies needed
   // The API deals with the rest.
   late String sessionCookie;
@@ -78,7 +79,7 @@ class ApiService {
     return username;
   }
 
-  /// Uses the [LastLoginAttempt] attribute to check whether if a Re-Authentication is necessary.
+  /// Uses the [lastLoginAttempt] attribute to check whether if a Re-Authentication is necessary.
   /// Returns a true if it does need re-auth, false if it doesn't.
   bool needsReAuthentication() {
     //Time elapsed since the last successful login

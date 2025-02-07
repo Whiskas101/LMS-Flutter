@@ -31,7 +31,7 @@ class SubjectScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Theme.of(context)
                       .colorScheme
-                      .surfaceVariant
+                      .surfaceContainerHighest
                       .withOpacity(0.2),
                   borderRadius: BorderRadius.circular(15),
                   // gradient: LinearGradient(colors: [
@@ -87,7 +87,7 @@ class SubjectScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Theme.of(context)
                         .colorScheme
-                        .surfaceVariant
+                        .surfaceContainerHighest
                         .withOpacity(0.2),
                     borderRadius: BorderRadius.circular(15),
                     // gradient: LinearGradient(colors: [

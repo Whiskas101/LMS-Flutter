@@ -23,7 +23,10 @@ class SubjectGridSection extends ConsumerWidget {
       margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.2),
+        color: Theme.of(context)
+            .colorScheme
+            .surfaceContainerHighest
+            .withOpacity(0.2),
         // color: Colors.red,
         borderRadius: BorderRadius.circular(15),
         // gradient: LinearGradient(

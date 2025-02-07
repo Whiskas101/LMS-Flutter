@@ -115,6 +115,7 @@ class AttendanceSummary {
   List<Attendance> rawAttendanceData = [];
 
   // In this case, attendance summary expects an array of JSON strings
+  // this just puts the attendance data into a variable, which can be operated on
   AttendanceSummary({List<Map<String, dynamic>>? attendanceList}) {
     // dont do anything, if it has no data supplied
     if (attendanceList == null) return;
@@ -131,8 +132,8 @@ class AttendanceSummary {
   // decisions about attending or missing lectures, and their impact on
   // overall and subject specific attendance.
 
-  // Reminder: Develop some sort of time metric to judge when
-  // the teacher has not updated the attendance in a long time
+  // TODO Reminder: Develop some sort of time metric to judge when
+  // the professor has not updated the attendance in a long time
   // in order to not make some unfounded recommendations that are
   // working with outdated information.
   // Preferably one that can persist state outside, using shared preferences ig

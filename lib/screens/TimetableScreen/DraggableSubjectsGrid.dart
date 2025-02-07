@@ -40,7 +40,10 @@ class DraggableSubjectsGrid extends StatelessWidget {
         //Here is the design
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.4)
+            color: Theme.of(context)
+                .colorScheme
+                .surfaceContainerHighest
+                .withOpacity(0.4)
             // gradient: LinearGradient(colors: [
             //   Colors.grey.shade100,
             //   Colors.grey.shade50,
