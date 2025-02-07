@@ -29,10 +29,8 @@ class SubjectScreen extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 12.0),
                 decoration: BoxDecoration(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .surfaceContainerHighest
-                      .withOpacity(0.2),
+                  color: Theme.of(context).colorScheme.surfaceContainerLowest,
+
                   borderRadius: BorderRadius.circular(15),
                   // gradient: LinearGradient(colors: [
                   //   Colors.grey.shade100,
@@ -60,14 +58,17 @@ class SubjectScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 12),
                       decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primary,
-                          borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(15)),
-                          border: Border(
-                              bottom: BorderSide(
-                                  width: 5,
-                                  color:
-                                      Theme.of(context).colorScheme.surface))),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .surfaceContainerLowest,
+                        borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(15)),
+                        border: Border(
+                          bottom: BorderSide(
+                              width: 5,
+                              color: Theme.of(context).colorScheme.surface),
+                        ),
+                      ),
                       child: ScreenTitle(subject: subject),
                     ),
 
@@ -85,10 +86,7 @@ class SubjectScreen extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 25, horizontal: 12),
                   padding: const EdgeInsets.symmetric(vertical: 0),
                   decoration: BoxDecoration(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .surfaceContainerHighest
-                        .withOpacity(0.2),
+                    color: Theme.of(context).colorScheme.surfaceContainerLow,
                     borderRadius: BorderRadius.circular(15),
                     // gradient: LinearGradient(colors: [
                     //   Colors.grey.shade100,

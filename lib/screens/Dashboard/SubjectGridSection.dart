@@ -20,13 +20,12 @@ class SubjectGridSection extends ConsumerWidget {
     final semester = ref.watch(semesterNotifierProvider);
 
     return Container(
-      margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
+      margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+      padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
       decoration: BoxDecoration(
-        color: Theme.of(context)
-            .colorScheme
-            .surfaceContainerHighest
-            .withOpacity(0.2),
+        // color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        // color: Colors.amber,
+        // .withOpacity(0.2),
         // color: Colors.red,
         borderRadius: BorderRadius.circular(15),
         // gradient: LinearGradient(
@@ -57,19 +56,19 @@ class SubjectGridSection extends ConsumerWidget {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(
-                        width: 3,
-                        color: Theme.of(context).colorScheme.surface))),
+            // decoration: BoxDecoration(
+            //     // color: Colors.red,
+            //     // border: Border(
+            //     //     bottom: BorderSide(
+            //     //         width: 3, color: Theme.of(context).colorScheme.surface)),
+            //     ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12.0, horizontal: 0),
+                    padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
                     child: Text(
                       "Your Courses",
                       style: TextStyle(
@@ -106,34 +105,34 @@ class SubjectGridSection extends ConsumerWidget {
                       itemCount: sem.subjects.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                            onTap: () async {
-                              refreshThrottler.run(() {
-                                ref
-                                    .read(courseMaterialProvider.notifier)
-                                    .getCourseMaterials(
-                                        sem.subjects[index].link);
-                              });
+                          onTap: () async {
+                            refreshThrottler.run(() {
                               ref
-                                  .read(searchProvider.notifier)
-                                  .updateSearchTerm(
-                                      ""); // setting the data for the materials
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SubjectScreen(
-                                          subject: sem.subjects[index])));
-                            },
-                            child: SubjectWidget(subject: sem.subjects[index]));
+                                  .read(courseMaterialProvider.notifier)
+                                  .getCourseMaterials(sem.subjects[index].link);
+                            });
+                            ref.read(searchProvider.notifier).updateSearchTerm(
+                                ""); // setting the data for the materials
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    SubjectScreen(subject: sem.subjects[index]),
+                              ),
+                            );
+                          },
+                          child: SubjectWidget(subject: sem.subjects[index]),
+                        );
                       },
                     );
                   },
                   error: (error, stackTrace) => const Text("You fucked up."),
                   loading: () {
-                    return const Column(
+                    return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CircularProgressIndicator(
-                          color: Colors.blueAccent,
+                          color: Theme.of(context).colorScheme.primary,
                         )
                       ],
                     );

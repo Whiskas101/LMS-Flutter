@@ -50,9 +50,10 @@ class BigSubjectCard extends StatelessWidget {
                           maxLines: 3,
                           softWrap: true,
                           style: TextStyle(
-                              color: Theme.of(context).colorScheme.tertiary,
-                              fontSize: 18,
-                              letterSpacing: -0.5),
+                            color: Theme.of(context).colorScheme.tertiary,
+                            fontSize: 18,
+                            letterSpacing: -0.5,
+                          ),
                         ),
                       ),
                     ],
@@ -83,10 +84,7 @@ class BigSubjectCard extends StatelessWidget {
           Container(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               decoration: BoxDecoration(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .surfaceContainerHighest
-                      .withOpacity(0.2),
+                  color: Theme.of(context).colorScheme.surfaceContainerLowest,
                   borderRadius:
                       const BorderRadius.only(bottomRight: Radius.circular(15)),
                   border: Border(

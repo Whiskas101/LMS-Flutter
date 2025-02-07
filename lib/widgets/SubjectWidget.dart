@@ -14,7 +14,7 @@ class SubjectWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
       // decoration: BoxDecoration(
       //     borderRadius: BorderRadius.circular(10),
       //     color: Colors.white,
@@ -27,29 +27,26 @@ class SubjectWidget extends StatelessWidget {
       // ),
 
       decoration: BoxDecoration(
-          color: Theme.of(context)
-              .colorScheme
-              .surfaceContainerHighest
-              .withOpacity(0.25),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(12),
-          ),
-          border:
-              Border.all(width: 2, color: Theme.of(context).colorScheme.surface)
-          // boxShadow: [
-          //   BoxShadow(
-          //       color: Colors.grey.shade300,
-          //       spreadRadius: 0.0,
-          //       blurRadius: 5.0,
-          //       offset: const Offset(3.0, 3.0)),
-          //   BoxShadow(
-          //       color: Colors.grey.shade400,
-          //       spreadRadius: 0.0,
-          //       blurRadius: 5 / 2.0,
-          //       offset: const Offset(3.0, 3.0)),
-          //
-          // ],
-          ),
+        color: Theme.of(context).colorScheme.surfaceContainerLow,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(12),
+        ),
+        // border:
+        //     Border.all(width: 2, color: Theme.of(context).colorScheme.surface)
+        // boxShadow: [
+        //   BoxShadow(
+        //       color: Colors.grey.shade300,
+        //       spreadRadius: 0.0,
+        //       blurRadius: 5.0,
+        //       offset: const Offset(3.0, 3.0)),
+        //   BoxShadow(
+        //       color: Colors.grey.shade400,
+        //       spreadRadius: 0.0,
+        //       blurRadius: 5 / 2.0,
+        //       offset: const Offset(3.0, 3.0)),
+        //
+        // ],
+      ),
 
       child: Row(
         children: [
@@ -82,6 +79,9 @@ class SubjectWidget extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8.0, vertical: 3),
+
+                        // INSTRUCTOR NAME
+
                         child: Text(
                           subject.instructor,
                           style: TextStyle(
@@ -90,6 +90,7 @@ class SubjectWidget extends StatelessWidget {
                                 .colorScheme
                                 .secondary
                                 .withOpacity(0.8),
+                            // color: Colors.red,
                             overflow: TextOverflow.visible,
                           ),
                         ),

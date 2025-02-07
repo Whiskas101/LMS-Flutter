@@ -22,7 +22,7 @@ class ScreenTitle extends ConsumerWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Icon(Icons.exit_to_app,
-                size: 32, color: Theme.of(context).colorScheme.onPrimary),
+                size: 32, color: Theme.of(context).colorScheme.primary),
           ),
         ),
 
@@ -33,7 +33,7 @@ class ScreenTitle extends ConsumerWidget {
             style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.onPrimary,
+                color: Theme.of(context).colorScheme.primary,
                 letterSpacing: 1.3),
           ),
         ),
@@ -43,7 +43,7 @@ class ScreenTitle extends ConsumerWidget {
           padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
           child: IconButton(
             icon: Icon(Icons.refresh_sharp,
-                size: 32, color: Theme.of(context).colorScheme.onPrimary),
+                size: 32, color: Theme.of(context).colorScheme.primary),
             onPressed: () => refreshThrottler.run(() {
               // print("${subject.link} fetch");
               ref

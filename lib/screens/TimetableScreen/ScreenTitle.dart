@@ -12,13 +12,14 @@ class ScreenTitle extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 6.0),
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
           child: Text(
-            "Your Timetable",
+            "Timetable",
             style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 28,
-                color: Theme.of(context).colorScheme.onPrimary),
+              fontWeight: FontWeight.bold,
+              fontSize: 26,
+              color: Theme.of(context).colorScheme.primary,
+            ),
           ),
         ),
         Padding(

@@ -39,31 +39,28 @@ class DraggableSubjectsGrid extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         //Here is the design
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: Theme.of(context)
-                .colorScheme
-                .surfaceContainerHighest
-                .withOpacity(0.4)
-            // gradient: LinearGradient(colors: [
-            //   Colors.grey.shade100,
-            //   Colors.grey.shade50,
-            // ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-            // boxShadow: [
-            //   //top left shadow
-            //   BoxShadow(
-            //       color: Colors.grey.shade50,
-            //       offset: const Offset(-10, -10),
-            //       blurRadius: 15,
-            //       spreadRadius: 1),
+          borderRadius: BorderRadius.circular(15),
+          color: Theme.of(context).colorScheme.surfaceContainerLow,
+          // gradient: LinearGradient(colors: [
+          //   Colors.grey.shade100,
+          //   Colors.grey.shade50,
+          // ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+          // boxShadow: [
+          //   //top left shadow
+          //   BoxShadow(
+          //       color: Colors.grey.shade50,
+          //       offset: const Offset(-10, -10),
+          //       blurRadius: 15,
+          //       spreadRadius: 1),
 
-            //   //Bottom right shadow
-            //   BoxShadow(
-            //       color: Colors.grey.shade300,
-            //       offset: const Offset(15, 15),
-            //       blurRadius: 15,
-            //       spreadRadius: 14)
-            // ],
-            ),
+          //   //Bottom right shadow
+          //   BoxShadow(
+          //       color: Colors.grey.shade300,
+          //       offset: const Offset(15, 15),
+          //       blurRadius: 15,
+          //       spreadRadius: 14)
+          // ],
+        ),
 
         child: GridView.builder(
           shrinkWrap: true,
@@ -76,20 +73,20 @@ class DraggableSubjectsGrid extends StatelessWidget {
               //Actual data that is being carried by the draggable object
               data: AcceptState(
                   text: generatedSubjects[index],
-                  color: Theme.of(context).colorScheme.primary),
+                  color: Theme.of(context).colorScheme.surfaceBright),
 
               childWhenDragging: Container(
                 margin: const EdgeInsets.all(2),
                 padding: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).colorScheme.surfaceBright,
                     borderRadius: BorderRadius.circular(10)),
                 child: Center(
                   child: Text(
                     generatedSubjects[index],
                     style: TextStyle(
                         fontSize: 10,
-                        color: Theme.of(context).colorScheme.onPrimary),
+                        color: Theme.of(context).colorScheme.surfaceBright),
                   ),
                 ),
               ),
@@ -102,13 +99,17 @@ class DraggableSubjectsGrid extends StatelessWidget {
                   height: 50,
                   width: 50,
                   decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
+                      color:
+                          Theme.of(context).colorScheme.primary.withAlpha(20),
                       borderRadius: BorderRadius.circular(10)),
                   child: Center(
                     child: Text(
                       generatedSubjects[index],
-                      style: const TextStyle(
-                          color: Colors.black26,
+                      style: TextStyle(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withAlpha(80),
                           fontSize: 12,
                           decoration: TextDecoration.none),
                     ),
@@ -131,12 +132,15 @@ class DraggableSubjectsGrid extends StatelessWidget {
                       Expanded(
                         child: Center(
                           child: Text(generatedSubjects[index],
-                              maxLines: 2,
-                              softWrap: true,
-                              style: const TextStyle(
-                                overflow: TextOverflow.visible,
-                                fontSize: 10,
-                                color: Colors.black26,
+                              maxLines: 1,
+                              // softWrap: true,
+                              style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                fontSize: 9,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withAlpha(150),
                               )),
                         ),
                       ),

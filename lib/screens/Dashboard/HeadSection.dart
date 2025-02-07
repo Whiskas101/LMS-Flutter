@@ -145,6 +145,7 @@ class HeadSection extends ConsumerWidget {
                 for (i = 0; i < data.timetable.length; i++) {
                   subjects.add(data.timetable[i][day]);
                 }
+                // print("subjects: ${data.timetable}");
                 // print(subjects.length);
               }
               if (day < 5) {

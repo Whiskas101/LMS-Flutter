@@ -29,11 +29,11 @@ class TimetableScreen extends ConsumerWidget {
           children: [
             // Title name
             Flexible(
-              flex: 2,
+              flex: 5,
               child: Container(
                 padding: const EdgeInsets.fromLTRB(12.0, 20, 12, 0),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.surfaceContainerLowest,
                   borderRadius:
                       const BorderRadius.vertical(bottom: Radius.circular(15)),
                   // boxShadow: const [
@@ -61,7 +61,7 @@ class TimetableScreen extends ConsumerWidget {
 
             //Time Table Matrix
             Flexible(
-              flex: 4,
+              flex: 14,
               child: data.when(
                   data: (data) {
                     return Container(
@@ -70,34 +70,32 @@ class TimetableScreen extends ConsumerWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 8),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Theme.of(context)
-                              .colorScheme
-                              .surfaceVariant
-                              .withOpacity(0.2)
-                          // gradient: LinearGradient(
-                          //     colors: [
-                          //       Colors.grey.shade100,
-                          //       Colors.grey.shade50,
-                          //     ],
-                          //     begin: Alignment.topLeft,
-                          //     end: Alignment.bottomRight),
-                          // boxShadow: [
-                          //   //top left shadow
-                          //   BoxShadow(
-                          //       color: Colors.grey.shade50,
-                          //       offset: const Offset(-10, -1),
-                          //       blurRadius: 15,
-                          //       spreadRadius: 1),
+                        borderRadius: BorderRadius.circular(15),
+                        color:
+                            Theme.of(context).colorScheme.surfaceContainerLow,
+                        // gradient: LinearGradient(
+                        //     colors: [
+                        //       Colors.grey.shade100,
+                        //       Colors.grey.shade50,
+                        //     ],
+                        //     begin: Alignment.topLeft,
+                        //     end: Alignment.bottomRight),
+                        // boxShadow: [
+                        //   //top left shadow
+                        //   BoxShadow(
+                        //       color: Colors.grey.shade50,
+                        //       offset: const Offset(-10, -1),
+                        //       blurRadius: 15,
+                        //       spreadRadius: 1),
 
-                          //   //Bottom right shadow
-                          //   BoxShadow(
-                          //       color: Colors.grey.shade300,
-                          //       offset: const Offset(15, 15),
-                          //       blurRadius: 15,
-                          //       spreadRadius: 14)
-                          // ],
-                          ),
+                        //   //Bottom right shadow
+                        //   BoxShadow(
+                        //       color: Colors.grey.shade300,
+                        //       offset: const Offset(15, 15),
+                        //       blurRadius: 15,
+                        //       spreadRadius: 14)
+                        // ],
+                      ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
                         child: GridView.builder(
@@ -144,8 +142,9 @@ class TimetableScreen extends ConsumerWidget {
 
             //Subjects to be dragged into timetable
             semester.when(
-                data: (semester) => Expanded(
-                        child: DraggableSubjectsGrid(
+                data: (semester) => Flexible(
+                    flex: 3,
+                    child: DraggableSubjectsGrid(
                       semester: semester,
                     )),
                 error: (error, stackTrace) =>
@@ -153,7 +152,7 @@ class TimetableScreen extends ConsumerWidget {
                 loading: () => const CircularProgressIndicator()),
 
             const SizedBox(
-              height: 40,
+              height: 20,
             ),
           ],
         ),

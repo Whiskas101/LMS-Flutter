@@ -11,16 +11,21 @@ class DaysHeader extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-      height: 100,
+      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      // decoration: BoxDecoration(
+      //     // color: Colors.red,
+      //     ),
+      // height: 10,
       child: GridView.builder(
-        padding: EdgeInsets.zero,
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
         physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 5,
-            crossAxisSpacing: 4,
-            mainAxisSpacing: 2,
-            childAspectRatio: isDesktopType() ? (2 / 1) : 1),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 5,
+          crossAxisSpacing: 4,
+          mainAxisSpacing: 1,
+
+          // childAspectRatio: isDesktopType() ? (2 / 1) : 1
+        ),
         itemCount: 5, // 5 for Five Working days of the week
 
         itemBuilder: (BuildContext context, int index) {
@@ -28,13 +33,17 @@ class DaysHeader extends ConsumerWidget {
             margin: const EdgeInsets.all(2),
             padding: const EdgeInsets.all(2),
             decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.scrim,
+                color: Theme.of(context)
+                    .colorScheme
+                    .surfaceContainerLow
+                    .withAlpha(90),
+                // color: Colors.red,
                 borderRadius: BorderRadius.circular(10)),
             child: Center(
               child: Text(
                 dayAtIndex(index),
-                style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant),
+                style:
+                    TextStyle(color: Theme.of(context).colorScheme.secondary),
               ),
             ),
           );

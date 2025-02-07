@@ -8,6 +8,7 @@ class TimetableBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Timetable block: ${subjects}");
     return Row(
       children: [
         ...subjects.asMap().entries.map((MapEntry<int, String> subject) {
