@@ -2,7 +2,10 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class SummaryGraph extends StatelessWidget {
-  const SummaryGraph({super.key});
+  const SummaryGraph({
+    super.key,
+    data = const ["hi"],
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,7 @@ class SummaryGraph extends StatelessWidget {
                     toY: 20, borderRadius: BorderRadius.circular(0), width: 25)
               ]),
               BarChartGroupData(x: 2, barRods: [BarChartRodData(toY: 25)]),
-              BarChartGroupData(x: 3, barRods: [BarChartRodData(toY: 30)]),
+              BarChartGroupData(x: 3, barRods: [BarChartRodData(toY: 100)]),
               BarChartGroupData(x: 4, barRods: [BarChartRodData(toY: 35)]),
               BarChartGroupData(x: 5, barRods: [BarChartRodData(toY: 35)]),
             ],
