@@ -22,6 +22,7 @@ class _TopBarState extends ConsumerState<TopBar> {
     print("Logged in?: ");
     print("Last login: ${apiService.lastLoginAttempt}");
     print(DateTime.now().difference(apiService.lastLoginAttempt));
+
     // const Duration(minutes: 30));
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

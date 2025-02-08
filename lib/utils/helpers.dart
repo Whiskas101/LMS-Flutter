@@ -46,6 +46,10 @@ double handlePercentage(String percentage, {bool floor = false}) {
       : double.parse(temp) / 100;
 }
 
+String toPercentageString(double percentage) {
+  return '${percentage.floorToDouble()}%';
+}
+
 String codeExtractor(String link) {
   return link.substring(link.lastIndexOf("=") + 1, link.length);
 }

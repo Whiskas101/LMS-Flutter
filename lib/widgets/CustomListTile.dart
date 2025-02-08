@@ -67,6 +67,8 @@ class CustomListTile extends ConsumerWidget {
       trailing: PopupMenuButton(
         enableFeedback: true,
         iconSize: 28,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+
         // onPressed: () => {
         //   apiService.downloadResource(subject.name,
         //       filteredMaterials[index].name, filteredMaterials[index].link,
@@ -75,7 +77,15 @@ class CustomListTile extends ConsumerWidget {
         itemBuilder: (context) {
           return [
             PopupMenuItem(
-                child: const Text("Download"),
+                // padding: EdgeInsets.symmetric(horizontal: 8),
+                child: const Row(
+                  // mainAxisAlignment: MainAxisAlignment.start,
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(Icons.download),
+                    Text("Download"),
+                  ],
+                ),
                 onTap: () => {
                       apiService.downloadResource(
                           subject.name,
@@ -84,7 +94,13 @@ class CustomListTile extends ConsumerWidget {
                           forceReFetch: true)
                     }),
             PopupMenuItem(
-              child: const Text("Delete"),
+              child: const Row(
+                // mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(Icons.delete),
+                  Text("Delete"),
+                ],
+              ),
               onTap: () =>
                   {showSnackBar("This feature is currently unavailable", 500)},
             )
@@ -92,7 +108,7 @@ class CustomListTile extends ConsumerWidget {
         },
         icon: Icon(
           Icons.more_vert_rounded,
-          color: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
+          color: Theme.of(context).colorScheme.secondary.withAlpha(65),
         ),
       ),
     );

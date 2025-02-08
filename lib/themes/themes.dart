@@ -9,7 +9,7 @@ final ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   colorScheme: ColorScheme.fromSeed(
     brightness: Brightness.light,
-    seedColor: Color.fromARGB(255, 3, 255, 137),
+    seedColor: Color.fromARGB(255, 219, 255, 12),
   ),
   useMaterial3: true,
   textTheme: GoogleFonts.aBeeZeeTextTheme(),
@@ -19,14 +19,15 @@ final ThemeData lightTheme = ThemeData(
 final ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   colorScheme: ColorScheme.fromSeed(
-      seedColor: const Color(0x00d5fe00),
-      // primary: Color.fromARGB(255, 0, 252, 117),
+    seedColor: const Color.fromARGB(209, 145, 3, 246),
+    // primary: Color.fromARGB(255, 0, 252, 117),
 
-      // primary: Colors.white,
-      // secondary: Color(0xFFDDECF9),
+    // primary: Colors.white,
+    // secondary: Color(0xFFDDECF9),
 
-      // seedColor: Color.fromARGB(255, 111, 151, 219),
-      brightness: Brightness.dark),
+    // seedColor: Color.fromARGB(255, 111, 151, 219),
+    brightness: Brightness.dark,
+  ),
   useMaterial3: true,
   textTheme: GoogleFonts.aBeeZeeTextTheme(),
   // textTheme: GoogleFonts.aBeeZeeTextTheme(),

@@ -1,6 +1,7 @@
 import 'package:dy_integrated_5/providers/ApiServiceProvider.dart';
 import 'package:dy_integrated_5/screens/Dashboard/AnimatedGradientText.dart';
 import 'package:dy_integrated_5/screens/Login/LoginScreen.dart';
+import 'package:dy_integrated_5/screens/ThemeScreen/ThemeScreen.dart';
 import 'package:dy_integrated_5/utils/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:dy_integrated_5/utils/snackbar.dart';
@@ -30,7 +31,7 @@ class SideBar extends StatelessWidget {
               radius: 2,
               colors: [
                 Theme.of(context).colorScheme.tertiary,
-                Theme.of(context).colorScheme.primary.withOpacity(0.35),
+                Theme.of(context).colorScheme.primary.withAlpha(105),
                 Theme.of(context).colorScheme.tertiary
               ],
               // textScaler: const TextScaler.linear(1.5),
@@ -43,10 +44,9 @@ class SideBar extends StatelessWidget {
               height: 16,
             ),
             ListTile(
-              splashColor:
-                  Theme.of(context).colorScheme.primary.withOpacity(0.5),
+              splashColor: Theme.of(context).colorScheme.primary.withAlpha(125),
               tileColor:
-                  Theme.of(context).colorScheme.surfaceTint.withOpacity(0.1),
+                  Theme.of(context).colorScheme.surfaceTint.withAlpha(30),
               leading: const Icon(Icons.verified_user),
               title: Consumer(
                 builder: (context, ref, child) {
@@ -82,7 +82,11 @@ class SideBar extends StatelessWidget {
               title: const Text("Personalisation"),
               subtitle: const Text("Pick a Theme!"),
               onTap: () {
-                showSnackBar("Not Implemented", 1000);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ThemeScreen(),
+                    ));
                 Scaffold.of(context).closeDrawer();
               },
             ),

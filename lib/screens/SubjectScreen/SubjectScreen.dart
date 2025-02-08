@@ -29,7 +29,7 @@ class SubjectScreen extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 12.0),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surfaceContainerLowest,
+                  color: Theme.of(context).colorScheme.surfaceContainerLow,
 
                   borderRadius: BorderRadius.circular(15),
                   // gradient: LinearGradient(colors: [
@@ -58,9 +58,8 @@ class SubjectScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 12),
                       decoration: BoxDecoration(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .surfaceContainerLowest,
+                        color:
+                            Theme.of(context).colorScheme.surfaceContainerLow,
                         borderRadius: const BorderRadius.vertical(
                             top: Radius.circular(15)),
                         border: Border(

@@ -66,13 +66,19 @@ class Attendance {
     //    5)  A - MinP*T =  X*(MinP - 1)
     //    6)  (A - MinP*T) /(MinP - 1) =  X
 
+    if (min_attendance_percentage == 1.0) {
+      // this will cause division by zero error
+      return 0;
+    }
+
     // if the attendance criteria is met, then theres no "need" to attend more lectures
-    if (percentage >= min_attendance_percentage) return 0;
+    if (percentage / 100 >= min_attendance_percentage) return 0;
 
     // returning X
+
     return ((present - min_attendance_percentage * total) /
             (min_attendance_percentage - 1))
-        .round();
+        .ceil();
   }
 
   // Returns no. of classes that can be skipped without attendance falling below
@@ -93,13 +99,14 @@ class Attendance {
     //
 
     // Cant skip classes if you are exactly on the attendance limit, or below it
-    if (percentage <= min_attendance_percentage) return 0;
+    print(percentage);
+    if (percentage / 100 <= min_attendance_percentage) return 0;
 
     // Something off here, investigate.
     return ((present - min_attendance_percentage * total) /
             (min_attendance_percentage))
         .floor()
-        .round();
+        .ceil();
   }
 
   // Timetable integrated functions go here
@@ -132,7 +139,7 @@ class AttendanceSummary {
   // decisions about attending or missing lectures, and their impact on
   // overall and subject specific attendance.
 
-  // TODO Reminder: Develop some sort of time metric to judge when
+  // TODO : Develop some sort of time metric to judge when
   // the professor has not updated the attendance in a long time
   // in order to not make some unfounded recommendations that are
   // working with outdated information.

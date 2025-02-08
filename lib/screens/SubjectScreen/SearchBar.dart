@@ -24,7 +24,7 @@ class CustomSearchBar extends ConsumerWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          //Search Icon
+          // Search Icon
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
             child: Icon(
@@ -38,7 +38,12 @@ class CustomSearchBar extends ConsumerWidget {
             child: TextField(
               onChanged: (value) =>
                   ref.watch(searchProvider.notifier).updateSearchTerm(value),
-              decoration: null,
+              style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              decoration: const InputDecoration(
+                  hintText: "Search",
+                  border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none),
             ),
           ),
 

@@ -6,6 +6,7 @@ import 'dart:io' show Platform;
 import 'package:dy_integrated_5/models/Attendance.dart';
 import 'package:dy_integrated_5/models/CourseMaterial.dart';
 import 'package:dy_integrated_5/models/Semester.dart';
+import 'package:dy_integrated_5/screens/WebViewScreen/WebViewScreen.dart';
 
 // import 'package:dy_integrated_5/screens/WebViewScreen/WebViewScreen.dart';
 import 'package:dy_integrated_5/services/file_handler.dart';
@@ -255,20 +256,25 @@ class ApiService {
         }
       }
 
-      // if (Platform.isAndroid || Platform.isIOS) {
-      //   //For iOS and Android, can use webview with cookies.
-      //   navigatorKey.currentState!.push(MaterialPageRoute(builder: (context) {
-      //     var cookieData = moodleCookie.split("=");
-      //     return WebViewScreen(
-      //         cookieName: cookieData[0],
-      //         value: cookieData[1],
-      //         domain: "mydy.dypatil.edu",
-      //         path: "/",
+      if (Platform.isAndroid || Platform.isIOS) {
+        //For iOS and Android, can use webview with cookies.
+        navigatorKey.currentState!.push(
+          MaterialPageRoute(
+            builder: (context) {
+              var cookieData = moodleCookie.split("=");
+              return WebViewScreen(
+                cookieName: cookieData[0],
+                value: cookieData[1],
+                domain: "mydy.dypatil.edu",
+                path: "/",
 
-      //         // https://mydy.dypatil.edu/rait/mod/url/view.php?id=618621
-      //         url: link);
-      //   }));
-      // }
+                // https://mydy.dypatil.edu/rait/mod/url/view.php?id=618621
+                url: link,
+              );
+            },
+          ),
+        );
+      }
     }
 
     //Try opening the file, if it exists, it will be opened, otherwise, we make a fetch
