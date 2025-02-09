@@ -350,7 +350,21 @@ class ApiService {
     }
   }
 
-  Future<AttendanceSummary> getAttendanceSummary() async {
+  Future<AttendanceSummary> getAttendanceSummary({forceRefetch = false}) async {
+    if (forceRefetch == false) {
+      // check cache
+      final prefs = await SharedPreferences.getInstance();
+      final attendanceData = prefs.get('attendance');
+      if (attendanceData != null) {
+        List<dynamic> attendance = jsonDecode(attendanceData.toString());
+        final attendanceList = attendance.cast<Map<String, dynamic>>();
+        print('attendance from cache: ${attendance.runtimeType}');
+        final summary = AttendanceSummary(attendanceList: attendanceList);
+        print("Summary: $summary");
+        return summary;
+      }
+    }
+
     print("Hit attendance summary");
     await ensureSessionValidity();
     Uri attendanceEndpoint = Uri.http(host, '/attendance');
@@ -364,8 +378,18 @@ class ApiService {
     List<Map<String, dynamic>> jsonAttendanceData =
         jsonDecode(response.body).cast<Map<String, dynamic>>();
     print(jsonAttendanceData.toString());
-    // Shove the data into the [Attendance] data model
 
+    print("Storing attendance into cache");
+    final jsonData = jsonEncode(jsonAttendanceData);
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('attendance', jsonData);
+
+    // for future purposes
+    String today = DateTime.now().toIso8601String().split("T")[0];
+    print("Storing today's along with attendance: $today");
+    prefs.setString('attendance-$today', jsonData);
+
+    // Shove the data into the [Attendance] data model
     // populate the attendance summary
     return AttendanceSummary(attendanceList: jsonAttendanceData);
   }

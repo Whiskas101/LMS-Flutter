@@ -127,7 +127,12 @@ class AttendanceSummary {
   // this just puts the attendance data into a variable, which can be operated on
   AttendanceSummary({List<Map<String, dynamic>>? attendanceList}) {
     // dont do anything, if it has no data supplied
-    if (attendanceList == null) return;
+    print("recieved froom constructor for attendance summary: $attendanceList");
+    if (attendanceList == null) {
+      print("No attendance data provided!");
+      return;
+    }
+    ;
 
     List<Attendance> temp = [];
     for (var subjectAttendanceJSON in attendanceList) {
