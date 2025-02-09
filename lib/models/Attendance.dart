@@ -8,6 +8,8 @@ class Attendance {
   late String subject;
   late int total;
 
+  // double min_attendance = 0.75;
+
   @override
   String toString() {
     String repr = """

@@ -65,7 +65,7 @@ class SubjectWidget extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                           style: TextStyle(
-                              color: Theme.of(context).colorScheme.secondary,
+                              color: Theme.of(context).colorScheme.primary,
                               fontWeight: FontWeight.normal,
                               letterSpacing: -0.5),
                         ),
@@ -81,15 +81,14 @@ class SubjectWidget extends StatelessWidget {
                             horizontal: 8.0, vertical: 3),
 
                         // INSTRUCTOR NAME
-
                         child: Text(
                           subject.instructor,
                           style: TextStyle(
                             fontSize: 10,
                             color: Theme.of(context)
                                 .colorScheme
-                                .secondary
-                                .withOpacity(0.8),
+                                .primary
+                                .withAlpha(200),
                             // color: Colors.red,
                             overflow: TextOverflow.visible,
                           ),
@@ -99,11 +98,11 @@ class SubjectWidget extends StatelessWidget {
                   ],
                 ),
                 LinearProgressIndicator(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(1),
+                  color: Theme.of(context).colorScheme.primary,
                   minHeight: 10,
                   value: handlePercentage(subject.attendance),
                   backgroundColor:
-                      Theme.of(context).colorScheme.primary.withOpacity(0.05),
+                      Theme.of(context).colorScheme.tertiary.withAlpha(50),
                   borderRadius:
                       const BorderRadius.vertical(bottom: Radius.circular(10)),
                 )

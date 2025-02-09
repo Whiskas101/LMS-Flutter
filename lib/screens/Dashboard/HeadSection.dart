@@ -37,7 +37,7 @@ class HeadSection extends ConsumerWidget {
                     duration: const Duration(seconds: 5),
                     colors: [
                       Theme.of(context).colorScheme.surfaceTint,
-                      Theme.of(context).colorScheme.primary.withOpacity(0.70),
+                      Theme.of(context).colorScheme.primary.withAlpha(190),
                       Theme.of(context).colorScheme.tertiary,
                     ],
                   ),
@@ -61,7 +61,7 @@ class HeadSection extends ConsumerWidget {
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w400,
-                          color: Theme.of(context).colorScheme.tertiary),
+                          color: Theme.of(context).colorScheme.primary),
                     ),
                   ),
                   Text(
@@ -69,7 +69,7 @@ class HeadSection extends ConsumerWidget {
                     style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w100,
-                        color: Theme.of(context).colorScheme.secondary),
+                        color: Theme.of(context).colorScheme.tertiary),
                   ),
                 ]);
               },

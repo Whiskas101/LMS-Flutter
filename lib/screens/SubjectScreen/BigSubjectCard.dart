@@ -50,7 +50,7 @@ class BigSubjectCard extends StatelessWidget {
                           maxLines: 3,
                           softWrap: true,
                           style: TextStyle(
-                            color: Theme.of(context).colorScheme.tertiary,
+                            color: Theme.of(context).colorScheme.primary,
                             fontSize: 18,
                             letterSpacing: -0.5,
                           ),

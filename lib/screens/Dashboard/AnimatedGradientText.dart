@@ -47,17 +47,36 @@ class _AnimatedGradientTextState extends State<AnimatedGradientText>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    print("Color changes: ${widget.colors?.length}");
 
     // if no widget.colors was specified, fallback on the default colors
     _defaultColors = widget.colors ??
         [
           Theme.of(context).colorScheme.primary,
-          Theme.of(context).colorScheme.secondary,
+          Theme.of(context).colorScheme.secondary
         ];
 
     _colorAnimation =
         ColorTween(begin: _defaultColors[0], end: _defaultColors.last)
             .animate(_controller);
+  }
+
+  @override
+  void didUpdateWidget(covariant AnimatedGradientText oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.colors != oldWidget.colors) {
+      setState(() {
+        _defaultColors = widget.colors ??
+            [
+              Theme.of(context).colorScheme.primary,
+              Theme.of(context).colorScheme.secondary
+            ];
+        _colorAnimation =
+            ColorTween(begin: _defaultColors[0], end: _defaultColors.last)
+                .animate(_controller);
+      });
+    }
   }
 
   @override

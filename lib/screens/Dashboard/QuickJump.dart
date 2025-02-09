@@ -53,7 +53,7 @@ class QuickJump extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(vertical: 4),
             decoration: BoxDecoration(
-              // color: CustomColors.customDarkGrey.withOpacity(0.9),
+              // color: Theme.of(context).colorScheme.onPrimaryFixed,
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(8),
               ),
@@ -73,14 +73,14 @@ class QuickJump extends StatelessWidget {
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 18,
-                          color: Theme.of(context).colorScheme.tertiary),
+                          color: Theme.of(context).colorScheme.primary),
                     ),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Icon(Icons.electric_bolt_sharp,
-                      color: Theme.of(context).colorScheme.secondary),
+                      color: Theme.of(context).colorScheme.primary),
                 )
               ],
             ),
@@ -127,9 +127,7 @@ class QuickJump extends StatelessWidget {
                         Text(
                           "Timetable",
                           style: TextStyle(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurfaceVariant),
+                              color: Theme.of(context).colorScheme.secondary),
                         )
                       ],
                     ),
@@ -177,9 +175,7 @@ class QuickJump extends StatelessWidget {
                             Text(
                               "Attendance",
                               style: TextStyle(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onSurfaceVariant,
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                             )
                           ],

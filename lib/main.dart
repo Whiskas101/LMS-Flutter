@@ -1,4 +1,5 @@
 import 'package:dy_integrated_5/providers/ApiServiceProvider.dart';
+import 'package:dy_integrated_5/providers/ThemeProvider.dart';
 // import 'package:dy_integrated_5/providers/ThemeProvider.dart';
 // import 'package:dy_integrated_5/screens/AttendanceScreen/AttendanceScreen.dart';
 import 'package:dy_integrated_5/screens/Dashboard/Dashboard.dart';
@@ -63,12 +64,13 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final theme = ref.watch(themeNotifierProvider);
+    final themeProvider = ref.watch(themeNotifierProvider);
 
     return MaterialApp(
       title: 'FDY',
       scaffoldMessengerKey: snackbarKey,
       navigatorKey: navigatorKey,
-      theme: darkTheme,
+      theme: themeProvider,
       themeMode: ThemeMode.system,
       home: home,
     );

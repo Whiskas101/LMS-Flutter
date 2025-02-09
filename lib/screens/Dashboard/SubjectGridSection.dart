@@ -74,13 +74,13 @@ class SubjectGridSection extends ConsumerWidget {
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 18,
-                          color: Theme.of(context).colorScheme.tertiary),
+                          color: Theme.of(context).colorScheme.primary),
                     ),
                   ),
                 ),
                 Icon(
                   Icons.menu_book,
-                  color: Theme.of(context).colorScheme.tertiary,
+                  color: Theme.of(context).colorScheme.primary,
                 )
               ],
             ),

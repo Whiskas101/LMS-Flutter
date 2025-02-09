@@ -75,8 +75,8 @@ class AttendanceScreen extends ConsumerWidget {
                     },
                   );
                 },
-                error: (err, trace) => Text("Error!"),
-                loading: () => Text("Loading..."),
+                error: (err, trace) => const Text("Error!"),
+                loading: () => const Text("Loading..."),
               ),
             )
           ],

@@ -10,6 +10,7 @@ import 'HeadSection.dart';
 import 'TopBar.dart';
 
 // import 'dart:math';
+// TODO : Create a download all (maybe in the background) feature somehow idk how exactly
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
@@ -97,10 +98,7 @@ class Dashboard extends StatelessWidget {
                   horizontal: BorderSide(
                       width: semester.isRefreshing ? 25 : 0,
                       color: semester.isRefreshing
-                          ? Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withOpacity(0.8)
+                          ? Theme.of(context).colorScheme.primary.withAlpha(220)
                           : Colors.transparent),
                 ),
               ),
