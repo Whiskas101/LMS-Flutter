@@ -38,7 +38,17 @@ class ThemeNotifier extends AsyncNotifier<ThemeData> {
       );
 
       // early return;
-      return ThemeData.from(
+      // ThemeData.from()
+      return ThemeData(
+        snackBarTheme: SnackBarThemeData(
+          backgroundColor: generatedColorScheme.primary,
+          contentTextStyle: TextStyle(
+            color: generatedColorScheme.onPrimary,
+            fontFamily: GoogleFonts.aBeeZee().fontFamily,
+          ),
+          // actionTextColor: generatedColorScheme.onPrimary,
+          // actionBackgroundColor: generatedColorScheme.primary,
+        ),
         colorScheme: generatedColorScheme,
         textTheme: GoogleFonts.aBeeZeeTextTheme(),
       );

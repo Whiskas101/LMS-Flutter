@@ -12,7 +12,11 @@ class AttendanceSummaryNotifier extends AsyncNotifier<AttendanceSummary> {
     print("AttendanceSummary build started");
     final apiService = ref.read(apiServiceProvider);
 
-    AttendanceSummary result = await apiService.getAttendanceSummary();
+    // TODO : Find a better alternative
+    // currently it just refetches attendance on a new build,
+    // basically, when the app is started from the killed state.
+    AttendanceSummary result =
+        await apiService.getAttendanceSummary(forceRefetch: true);
     print('Att summary: build: ${result}');
     return result;
   }

@@ -78,12 +78,19 @@ class CustomListTile extends ConsumerWidget {
           return [
             PopupMenuItem(
                 // padding: EdgeInsets.symmetric(horizontal: 8),
-                child: const Row(
+                child: Row(
                   // mainAxisAlignment: MainAxisAlignment.start,
                   // crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(Icons.download),
-                    Text("Download"),
+                    Icon(
+                      Icons.download,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    Text(
+                      "Download",
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary),
+                    ),
                   ],
                 ),
                 onTap: () => {
@@ -94,11 +101,19 @@ class CustomListTile extends ConsumerWidget {
                           forceReFetch: true)
                     }),
             PopupMenuItem(
-              child: const Row(
+              child: Row(
                 // mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Icon(Icons.delete),
-                  Text("Delete"),
+                  Icon(
+                    Icons.delete,
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+                  Text(
+                    "Delete",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                  ),
                 ],
               ),
               onTap: () =>

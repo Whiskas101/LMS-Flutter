@@ -92,12 +92,14 @@ class QuickJump extends StatelessWidget {
             child: Row(
               children: [
                 // Timetable
-                Listener(
-                  onPointerDown: (event) => {
+                GestureDetector(
+                  onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const TimetableScreen()))
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const TimetableScreen(),
+                      ),
+                    );
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
