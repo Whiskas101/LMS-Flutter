@@ -66,13 +66,34 @@ class MyApp extends ConsumerWidget {
     // final theme = ref.watch(themeNotifierProvider);
     final themeProvider = ref.watch(themeNotifierProvider);
 
-    return MaterialApp(
-      title: 'FDY',
-      scaffoldMessengerKey: snackbarKey,
-      navigatorKey: navigatorKey,
-      theme: themeProvider,
-      themeMode: ThemeMode.system,
-      home: home,
-    );
+    return themeProvider.when(
+        data: (theme) => MaterialApp(
+              title: 'FDY',
+              scaffoldMessengerKey: snackbarKey,
+              navigatorKey: navigatorKey,
+              theme: theme,
+              themeMode: ThemeMode.system,
+              home: home,
+            ),
+        error: (err, trace) {
+          return MaterialApp(
+            title: 'FDY',
+            scaffoldMessengerKey: snackbarKey,
+            navigatorKey: navigatorKey,
+            theme: darkTheme,
+            themeMode: ThemeMode.system,
+            home: home,
+          );
+        },
+        loading: () {
+          return MaterialApp(
+            title: 'FDY',
+            scaffoldMessengerKey: snackbarKey,
+            navigatorKey: navigatorKey,
+            theme: darkTheme,
+            themeMode: ThemeMode.system,
+            home: home,
+          );
+        });
   }
 }

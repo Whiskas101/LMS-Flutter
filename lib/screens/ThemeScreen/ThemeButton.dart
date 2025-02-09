@@ -28,13 +28,14 @@ class ThemeButton extends ConsumerWidget {
     return GestureDetector(
       onTap: () {
         // set the theme on tap
-        ref.read(themeNotifierProvider.notifier).saveThemePref();
+        ref.read(themeNotifierProvider.notifier).saveThemePref(seedColor);
         ref.read(themeNotifierProvider.notifier).setTheme(themeData);
       },
-      child: Stack(children: [
-        // Background
-        Container(
-          decoration: BoxDecoration(
+      child: Stack(
+        children: [
+          // Background
+          Container(
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               boxShadow: [
                 BoxShadow(
@@ -43,29 +44,31 @@ class ThemeButton extends ConsumerWidget {
                   spreadRadius: -6,
                   blurStyle: BlurStyle.outer,
                 ),
-              ]),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: CustomPaint(
-              painter: WavePainter(
-                primary: _colors.primary,
-                secondary: _colors.secondary,
-                tertiary: _colors.tertiary,
-              ),
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: Text(
-                  themeName,
-                  style: const TextStyle(fontSize: 12, color: Colors.white),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: CustomPaint(
+                painter: WavePainter(
+                  primary: _colors.primary,
+                  secondary: _colors.secondary,
+                  tertiary: _colors.tertiary,
+                ),
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Text(
+                    themeName,
+                    style: const TextStyle(fontSize: 12, color: Colors.white),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
 
-        // Text
-      ]),
+          // Text
+        ],
+      ),
     );
   }
 }
