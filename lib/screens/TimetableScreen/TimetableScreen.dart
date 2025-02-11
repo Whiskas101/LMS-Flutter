@@ -23,26 +23,27 @@ class TimetableScreen extends ConsumerWidget {
     final semester = ref.watch(semesterNotifierProvider);
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: LimitWidth(
         child: Column(
           children: [
             // Title name
             Flexible(
-              flex: 2,
+              flex: 5,
               child: Container(
                 padding: const EdgeInsets.fromLTRB(12.0, 20, 12, 0),
-                decoration: const BoxDecoration(
-                    color: Colors.lightBlue,
-                    borderRadius:
-                        BorderRadius.vertical(bottom: Radius.circular(15)),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black87,
-                          blurRadius: 8,
-                          offset: Offset(0, -3),
-                          spreadRadius: 1)
-                    ]),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surfaceContainerLowest,
+                  borderRadius:
+                      const BorderRadius.vertical(bottom: Radius.circular(15)),
+                  // boxShadow: const [
+                  //   BoxShadow(
+                  //       color: Colors.black87,
+                  //       blurRadius: 8,
+                  //       offset: Offset(0, -3),
+                  //       spreadRadius: 1)
+                  // ]
+                ),
                 child: const Column(
                   children: [
                     SizedBox(
@@ -60,7 +61,7 @@ class TimetableScreen extends ConsumerWidget {
 
             //Time Table Matrix
             Flexible(
-              flex: 4,
+              flex: 14,
               child: data.when(
                   data: (data) {
                     return Container(
@@ -70,28 +71,30 @@ class TimetableScreen extends ConsumerWidget {
                           horizontal: 8, vertical: 8),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        gradient: LinearGradient(
-                            colors: [
-                              Colors.grey.shade100,
-                              Colors.grey.shade50,
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
-                        boxShadow: [
-                          //top left shadow
-                          BoxShadow(
-                              color: Colors.grey.shade50,
-                              offset: const Offset(-10, -1),
-                              blurRadius: 15,
-                              spreadRadius: 1),
+                        color:
+                            Theme.of(context).colorScheme.surfaceContainerLow,
+                        // gradient: LinearGradient(
+                        //     colors: [
+                        //       Colors.grey.shade100,
+                        //       Colors.grey.shade50,
+                        //     ],
+                        //     begin: Alignment.topLeft,
+                        //     end: Alignment.bottomRight),
+                        // boxShadow: [
+                        //   //top left shadow
+                        //   BoxShadow(
+                        //       color: Colors.grey.shade50,
+                        //       offset: const Offset(-10, -1),
+                        //       blurRadius: 15,
+                        //       spreadRadius: 1),
 
-                          //Bottom right shadow
-                          BoxShadow(
-                              color: Colors.grey.shade300,
-                              offset: const Offset(15, 15),
-                              blurRadius: 15,
-                              spreadRadius: 14)
-                        ],
+                        //   //Bottom right shadow
+                        //   BoxShadow(
+                        //       color: Colors.grey.shade300,
+                        //       offset: const Offset(15, 15),
+                        //       blurRadius: 15,
+                        //       spreadRadius: 14)
+                        // ],
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
@@ -139,8 +142,9 @@ class TimetableScreen extends ConsumerWidget {
 
             //Subjects to be dragged into timetable
             semester.when(
-                data: (semester) => Expanded(
-                        child: DraggableSubjectsGrid(
+                data: (semester) => Flexible(
+                    flex: 3,
+                    child: DraggableSubjectsGrid(
                       semester: semester,
                     )),
                 error: (error, stackTrace) =>
@@ -148,7 +152,7 @@ class TimetableScreen extends ConsumerWidget {
                 loading: () => const CircularProgressIndicator()),
 
             const SizedBox(
-              height: 40,
+              height: 20,
             ),
           ],
         ),

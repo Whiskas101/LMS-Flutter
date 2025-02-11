@@ -9,8 +9,8 @@ pdf viewer available on the Old Site.
 
 
 # Todo
-    - Update the ApiService Class to be in line with the rest of the application by using riverpod providers instead of static methods.     
-    - Improve caching and minimize number of request to the proxy authentication (dyp-flask)
-    - Add a more extensive Attendance Tab 
-    - Dark Mode (Rivepod Provider based theming, I supposed) 
+    - Update the ApiService Class to be in line with the rest of the application by using riverpod providers instead of static methods. [Done]     
+    - Improve caching and minimize number of request to the proxy authentication (dyp-flask) [Done]
+    - Add a more extensive Attendance Tab [In progress]
+    - Dark Mode (Rivepod Provider based theming, I suppose) [In progress]
 

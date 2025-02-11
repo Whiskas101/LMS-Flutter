@@ -1,41 +1,95 @@
+import 'package:dy_integrated_5/providers/ApiServiceProvider.dart';
 import 'package:dy_integrated_5/providers/SemesterProvider.dart';
+import 'package:dy_integrated_5/services/api_service.dart';
 import 'package:dy_integrated_5/utils/debouncer.dart';
-import 'package:dy_integrated_5/utils/snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TopBar extends ConsumerWidget {
-  TopBar({super.key});
+class TopBar extends ConsumerStatefulWidget {
+  const TopBar({super.key});
+
+  @override
+  ConsumerState<TopBar> createState() => _TopBarState();
+}
+
+class _TopBarState extends ConsumerState<TopBar> {
   final refreshThrottler = Throttler();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    
+  Widget build(BuildContext context) {
+    final apiService = ref.watch(apiServiceProvider);
+    print("Logged in?: ");
+    print("Last login: ${apiService.lastLoginAttempt}");
+    print(DateTime.now().difference(apiService.lastLoginAttempt));
 
+    // const Duration(minutes: 30));
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.0),
-          child: Icon(
-            Icons.line_style_sharp,
-            size: 32,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: Icon(
+              Icons.menu,
+              color: Theme.of(context).colorScheme.tertiary,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
           ),
         ),
-
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-          child: IconButton(
-              onPressed: (){
-                refreshThrottler.run((){
-                  ref.read(semesterNotifierProvider.notifier).getSemesterData(forceReFetch: true);
-                });
-              },
-              icon: const Icon(
-                Icons.refresh,
-                size: 32,
-              ),
-          )
+        const Expanded(
+          child: SizedBox(
+            width: 10,
+          ),
+        ),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          onPressed: () {},
+          child: DateTime.now().difference(apiService.lastLoginAttempt) <
+                  const Duration(minutes: 30)
+              ? Icon(
+                  Icons.signal_cellular_alt_rounded,
+                  color: Theme.of(context).colorScheme.tertiary,
+                )
+              : Icon(
+                  Icons.signal_cellular_alt_rounded,
+                  color: Theme.of(context).colorScheme.error,
+                ),
+        ),
+        const SizedBox(
+          width: 5,
+        ),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          onPressed: () {
+            refreshThrottler.run(() async {
+              await ref
+                  .read(semesterNotifierProvider.notifier)
+                  .getSemesterData(forceReFetch: true);
+              setState(() {
+                //For forcing the update on the signal widget [This is a bandaid because I dont want to have an API stateNotifier for now]
+              });
+            });
+          },
+          child: Icon(
+            Icons.refresh,
+            color: Theme.of(context).colorScheme.tertiary,
+          ),
         ),
       ],
     );

@@ -1,3 +1,4 @@
+import 'package:dy_integrated_5/providers/ApiServiceProvider.dart';
 import 'package:dy_integrated_5/utils/debouncer.dart';
 import 'package:dy_integrated_5/utils/snackbar.dart';
 import 'package:flutter/material.dart';
@@ -6,39 +7,45 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/CourseMaterial.dart';
 import '../models/Subject.dart';
 import '../providers/DatabaseProvider.dart';
-import '../services/api_service.dart';
-
 
 class CustomListTile extends ConsumerWidget {
   final int index;
   final List<CourseMaterial> filteredMaterials;
   final Subject subject;
-  const CustomListTile({super.key, required this.index, required this.filteredMaterials, required this.subject});
+  const CustomListTile(
+      {super.key,
+      required this.index,
+      required this.filteredMaterials,
+      required this.subject});
 
+  IconData getIconFor(String item) {
+    if (item == "url") {
+      return Icons.link;
+    }
 
+    return Icons.dashboard;
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     Throttler _throttler = Throttler();
+    final apiService = ref.read(apiServiceProvider);
 
     return ListTile(
-      onTap: (){
-
-        ref.read(databaseNotifierProvider.notifier).insert(filteredMaterials[index], subject.name);
-        _throttler.run((){
-          ApiService.downloadResource(subject.name, filteredMaterials[index].name, filteredMaterials[index].link);
+      onTap: () {
+        ref
+            .read(databaseNotifierProvider.notifier)
+            .insert(filteredMaterials[index], subject.name);
+        _throttler.run(() {
+          apiService.downloadResource(subject.name,
+              filteredMaterials[index].name, filteredMaterials[index].link);
         });
         // ApiService.downloadResource(subject.name, filteredMaterials[index].name, filteredMaterials[index].link);
-
       },
 
-
-      leading: Icon(
-        Icons.dashboard,
-        size: 32,
-        color: Colors.lightBlueAccent[200],
-      ),
+      leading: Icon(getIconFor(filteredMaterials[index].type),
+          size: 32,
+          color: Theme.of(context).colorScheme.tertiary.withOpacity(0.8)),
       title: Row(
         children: [
           Expanded(
@@ -47,41 +54,78 @@ class CustomListTile extends ConsumerWidget {
               filteredMaterials[index].name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 14,
-              ),
+              style: TextStyle(
+                  fontSize: 14, color: Theme.of(context).colorScheme.secondary),
             ),
           ),
         ],
-      ),//File Type
-      subtitle: Text(
-          filteredMaterials[index].type,
-        style: const TextStyle(
-            fontSize: 10,
-        ),
-      ),
-      trailing: IconButton(
-        iconSize: 32,
-        onPressed: ()=>{
+      ), //File Type
+      subtitle: Text(filteredMaterials[index].type,
+          style: TextStyle(
+              fontSize: 10,
+              color: Theme.of(context).colorScheme.tertiary.withOpacity(0.4))),
+      trailing: PopupMenuButton(
+        enableFeedback: true,
+        iconSize: 28,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
 
-          ApiService.downloadResource(subject.name, filteredMaterials[index].name, filteredMaterials[index].link, forceReFetch: true)
-        },
-        style: IconButton.styleFrom(
-            side: const BorderSide(
-                color: Colors.lightBlueAccent,
-                width: 0
-
+        // onPressed: () => {
+        //   apiService.downloadResource(subject.name,
+        //       filteredMaterials[index].name, filteredMaterials[index].link,
+        //       forceReFetch: true)
+        // },
+        itemBuilder: (context) {
+          return [
+            PopupMenuItem(
+                // padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Row(
+                  // mainAxisAlignment: MainAxisAlignment.start,
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.download,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    Text(
+                      "Download",
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary),
+                    ),
+                  ],
+                ),
+                onTap: () => {
+                      apiService.downloadResource(
+                          subject.name,
+                          filteredMaterials[index].name,
+                          filteredMaterials[index].link,
+                          forceReFetch: true)
+                    }),
+            PopupMenuItem(
+              child: Row(
+                // mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.delete,
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+                  Text(
+                    "Delete",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                  ),
+                ],
+              ),
+              onTap: () =>
+                  {showSnackBar("This feature is currently unavailable", 500)},
             )
-        ),
-        icon: const Icon(
-          Icons.refresh_sharp,
-
-
+          ];
+        },
+        icon: Icon(
+          Icons.more_vert_rounded,
+          color: Theme.of(context).colorScheme.secondary.withAlpha(65),
         ),
       ),
-
-
-
     );
   }
 }
