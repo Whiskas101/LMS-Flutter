@@ -17,7 +17,8 @@ class FileHandler {
       String dirname, String fileName, String link, List<int> data,
       {bool rewrite = false}) async {
     Directory appDir = await _getAppDir();
-    File file = File("${appDir.path}/$dirname/$fileName");
+    String trimmedDirname = dirname.trim();
+    File file = File("${appDir.path}/$trimmedDirname/$fileName");
     try {
       await file.create(
         exclusive:
@@ -25,7 +26,7 @@ class FileHandler {
         recursive: true, // Create any missing directories if there are any
       );
       await file.writeAsBytes(data);
-      print("Created a file ${dirname}/$fileName");
+      print("Created a file ${trimmedDirname}/$fileName");
 
       // Creating a key value pair,
       // dirname IS the subject name
@@ -45,8 +46,10 @@ class FileHandler {
   static Future<bool> readFile(String dirname, String fileName) async {
     print("Reading $fileName");
     Directory appDir = await _getAppDir();
+    
     // print("${appDir.path}/$dirname/$fileName");
-    File file = File("${appDir.path}/$dirname/$fileName");
+    String trimmedDirname = dirname.trim();
+    File file = File("${appDir.path}/$trimmedDirname/$fileName");
     // print(file);
     // if file doesn't already exist, return false for failure to read
     if (await file.exists() == false) {

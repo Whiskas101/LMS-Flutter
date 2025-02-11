@@ -65,7 +65,7 @@ class SubjectWidget extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                           style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
+                              color: Theme.of(context).colorScheme.secondary,
                               fontWeight: FontWeight.normal,
                               letterSpacing: -0.5),
                         ),
@@ -87,7 +87,7 @@ class SubjectWidget extends StatelessWidget {
                             fontSize: 10,
                             color: Theme.of(context)
                                 .colorScheme
-                                .primary
+                                .secondary
                                 .withAlpha(200),
                             // color: Colors.red,
                             overflow: TextOverflow.visible,

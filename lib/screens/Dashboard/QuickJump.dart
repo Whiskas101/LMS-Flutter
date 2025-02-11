@@ -73,7 +73,7 @@ class QuickJump extends StatelessWidget {
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 18,
-                          color: Theme.of(context).colorScheme.primary),
+                          color: Theme.of(context).colorScheme.tertiary),
                     ),
                   ),
                 ),
