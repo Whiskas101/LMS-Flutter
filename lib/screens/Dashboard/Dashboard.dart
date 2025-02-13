@@ -1,6 +1,8 @@
+import 'package:dy_integrated_5/providers/ApiServiceProvider.dart';
 import 'package:dy_integrated_5/providers/SemesterProvider.dart';
 import 'package:dy_integrated_5/screens/Dashboard/QuickJump.dart';
 import 'package:dy_integrated_5/screens/Dashboard/SubjectGridSection.dart';
+import 'package:dy_integrated_5/services/api_service.dart';
 import 'package:dy_integrated_5/widgets/SideBar.dart';
 
 import 'package:flutter/material.dart';

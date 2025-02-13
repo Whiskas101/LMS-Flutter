@@ -1,3 +1,4 @@
+import 'package:dy_integrated_5/providers/ApiServiceProvider.dart';
 import 'package:dy_integrated_5/providers/CourseMaterialProvider.dart';
 import 'package:dy_integrated_5/providers/SearchProvider.dart';
 import 'package:dy_integrated_5/providers/SemesterProvider.dart';
@@ -78,9 +79,14 @@ class SubjectGridSection extends ConsumerWidget {
                     ),
                   ),
                 ),
-                Icon(
-                  Icons.menu_book,
-                  color: Theme.of(context).colorScheme.primary,
+                GestureDetector(
+                  onTap: () {
+                    ref.read(apiServiceProvider).getTimetable();
+                  },
+                  child: Icon(
+                    Icons.menu_book,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 )
               ],
             ),

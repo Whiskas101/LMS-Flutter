@@ -27,6 +27,10 @@ class TimetableNotifier extends AsyncNotifier<TimeTable> {
     return _timetable;
   }
 
+  void convertToMatrix(dynamic timetableJson) {
+    // TODO
+  }
+
   void getTimeTable() async {
     print("Manual fetch requested");
     state = const AsyncLoading();
