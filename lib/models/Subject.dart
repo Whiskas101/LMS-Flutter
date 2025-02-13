@@ -1,15 +1,12 @@
-
-
-class Subject{
-
+class Subject {
   late String name;
   late String instructor;
   late String attendance;
   late String courseId;
   late String link;
+  late String type;
 
-
-  Subject.fromJSON(Map<String, dynamic> jsonData){
+  Subject.fromJSON(Map<String, dynamic> jsonData) {
     name = jsonData['name'];
     instructor = jsonData['instructor'];
     attendance = jsonData['attendance'];
@@ -17,8 +14,8 @@ class Subject{
     courseId = jsonData['course_id'];
   }
 
-  Map<String, dynamic> toJSON(){
-    Map<String, dynamic> jsonData = <String,dynamic>{};
+  Map<String, dynamic> toJSON() {
+    Map<String, dynamic> jsonData = <String, dynamic>{};
 
     jsonData['name'] = name;
     jsonData['instructor'] = instructor;
@@ -27,7 +24,5 @@ class Subject{
     jsonData['course_id'] = courseId;
 
     return jsonData;
-
   }
-
 }

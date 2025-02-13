@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../models/Semester.dart';
@@ -30,7 +29,6 @@ class DraggableSubjectsGrid extends StatelessWidget {
     for (i = 0; i < subjectNames.length; i++) {
       generatedSubjects.add(subjectNames[i]);
       generatedSubjects.add("${subjectNames[i]} LAB");
-
     }
 
     generatedSubjects.add("MP");
@@ -42,78 +40,78 @@ class DraggableSubjectsGrid extends StatelessWidget {
         //Here is the design
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          gradient: LinearGradient(
-              colors: [
-                Colors.grey.shade100,
-                Colors.grey.shade50,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight
-          ),
-          boxShadow: [
-            //top left shadow
-            BoxShadow(
-                color: Colors.grey.shade50,
-                offset: const Offset(-10, -10),
-                blurRadius: 15,
-                spreadRadius: 1
+          color: Theme.of(context).colorScheme.surfaceContainerLow,
+          // gradient: LinearGradient(colors: [
+          //   Colors.grey.shade100,
+          //   Colors.grey.shade50,
+          // ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+          // boxShadow: [
+          //   //top left shadow
+          //   BoxShadow(
+          //       color: Colors.grey.shade50,
+          //       offset: const Offset(-10, -10),
+          //       blurRadius: 15,
+          //       spreadRadius: 1),
 
-            ),
-
-            //Bottom right shadow
-            BoxShadow(
-                color: Colors.grey.shade300,
-                offset: const Offset(15,15),
-                blurRadius: 15,
-                spreadRadius: 14
-            )
-
-          ],
+          //   //Bottom right shadow
+          //   BoxShadow(
+          //       color: Colors.grey.shade300,
+          //       offset: const Offset(15, 15),
+          //       blurRadius: 15,
+          //       spreadRadius: 14)
+          // ],
         ),
-
 
         child: GridView.builder(
           shrinkWrap: true,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2),
           scrollDirection: Axis.horizontal,
           itemCount: generatedSubjects.length,
           itemBuilder: (context, index) {
             return Draggable(
               //Actual data that is being carried by the draggable object
               data: AcceptState(
-                  text: generatedSubjects[index], color: Colors.greenAccent),
+                  text: generatedSubjects[index],
+                  color: Theme.of(context).colorScheme.surfaceBright),
 
               childWhenDragging: Container(
                 margin: const EdgeInsets.all(2),
                 padding: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
-                    color: Colors.greenAccent,
+                    color: Theme.of(context).colorScheme.surfaceBright,
                     borderRadius: BorderRadius.circular(10)),
                 child: Center(
                   child: Text(
                     generatedSubjects[index],
-                    style: const TextStyle(fontSize: 10, color: Colors.black26),
+                    style: TextStyle(
+                        fontSize: 10,
+                        color: Theme.of(context).colorScheme.surfaceBright),
                   ),
                 ),
               ),
 
               feedback: Container(
                 decoration: BoxDecoration(
-                    color: getSubjectColor(generatedSubjects[index]), borderRadius: BorderRadius.circular(10)),
+                    color: getSubjectColor(generatedSubjects[index], context),
+                    borderRadius: BorderRadius.circular(10)),
                 child: Container(
                   height: 50,
                   width: 50,
                   decoration: BoxDecoration(
-                      color: Colors.black12,
+                      color:
+                          Theme.of(context).colorScheme.primary.withAlpha(20),
                       borderRadius: BorderRadius.circular(10)),
                   child: Center(
                     child: Text(
                       generatedSubjects[index],
-                      style: const TextStyle(
-                          color: Colors.black26,
+                      style: TextStyle(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withAlpha(80),
                           fontSize: 12,
-                          decoration: TextDecoration.none
-                      ),
+                          decoration: TextDecoration.none),
                     ),
                   ),
                 ),
@@ -123,33 +121,30 @@ class DraggableSubjectsGrid extends StatelessWidget {
                 margin: const EdgeInsets.all(2),
                 padding: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
-                    color: getSubjectColor(generatedSubjects[index]),
-                    borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: Colors.black87
-                  )
+                  color: getSubjectColor(generatedSubjects[index], context),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-
+                // border: Border.all(color: Colors.black87)),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                  Expanded(
-                    child: Center(
-                      child: Text(
-                          generatedSubjects[index],
-                          maxLines: 2,
-                          softWrap: true,
-                          style: const TextStyle(
-                            overflow: TextOverflow.visible,
-                              fontSize: 10, color: Colors.black26,
-
-
-                          )
+                      Expanded(
+                        child: Center(
+                          child: Text(generatedSubjects[index],
+                              maxLines: 1,
+                              // softWrap: true,
+                              style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                fontSize: 9,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withAlpha(150),
+                              )),
+                        ),
                       ),
-                    ),
-                  ),
-                ]),
+                    ]),
               ),
             );
           },

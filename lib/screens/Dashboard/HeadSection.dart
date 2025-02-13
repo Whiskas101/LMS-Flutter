@@ -1,6 +1,7 @@
 import 'package:dy_integrated_5/providers/CourseMaterialProvider.dart';
 import 'package:dy_integrated_5/providers/SemesterProvider.dart';
 import 'package:dy_integrated_5/providers/TimetableProvider.dart';
+import 'package:dy_integrated_5/screens/Dashboard/AnimatedGradientText.dart';
 import 'package:dy_integrated_5/utils/helpers.dart';
 import 'package:dy_integrated_5/widgets/TimetableBlock.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class HeadSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final timeTable = ref.watch(timetableNotifierProvider);
-    final semester = ref.read(semesterNotifierProvider);
+    final semester = ref.watch(semesterNotifierProvider);
 
     return Column(
       children: [
@@ -21,24 +22,31 @@ class HeadSection extends ConsumerWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "FDY",
+                  AnimatedGradientText(
+                    text: "FDY",
+                    radius: 0.50,
                     style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white),
+                        fontSize: 30,
+                        fontWeight: FontWeight.w800,
+                        color: Theme.of(context).colorScheme.primary),
+                    duration: const Duration(seconds: 5),
+                    colors: [
+                      Theme.of(context).colorScheme.surfaceTint,
+                      Theme.of(context).colorScheme.primary.withAlpha(190),
+                      Theme.of(context).colorScheme.tertiary,
+                    ],
                   ),
                   Text(
                     "LMS Wrapper",
                     style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w100,
-                        color: Colors.white60),
+                        color: Theme.of(context).colorScheme.tertiary),
                   ),
                 ],
               ),
@@ -50,18 +58,18 @@ class HeadSection extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Text(
                       overallAttendance(sem),
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w400,
-                          color: Colors.white),
+                          color: Theme.of(context).colorScheme.primary),
                     ),
                   ),
-                  const Text(
+                  Text(
                     "Overall",
                     style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w100,
-                        color: Colors.white60),
+                        color: Theme.of(context).colorScheme.tertiary),
                   ),
                 ]);
               },
@@ -137,7 +145,8 @@ class HeadSection extends ConsumerWidget {
                 for (i = 0; i < data.timetable.length; i++) {
                   subjects.add(data.timetable[i][day]);
                 }
-                print(subjects.length);
+                // print("subjects: ${data.timetable}");
+                // print(subjects.length);
               }
               if (day < 5) {
                 return SizedBox(
@@ -145,16 +154,16 @@ class HeadSection extends ConsumerWidget {
                     child: ShaderMask(
                       blendMode: BlendMode.dstOut,
                       shaderCallback: (Rect bounds) {
-                        return const LinearGradient(
+                        return LinearGradient(
                           begin: Alignment.centerLeft,
                           end: Alignment.centerRight,
                           colors: [
-                            Colors.purple,
+                            Theme.of(context).colorScheme.tertiary,
                             Colors.transparent,
                             Colors.transparent,
-                            Colors.purple
+                            Theme.of(context).colorScheme.tertiary
                           ],
-                          stops: [
+                          stops: const [
                             0.0,
                             0.02,
                             0.9,
@@ -167,7 +176,7 @@ class HeadSection extends ConsumerWidget {
                           child: TimetableBlock(subjects: subjects)),
                     ));
               } else {
-                return const Text("No lectures for today");
+                return const Text("");
               }
             },
             error: (error, stackTrace) => const Text("Something went wrong"),

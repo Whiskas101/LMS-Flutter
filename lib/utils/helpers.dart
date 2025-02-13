@@ -46,6 +46,10 @@ double handlePercentage(String percentage, {bool floor = false}) {
       : double.parse(temp) / 100;
 }
 
+String toPercentageString(double percentage) {
+  return '${percentage.floorToDouble()}%';
+}
+
 String codeExtractor(String link) {
   return link.substring(link.lastIndexOf("=") + 1, link.length);
 }
@@ -95,19 +99,18 @@ String timeAtIndexLinear(int rowIndex) {
   return map[rowIndex]!;
 }
 
-Color getSubjectColor(String subject) {
+Color getSubjectColor(String subject, BuildContext context) {
   if (subject.toLowerCase().contains("lab")) {
-    return Colors.lightBlue;
+    return Theme.of(context).colorScheme.surfaceTint.withOpacity(0.4);
   }
   if (subject.toLowerCase() == "break") {
-    return Colors.greenAccent;
+    return Theme.of(context).colorScheme.surfaceTint.withOpacity(0.6);
   }
 
   if (subject.toLowerCase() == "mp") {
-    return Colors.lightGreenAccent;
+    return Theme.of(context).colorScheme.tertiary.withOpacity(0.7);
   }
-
-  return Colors.lightBlueAccent;
+  return Theme.of(context).colorScheme.secondaryContainer;
 }
 
 bool isDesktopType() {

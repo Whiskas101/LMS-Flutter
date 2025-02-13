@@ -1,12 +1,16 @@
+import 'package:dy_integrated_5/providers/SemesterProvider.dart';
 import 'package:dy_integrated_5/screens/Dashboard/QuickJump.dart';
 import 'package:dy_integrated_5/screens/Dashboard/SubjectGridSection.dart';
-import 'package:dy_integrated_5/utils/constants.dart';
-import 'package:dy_integrated_5/widgets/LimitWidth.dart';
+import 'package:dy_integrated_5/widgets/SideBar.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'HeadSection.dart';
 import 'TopBar.dart';
+
+// import 'dart:math';
+// TODO : Create a download all (maybe in the background) feature somehow idk how exactly
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
@@ -14,37 +18,42 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      drawer: const SideBar(),
       resizeToAvoidBottomInset: false,
-      body: Container(
-        decoration: BoxDecoration(color: Colors.grey.shade200),
-        child: Column(
+      body: Stack(children: [
+        Column(
           children: [
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 28),
               decoration: BoxDecoration(
-                  color: Colors.lightBlue,
-                  borderRadius:
-                      const BorderRadius.vertical(bottom: Radius.circular(16)),
-                  boxShadow: [
-                    BoxShadow(
-                        color: CustomColors.customDarkGrey3, blurRadius: 3)
-                  ]),
-              child: Column(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius:
+                    const BorderRadius.vertical(bottom: Radius.circular(16)),
+                // border: BorderDirectional(
+                //   bottom: BorderSide(
+                //     width: 7,
+                //     color: Theme.of(context)
+                //         .colorScheme
+                //         .background
+                //         .withOpacity(0.5),
+                //   ),
+                // ),
+              ),
+              child: const Column(
                 children: [
-                  const SizedBox(
+                  SizedBox(
                     height: 16,
                   ),
 
                   //Upper most layer, with the two buttons
                   TopBar(),
 
-                  const SizedBox(
+                  SizedBox(
                     height: 18,
                   ),
 
                   // Weird ahh message that makes no sense but yes
-                  const HeadSection(),
+                  HeadSection(),
                 ],
               ),
             ),
@@ -62,7 +71,9 @@ class Dashboard extends StatelessWidget {
                   ),
 
                   //Subjects
-                  Expanded(child: SubjectGridSection()),
+                  Expanded(
+                    child: SubjectGridSection(),
+                  ),
                 ],
               ),
             ),
@@ -71,7 +82,30 @@ class Dashboard extends StatelessWidget {
             ),
           ],
         ),
-      ),
+
+        /// BORDER FOR INDICATING REFRESH
+        /// Making animations is boring. To be replaced later.
+
+        IgnorePointer(
+          child: Consumer(builder: (context, ref, child) {
+            final semester = ref.watch(semesterNotifierProvider);
+
+            return AnimatedContainer(
+              curve: Curves.easeInOutQuint,
+              duration: const Duration(milliseconds: 1000),
+              decoration: BoxDecoration(
+                border: Border.symmetric(
+                  horizontal: BorderSide(
+                      width: semester.isRefreshing ? 25 : 0,
+                      color: semester.isRefreshing
+                          ? Theme.of(context).colorScheme.primary.withAlpha(220)
+                          : Colors.transparent),
+                ),
+              ),
+            );
+          }),
+        )
+      ]),
     );
   }
 }
