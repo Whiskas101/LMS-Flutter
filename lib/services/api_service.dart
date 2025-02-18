@@ -53,9 +53,9 @@ class ApiService {
   // static String host =
   //     "172.18.44.83:8000"; //for external device, but wsl hosting [doesn't seem to work]
 
-  String host = "10.0.2.2:8000"; // for emulator
+  // String host = "10.0.2.2:8000"; // for emulator
   // static String host = "127.0.0.1:8000"; // for windows executable testing
-  // static String host = HOST;
+  static String host = HOST;
   // static String host = "649a-49-36-98-105.ngrok-free.app";
 
   // Secure storage to store and access the username and password for future automated login.

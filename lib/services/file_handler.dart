@@ -46,7 +46,7 @@ class FileHandler {
   static Future<bool> readFile(String dirname, String fileName) async {
     print("Reading $fileName");
     Directory appDir = await _getAppDir();
-    
+
     // print("${appDir.path}/$dirname/$fileName");
     String trimmedDirname = dirname.trim();
     File file = File("${appDir.path}/$trimmedDirname/$fileName");

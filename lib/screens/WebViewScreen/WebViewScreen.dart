@@ -48,16 +48,41 @@ class _WebViewScreenState extends State<WebViewScreen> {
     _controller.loadRequest(Uri.parse(widget.url));
   }
 
+  Future<bool> _shouldPop() async {
+    bool canGoback = await _controller.canGoBack();
+    if (canGoback) {
+      print("canGoback in web view? $canGoback");
+      _controller.goBack();
+      return Future.value(false);
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Redirect",
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        print("Pop demanded...");
+        if (didPop) {
+          return;
+        }
+        // decide whether to pop context
+        bool shouldPop = await _shouldPop();
+        if (context.mounted && shouldPop) {
+          print("No browser history to go back to, popping context");
+          Navigator.pop(context);
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            "Redirect",
+          ),
         ),
-      ),
-      body: WebViewWidget(
-        controller: _controller,
+        body: WebViewWidget(
+          controller: _controller,
+        ),
       ),
     );
   }
