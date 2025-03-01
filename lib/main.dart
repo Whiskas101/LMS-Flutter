@@ -4,8 +4,11 @@ import 'package:dy_integrated_5/providers/ThemeProvider.dart';
 // import 'package:dy_integrated_5/screens/AttendanceScreen/AttendanceScreen.dart';
 import 'package:dy_integrated_5/screens/Dashboard/Dashboard.dart';
 import 'package:dy_integrated_5/screens/Login/LoginScreen.dart';
+import 'package:dy_integrated_5/screens/New/AttendanceScreen.dart/AttendanceScreen.dart';
+import 'package:dy_integrated_5/screens/New/Home.dart';
 import 'package:dy_integrated_5/screens/New/LoginScreen/LoginScreen.dart';
 import 'package:dy_integrated_5/screens/New/Dashboard/Dashboard.dart';
+import 'package:dy_integrated_5/screens/New/VaultScreen/VaultScreen.dart';
 // import 'package:dy_integrated_5/screens/playground.dart';
 import 'package:dy_integrated_5/themes/themes.dart';
 import 'package:dy_integrated_5/utils/globals.dart';
@@ -49,8 +52,9 @@ class AuthCheck extends ConsumerWidget {
     return creds.when(
         data: (user) {
           // interuppting flow for testing new UI
-
-          return DashboardV2();
+          return Home();
+          // return AttendanceScreenV2();
+          // return DashboardV2();
           // return LoginScreenV2();
           if ((user['username'] != null && user['password'] != null)) {
             return const Dashboard();

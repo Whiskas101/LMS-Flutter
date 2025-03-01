@@ -1,37 +1,32 @@
 import 'package:dy_integrated_5/widgets/AdaptiveScaffold.dart';
 import 'package:flutter/material.dart';
 
-class DashboardV2 extends StatefulWidget {
-  const DashboardV2({super.key});
+class AttendanceScreenV2 extends StatelessWidget {
+  const AttendanceScreenV2({super.key});
 
-  @override
-  State<DashboardV2> createState() => _DashboardV2State();
-}
-
-class _DashboardV2State extends State<DashboardV2> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Top most section, Overall attendance shown here
+        // ATNDC Text, with description
         Flexible(
-          flex: 2,
+          flex: 3,
           child: Container(
             color: Colors.red,
           ),
         ),
 
-        // Up next, to show what's the next lecture
+        // summary section
         Flexible(
-          flex: 1,
+          flex: 2,
           child: Container(
             color: Colors.blue,
           ),
         ),
 
-        // List of courses, as a grid
+        // Breakdown section? idk what's the difference
         Flexible(
-          flex: 5,
+          flex: 6,
           child: Container(
             color: Colors.green,
           ),

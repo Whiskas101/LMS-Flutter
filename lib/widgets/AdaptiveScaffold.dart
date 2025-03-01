@@ -8,6 +8,8 @@ class AdaptiveScaffold extends StatelessWidget {
   final Widget body;
   const AdaptiveScaffold({super.key, required this.body});
 
+  // Use a riverpod provider to handle currently selected state
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -16,40 +18,80 @@ class AdaptiveScaffold extends StatelessWidget {
         double width = MediaQuery.of(context).size.width;
         bool isWideScreen = width > 600;
         print("Widescreen status : $isWideScreen");
+        // TODO: Add a navigation rail for desktop by checking the isWideScreen
+
         return Scaffold(
+          // backgroundColor: Colors.red,
           body: body,
           bottomNavigationBar: isWideScreen == false
               ? BottomNavigationBar(
+                  onTap: (value) {
+                    print("Navigation tapped: $value");
+                  },
+                  backgroundColor: Colors.transparent,
+                  currentIndex: 3,
+                  showSelectedLabels: false, // do not show label text
+                  showUnselectedLabels: false,
                   items: const <BottomNavigationBarItem>[
+                    // TODO: update icons, figure out logic for varying colors when selected
+
+                    // Dashboard
                     BottomNavigationBarItem(
-                      label: "temp",
+                      label: "Dashboard",
+                      activeIcon: Icon(
+                        Icons.dashboard_rounded,
+                        color: Colors.white,
+                        size: 40,
+                      ),
                       icon: Icon(
-                        Icons.place,
-                        color: Colors.red,
+                        Icons.dashboard_rounded,
+                        color: Color(0xff5A5969),
                         size: 40,
                       ),
                     ),
+
+                    // Attendance
                     BottomNavigationBarItem(
-                      label: "temp",
+                      label: "Attendance",
+                      activeIcon: Icon(
+                        Icons.calendar_month_rounded,
+                        color: Color(0xffE7F98B),
+                        size: 40,
+                      ),
                       icon: Icon(
-                        Icons.place,
-                        color: Colors.red,
+                        Icons.calendar_month_rounded,
+                        color: Color(0xff5A5969),
                         size: 40,
                       ),
                     ),
+
+                    // Vault
                     BottomNavigationBarItem(
-                      label: "temp",
+                      label: "Vault",
+                      activeIcon: Icon(
+                        Icons.add_box_rounded,
+                        color: Color(0xff21D398),
+                        size: 40,
+                      ),
                       icon: Icon(
-                        Icons.place,
-                        color: Colors.red,
+                        Icons.add_box_rounded,
+                        color: Color(0xff5A5969),
                         size: 40,
                       ),
                     ),
+
+                    // Settings or Config
                     BottomNavigationBarItem(
-                      label: "temp",
+                      label: "Config",
+                      activeIcon: Icon(
+                        Icons.settings,
+                        color: Color(0xff15A3F0),
+                        size: 40,
+                      ),
                       icon: Icon(
-                        Icons.place,
-                        color: Colors.red,
+                        Icons.settings,
+                        // color: Colors.red,
+                        color: Color(0xff5A5969),
                         size: 40,
                       ),
                     ),
