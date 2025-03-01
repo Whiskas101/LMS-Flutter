@@ -6,6 +6,7 @@ import 'dart:io' show Platform;
 import 'package:dy_integrated_5/models/Attendance.dart';
 import 'package:dy_integrated_5/models/CourseMaterial.dart';
 import 'package:dy_integrated_5/models/Semester.dart';
+import 'package:dy_integrated_5/models/TimeTable.dart';
 import 'package:dy_integrated_5/screens/WebViewScreen/WebViewScreen.dart';
 
 // import 'package:dy_integrated_5/screens/WebViewScreen/WebViewScreen.dart';
@@ -47,15 +48,16 @@ class ApiService {
     lastLoginAttempt =
         DateTime.now().subtract(_sessionLength * 2); // Just to be safe.
   }
+
   //  !!!Subject to change or move out of this Class entirely!!!
   // REMEMBER TO CHANGE THIS WHEN TESTING ON EMULATOR VS WHEN ON USB DEBUGGING !!!
   // static String host = "192.168.29.137:8000"; //for external device
   // static String host =
   //     "172.18.44.83:8000"; //for external device, but wsl hosting [doesn't seem to work]
 
-  // String host = "10.0.2.2:8000"; // for emulator
+  String host = "10.0.2.2:8000"; // for emulator
   // static String host = "127.0.0.1:8000"; // for windows executable testing
-  static String host = HOST;
+  // static String host = HOST;
   // static String host = "649a-49-36-98-105.ngrok-free.app";
 
   // Secure storage to store and access the username and password for future automated login.
@@ -65,6 +67,12 @@ class ApiService {
   Future<void> saveCredentials(String username, String password) async {
     await _storage.write(key: 'username', value: username);
     await _storage.write(key: 'password', value: password);
+  }
+
+  /// Resolves the last login attempt time, in order to define sesssion validity
+  Future<Map<String, String>> resolveSession() async {
+    throw Error();
+    // return await {"what":'what'};
   }
 
   /// Fetches the username and password, for automatic login
@@ -401,13 +409,18 @@ class ApiService {
   Future<void> getTimetable({forceRefetch = false}) async {
     await ensureSessionValidity();
     Uri timetableEndpoint = Uri.http(host, '/timetable');
-    print(timetableEndpoint);
+    // print(timetableEndpoint);
     var response = await CustomHttp.get(
       timetableEndpoint,
       headers: {'Cookie': sessionCookie},
     );
+    print("raw response: ${response.body}");
 
-    print(response.body);
+    // convert the raw data into something consumable via TimeTableV2 class
+    Map<String, dynamic> data = jsonDecode(response.body);
+    print(data.keys);
+    TimeTableV2 timetable = TimeTableV2(data);
+    print(timetable.toString());
 
     return Future.delayed(const Duration(milliseconds: 1000));
   }

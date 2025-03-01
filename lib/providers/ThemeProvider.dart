@@ -17,44 +17,45 @@ class ThemeNotifier extends AsyncNotifier<ThemeData> {
     final prefs = await SharedPreferences.getInstance();
     final colorJson = prefs.get("seedColor");
     print('saved json color: $colorJson');
+
     // generate the theme and return if its found
-
-    if (colorJson != null) {
-      // create the color object
-      final trueJson = jsonDecode(colorJson.toString());
-      print("creating color object: $trueJson");
-
-      Color seedColor = Color.from(
-        alpha: trueJson['alpha'],
-        red: trueJson['red'],
-        green: trueJson['green'],
-        blue: trueJson['blue'],
-      );
-      print('generating theme from seed: $seedColor');
-
-      final generatedColorScheme = ColorScheme.fromSeed(
-        seedColor: seedColor,
-        brightness: Brightness.dark,
-      );
-
-      // early return;
-      // ThemeData.from()
-      return ThemeData(
-        snackBarTheme: SnackBarThemeData(
-          backgroundColor: generatedColorScheme.primary,
-          contentTextStyle: TextStyle(
-            color: generatedColorScheme.onPrimary,
-            fontFamily: GoogleFonts.aBeeZee().fontFamily,
-          ),
-          // actionTextColor: generatedColorScheme.onPrimary,
-          // actionBackgroundColor: generatedColorScheme.primary,
-        ),
-        colorScheme: generatedColorScheme,
-        textTheme: GoogleFonts.aBeeZeeTextTheme(),
-      );
+    if (colorJson == null) {
+      return darkTheme;
     }
 
-    return darkTheme;
+    // create the color object
+    final trueJson = jsonDecode(colorJson.toString());
+    print("creating color object: $trueJson");
+
+    Color seedColor = Color.from(
+      alpha: trueJson['alpha'],
+      red: trueJson['red'],
+      green: trueJson['green'],
+      blue: trueJson['blue'],
+    );
+    print('generating theme from seed: $seedColor');
+
+    final generatedColorScheme = ColorScheme.fromSeed(
+      seedColor: seedColor,
+      brightness: Brightness.dark,
+    );
+
+    // early return;
+    // ThemeData.from()
+    return ThemeData(
+      snackBarTheme: SnackBarThemeData(
+        backgroundColor: generatedColorScheme.primary,
+        contentTextStyle: TextStyle(
+          color: generatedColorScheme.onPrimary,
+          // fontFamily: GoogleFonts.aBeeZee().fontFamily,
+        ),
+        // actionTextColor: generatedColorScheme.onPrimary,
+        // actionBackgroundColor: generatedColorScheme.primary,
+      ),
+      colorScheme: generatedColorScheme,
+      // textTheme: GoogleFonts.aBeeZeeTextTheme(),
+      textTheme: GoogleFonts.martianMonoTextTheme(),
+    );
   }
 
   void saveThemePref(Color seedColor) async {
