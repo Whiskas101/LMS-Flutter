@@ -39,6 +39,7 @@ class CustomHttp {
   static Future<http.Response> post(Uri uri,
       {Map<String, String>? body, Map<String, String>? headers}) async {
     try {
+      print(uri);
       return http.post(
         uri,
         body: body,

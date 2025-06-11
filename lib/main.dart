@@ -14,7 +14,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-// import 'dart:io';
+import 'dart:io';
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port) {
+        print('⚠️ Accepting self-signed certificate from $host');
+        return true;
+      };
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +36,12 @@ void main() async {
   // sqfliteFfiInit();
   // databaseFactory = databaseFactoryFfi;
   // }
+
+  // To accept self signed certs
+  // A measure needed because newer flutter versions are more strict on certs
+  // but only on windows and mac
+  HttpOverrides.global = MyHttpOverrides();
+
   runApp(const ProviderScope(child: MyApp(home: AuthCheck())));
 
   // runApp(MyApp(home: AttendanceScreen()));
