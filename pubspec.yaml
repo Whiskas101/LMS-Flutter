@@ -54,6 +54,11 @@ dependencies:
   fl_chart: ^0.69.0
   webview_flutter: ^4.10.0
 
+  dyp_dart:
+    git: 
+      url: https://github.com/Whiskas101/dyp_dart.git
+
+
 flutter_native_splash:
   color: "#ffffff"
   image: assets/fdy_512.png

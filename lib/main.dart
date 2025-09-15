@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:dy_integrated_5/providers/ApiServiceProvider.dart';
 import 'package:dy_integrated_5/providers/ThemeProvider.dart';
 // import 'package:dy_integrated_5/providers/ThemeProvider.dart';
@@ -15,6 +17,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import 'dart:io';
+
+// for running the dyp_dart server
+import 'package:dyp_dart/api/server.dart' as dyp_dart;
+
+int? globalServerPort;
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -41,6 +48,15 @@ void main() async {
   // A measure needed because newer flutter versions are more strict on certs
   // but only on windows and mac
   HttpOverrides.global = MyHttpOverrides();
+
+  print("Launching dyp_dart server...");
+  final receivePort = ReceivePort();
+  await Isolate.spawn(dyp_dart.serverEntryPoint, receivePort.sendPort);
+
+  final message = await receivePort.first as Map<String, dynamic>;
+  globalServerPort = message['port'] as int;
+
+  print('Server running on port $globalServerPort!');
 
   runApp(const ProviderScope(child: MyApp(home: AuthCheck())));
 
