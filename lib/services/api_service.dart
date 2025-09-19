@@ -54,7 +54,8 @@ class ApiService {
   // static String host =
   //     "172.18.44.83:8000"; //for external device, but wsl hosting [doesn't seem to work]
 
-  String host = "10.0.2.2:$globalServerPort"; // for emulator
+  // String host = "10.0.2.2:8000"; // for emulator
+  String host = "127.0.0.1:$globalServerPort"; // for emulator
   // static String host = "127.0.0.1:8000"; // for windows executable testing
   // static String host = HOST;
   // static String host = "649a-49-36-98-105.ngrok-free.app";
@@ -128,10 +129,13 @@ class ApiService {
 
     if (response.statusCode == 200) {
       // For a valid login, parse the cookies, and store them for future data requests
+
       Map<String, dynamic> responseBody = jsonDecode(response.body);
       sessionCookie = response
           .headers['set-cookie']!; // default value, for the browser scenario
       moodleCookie = "MoodleSession=${responseBody['MoodleSession']}";
+
+      print("Moodle cookie updated: ${moodleCookie}");
 
       //Update the last successful login time
       lastLoginAttempt = DateTime.now();
@@ -316,7 +320,6 @@ class ApiService {
 
     var response = await CustomHttp.post(uri,
         body: {'link': link, 'type': type}, headers: {'Cookie': sessionCookie});
-
     if (response.statusCode == 200) {
       Map<String, dynamic> resourceData = jsonDecode(response.body);
       String resourceLink = resourceData['link'];
@@ -331,6 +334,7 @@ class ApiService {
         'Cookie': moodleCookie,
       });
       print('$subject, $name!!!!!!!!!!!!!!!!!!!');
+      // print("\n\n\nResponse from dyserver server: ${response.body}\n\n\n");
 
       FileHandler.writeThenReadFile(subject, name, link, response.bodyBytes);
     } else {
